@@ -1,0 +1,206 @@
+.main {
+  margin-top: 50px;
+}
+
+img.banner {
+  height: 400px;
+  width: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+.hero {
+  background: black;
+  height: 200px;
+}
+
+.front .info {
+  margin-bottom: 40px;
+}
+.front #search {
+  padding: 3px 10px;
+  color: #888;
+  height: 40px;
+  border-radius: 0px;
+  border: 0px;
+  width: 300px;
+}
+
+.main .row {
+  width: 100%;
+  margin-left: 0px;
+}
+.main .info {
+  height: 60px;
+  padding: 10px 20px;
+}
+.main .info .star {
+  font-size: 16pt;
+}
+.main .info h2 {
+  line-height: 40px;
+  color: white;
+  font-size: 22pt;
+  font-weight: bold;
+}
+.main .info .author {
+  line-height: 40px;
+  color: #ccc;
+}
+.main .info .author a {
+  font-weight: bold;
+  color: white;
+}
+.main .detailed {
+  background: #f8f8f8;
+  padding: 10px 20px;
+}
+.main .detailed h4 {
+  margin-top: 20px;
+}
+.main .detailed .avatar {
+  margin-top: 20px;
+  width: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  border: 1px solid #aaa;
+}
+.main .github > h1 {
+  display: none;
+}
+.main .github {
+  padding-top: 20px;
+}
+.main .github h1 {
+  font-size: 20pt;
+}
+.main .github h2 {
+  font-size: 18pt;
+}
+.main .github h3 {
+  font-size: 16pt;
+}
+.main .github h4 {
+  font-size: 14pt;
+}
+.main .endorse .one {
+  width: 40%;
+  display: inline-block;
+}
+
+.card-area {
+  text-align: left;
+}
+.card-area .card-img-top {
+  border-radius: 0px !important;
+}
+
+.card {
+  border-radius: 0px !important;
+  float: left;
+  width: 250px;
+  padding: 0px;
+  background: #f8f8f8;
+  position: relative;
+  margin: 10px;
+}
+.card .btn {
+  margin-bottom: 15px;
+}
+.card img {
+  width: 100%;
+  height: 150px;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+.card .card-body {
+  padding: 0px;
+  background: #f8f8f8;
+}
+.card p.card-text {
+  height: 130px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  padding: 5px;
+}
+.card .card-title {
+  height: 90px;
+  display: block;
+  line-height: 1.1;
+  background: #555;
+  color: white;
+  font-size: 14pt;
+  display: block;
+  padding: 10px;
+  display: flex;
+  justify-content: center; /* Horizontally center */
+  align-items: center; /* Vertically center */
+}
+.card .card-title a {
+  vertical-align: middle;
+  color: white;
+}
+
+.issues-inside {
+  padding-top: 20px;
+}
+.issues-inside h5 {
+  padding-bottom: 0px;
+  margin-bottom: 0px;
+  font-size: 12pt;
+}
+.issues-inside .meta {
+  margin-bottom: 0px;
+  color: #777;
+  font-weight: normal;
+  font-size: 10pt;
+}
+.issues-inside img.issue-avatar {
+  float: left;
+  width: 64px;
+  height: 64px;
+  display: block;
+  margin-right: 15px;
+  border: 1px solid #ccc;
+}
+.issues-inside ul {
+  padding-left: 0px;
+  list-style-type: none;
+}
+.issues-inside ul li {
+  padding-top: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #ddd;
+}
+.issues-inside ul li p.body {
+  max-height: 100px;
+  overflow: scroll;
+  margin-top: 10px;
+}
+
+.release-inside {
+  padding-top: 20px;
+}
+.release-inside h5 {
+  padding-bottom: 0px;
+  margin-bottom: 20px;
+  font-size: 12pt;
+}
+.release-inside .meta {
+  margin-bottom: 0px;
+  color: #777;
+  font-weight: normal;
+}
+.release-inside ul {
+  padding-left: 0px;
+  list-style-type: none;
+}
+.release-inside ul li {
+  padding-top: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.clear {
+  clear: both;
+}
