@@ -48,13 +48,14 @@ class Server {
         LOG( sprintf( "Adding add-on to DB [%s]", $addOnData->info->slug ), 2 );
 
         $queryString = sprintf( 
-            "INSERT INTO addons (site_id,type,name,slug,author_name,author_url,avatar_url,description,readme,stable_version,repo_version,banner_image_url,requires_php,requires_at_least,tested_up_to,open_issues_count,stars_count,watchers_count,subscribers_count,updated_at,created_at) " . 
-            "VALUES (%u,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%u,%u,%u,%u,%u,%u)",
+            "INSERT INTO addons (site_id,type,name,slug,author_name,signing_authority,author_url,avatar_url,description,readme,stable_version,repo_version,banner_image_url,requires_php,requires_at_least,tested_up_to,open_issues_count,stars_count,watchers_count,subscribers_count,updated_at,created_at) " . 
+            "VALUES (%u,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%u,%u,%u,%u,%u,%u)",
             $siteId,
             $this->db->escapeWithTicks( 'plugin' ),
             $this->db->escapeWithTicks( $addOnData->info->pluginName ),
             $this->db->escapeWithTicks( $addOnData->info->slug ),
             $this->db->escapeWithTicks( $addOnData->info->author ),
+            $this->db->escapeWithTicks( $addOnData->info->signingAuthority ),
             $this->db->escapeWithTicks( $addOnData->info->authorUrl ),
             $this->db->escapeWithTicks( $addOnData->info->repoInfo->owner->avatar_url ),
             $this->db->escapeWithTicks( $addOnData->info->description ),

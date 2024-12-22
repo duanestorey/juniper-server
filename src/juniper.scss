@@ -8,6 +8,26 @@ img.banner {
     object-fit: cover;
 }
 
+.hero {
+    background: black;
+    height: 200px;
+}
+
+.front {
+    .info {
+        margin-bottom: 40px;
+    }
+
+    #search {
+        padding: 3px 10px;
+        color: #888;
+        height: 40px;
+        border-radius: 0px;
+        border: 0px;
+        width: 300px;
+    }
+}
+
 .main { 
     .row {
         width: 100%;
@@ -16,8 +36,11 @@ img.banner {
 
     .info {
         height: 60px;
-        background: #555;
         padding: 10px 20px;
+
+        .star {
+            font-size: 16pt;
+        }
 
         h2 {
             line-height: 40px;
@@ -38,7 +61,7 @@ img.banner {
     }
 
     .detailed {
-        background: #eee;
+        background: #f8f8f8;
         padding: 10px 20px;
 
         h4 {
@@ -82,28 +105,62 @@ img.banner {
     }
 }
 
+.card-area {
+    text-align: left;
+
+    .card-img-top {
+        border-radius: 0px!important;
+    }
+}
 
 .card {
-    margin: 10px;
+    border-radius: 0px!important;
     float: left;
-    width: 23%;
+    width: 250px;
+    padding: 0px;
+    background: #f8f8f8;
+    position: relative;
+    margin: 10px;
+
+    .btn {
+        margin-bottom:  15px;
+    }
 
     img {
         width: 100%;
-        height: 200px;
+        height: 150px;
         object-fit: cover;
     }
 
+    .card-body {
+        padding: 0px;
+        background: #f8f8f8;
+    }
+
     p.card-text {
-        height: 150px;
+        height: 130px;
         text-overflow: ellipsis;
         overflow: hidden;
+        padding: 5px;
     }
 
     .card-title {
-        height: 70px;
+        height: 90px;
         display: block;
         line-height: 1.1;
+        background: #555;
+        color: white;
+        font-size: 14pt;
+        display: block;
+        padding: 10px;
+        display: flex;
+        justify-content: center; /* Horizontally center */
+        align-items: center; /* Vertically center */
+
+        a {
+            vertical-align: middle;
+            color: white;
+        }
     }
 }
 
