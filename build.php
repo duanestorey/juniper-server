@@ -18,7 +18,7 @@ class Build {
         $this->server = new Server();
         $this->latte = new \Latte\Engine;
 
-        $mkdir( JUNIPER_SERVER_DIR . '/cache', true, 0775 );
+        @mkdir( JUNIPER_SERVER_DIR . '/cache', true, 0775 );
         $this->latte->setTempDirectory( JUNIPER_SERVER_DIR . '/cache' );
     }
 
