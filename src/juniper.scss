@@ -164,6 +164,77 @@ img.banner {
     }
 }
 
+.issues-inside {
+    padding-top: 20px;
+
+    h5 {
+        padding-bottom: 0px;
+        margin-bottom: 0px;
+        font-size: 12pt;
+    }
+
+    .meta {
+        margin-bottom: 0px;
+        color: #777;
+        font-weight: normal;
+        font-size: 10pt;
+    }
+    
+    img.issue-avatar {
+        float: left;
+        width: 64px;
+        height: 64px;
+        display: block;
+        margin-right: 15px;
+        border: 1px solid #ccc;
+    }
+
+    ul {
+        padding-left: 0px;
+        list-style-type: none;
+
+        li {
+            padding-top: 20px;
+            padding-bottom: 10px;
+
+            p.body {
+                max-height: 100px;
+                overflow: scroll; 
+                margin-top: 10px;
+            }
+
+            border-bottom: 1px solid #ddd;
+        }
+    }
+}
+
+.release-inside {
+    padding-top: 20px;
+    
+    h5 {
+        padding-bottom: 0px;
+        margin-bottom: 20px;
+        font-size: 12pt;
+    }
+
+    .meta {
+        margin-bottom: 0px;
+        color: #777;
+        font-weight: normal;
+    }
+
+    ul {
+        padding-left: 0px;
+        list-style-type: none;
+
+        li {
+            padding-top: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+    }
+}
+
 .clear {
     clear: both;
 }

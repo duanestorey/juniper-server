@@ -21,11 +21,63 @@
                 </div>
             </div>
         </div>
-        <div class="detailed">
+
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+                <button class="nav-link active" id="info-tab" data-bs-toggle="tab" data-bs-target="#info" type="button" role="tab" aria-controls="info" aria-selected="true">Information</button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link" id="releases-tab" data-bs-toggle="tab" data-bs-target="#releases" type="button" role="tab" aria-controls="releases" aria-selected="false">Releases</button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link" id="issues-tab" data-bs-toggle="tab" data-bs-target="#issues" type="button" role="tab" aria-controls="issues" aria-selected="false">Issues</button>
+            </li>
+        </ul>
+
+        <div class="detailed ">
             <div class="row">
-                <div class="col-9 text-left desc-area">
-                    <div class="github">
-                    {$plugin['readme']|noescape}
+                <div class="col-9 text-left desc-area tab-content">
+                    <div class="tab-pane fade show active" id="info" role="tabpanel" aria-labelledby="info-tab">
+                        <div class="github">
+                        {$plugin['readme']|noescape}
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="releases" role="tabpanel" aria-labelledby="releases-tab">   
+                        <div class="release-inside">
+                            {if $releases} 
+                                <p>The following is a list of the most recent releases for this plugin.</p>
+                                <ul>
+                                {foreach $releases as $release} 
+                                    <li>
+                                        <h5><strong>{$release['release_tag']}</strong> - <a href="{$release['url']}">{$release['name']}</a><span class="meta"> / {$release['release_date']|date: 'M jS, Y'}</span></h5>
+                                        <p>{$release['description']}</p>
+                                    </li>
+                                {/foreach}
+                                </ul>
+                            {else}
+                            <p>No releases yet.</p>
+                            {/if}
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="issues" role="tabpanel" aria-labelledby="issues-tab">
+                        <div class="issues-inside">
+                            {if $issues} 
+                                <p>The following is a list of the most recent issues for this plugin.</p>
+                                <ul>
+                                {foreach $issues as $issue} 
+                                    <li>
+                                        <img class="issue-avatar" src="{$issue['user_avatar_url']}" />
+                                        <h5><a href="{$issue['url']}">{$issue['title']}</a></h5>
+                                        <div class="meta">{$issue['updated_at_date']|date: 'M jS, Y'}</div>
+                                        <p class="body">{$issue['body']}</p>
+                                        <div class="clear"></div>
+                                    </li>
+                                {/foreach}
+                                </ul>
+                            {else}
+                                <p>No issues yet.</p>
+                            {/if}
+                        </div>
                     </div>
                 </div>
                 <div class="col-3 text-left issue-area">

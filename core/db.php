@@ -10,11 +10,10 @@ class DB {
     }
 
     public function init() {
-        
         $this->addSchema( JUNIPER_SERVER_DIR . '/schema/sites.sql' );
         $this->addSchema( JUNIPER_SERVER_DIR . '/schema/addons.sql' );
         $this->addSchema( JUNIPER_SERVER_DIR . '/schema/releases.sql' );
-        
+        $this->addSchema( JUNIPER_SERVER_DIR . '/schema/issues.sql' );
     }
 
     public function getLastInsertId() {

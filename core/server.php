@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Juniper\Server;
 
 require_once( JUNIPER_SERVER_DIR . '/core/config.php' );
@@ -58,19 +57,19 @@ class Server {
     }
 
     public function addAddonToDb( $siteId, $addOnData ) {
-        LOG( sprintf( "Adding add-on to DB [%s]", $addOnData->info->slug ), 2 );
+        LOG( sprintf( "Adding add-on to DB [%s]", $addOnData->repository->fullName ), 2 );
 
         $queryString = sprintf( 
-            "INSERT INTO addons (site_id,type,name,slug,author_name,signing_authority,author_url,avatar_url,description,readme,stable_version,repo_version,banner_image_url,requires_php,requires_at_least,tested_up_to,open_issues_count,stars_count,watchers_count,subscribers_count,updated_at,created_at) " . 
-            "VALUES (%u,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%u,%u,%u,%u,%u,%u)",
+            "INSERT INTO addons (site_id,type,name,slug,author_name,signing_authority,author_url,avatar_url,description,readme,stable_version,repo_version,banner_image_url,requires_php,requires_at_least,tested_up_to,open_issues_count,stars_count,updated_at,created_at) " . 
+            "VALUES (%u,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%u,%u,%u,%u)",
             $siteId,
             $this->db->escapeWithTicks( 'plugin' ),
             $this->db->escapeWithTicks( $addOnData->info->pluginName ),
-            $this->db->escapeWithTicks( $addOnData->info->slug ),
+            $this->db->escapeWithTicks( $addOnData->repository->fullName ),
             $this->db->escapeWithTicks( $addOnData->info->author ),
             $this->db->escapeWithTicks( $addOnData->info->signingAuthority ),
-            $this->db->escapeWithTicks( $addOnData->info->authorUrl ),
-            $this->db->escapeWithTicks( $addOnData->info->repoInfo->owner->avatar_url ),
+            $this->db->escapeWithTicks( $addOnData->repository->owner->ownerUrl ),
+            $this->db->escapeWithTicks( $addOnData->repository->owner->avatarUrl ),
             $this->db->escapeWithTicks( $addOnData->info->description ),
             $this->db->escapeWithTicks( $addOnData->info->readmeHtml ),
             $this->db->escapeWithTicks( $addOnData->info->stableVersion ),
@@ -79,10 +78,8 @@ class Server {
             $this->db->escapeWithTicks( $addOnData->info->requiresPHP ),
             $this->db->escapeWithTicks( $addOnData->info->requiresAtLeast ),
             $this->db->escapeWithTicks( $addOnData->info->testedUpTo ),
-            $addOnData->info->repoInfo->open_issues_count, 
-            $addOnData->info->repoInfo->stargazers_count, 
-            $addOnData->info->repoInfo->watchers_count, 
-            $addOnData->info->repoInfo->subscribers_count, 
+            $addOnData->repository->openIssuesCount,  // open issues
+            $addOnData->repository->starsCount, 
             time(),
             time()
         );
@@ -92,18 +89,34 @@ class Server {
     }
 
     public function addReleaseToDb( $addOnId, $releaseData ) {
-        LOG( sprintf( "Adding release to DB [%s]", $releaseData->tagName ), 2 );
-
         $queryString = sprintf( 
-            "INSERT INTO releases (addon_id,release_tag,name,description,download_url,signed,release_date) " . 
-            "VALUES (%u,%s,%s,%s,%s,%d,%u)",
+            "INSERT INTO releases (addon_id,release_tag,url,name,description,download_url,signed,release_date) " . 
+            "VALUES (%u,%s,%s,%s,%s,%s,%d,%u)",
             $addOnId,
-            $this->db->escapeWithTicks( $releaseData->tagName ),
+            $this->db->escapeWithTicks( $releaseData->tag ),
+            $this->db->escapeWithTicks( $releaseData->url ),
             $this->db->escapeWithTicks( $releaseData->name ),
-            $this->db->escapeWithTicks( $releaseData->description ),
-            $this->db->escapeWithTicks( $releaseData->package_url ),
+            $this->db->escapeWithTicks( $releaseData->body ),
+            $this->db->escapeWithTicks( $releaseData->downloadUrl ),
             $releaseData->signed ? 1 : 0,
-            $releaseData->publishedDate
+            $releaseData->publishedAt
+        );
+
+        $this->db->query( $queryString );
+    }
+
+     public function addIssueToDb( $addOnId, $issueData ) {
+        $queryString = sprintf( 
+            "INSERT INTO issues (addon_id,url,title,body,user,user_avatar_url,user_url,updated_at_date) " . 
+            "VALUES (%u,%s,%s,%s,%s,%s,%s,%u)",
+            $addOnId,
+            $this->db->escapeWithTicks( $issueData->url ),
+            $this->db->escapeWithTicks( $issueData->title ),
+            $this->db->escapeWithTicks( $issueData->body ),
+            $this->db->escapeWithTicks( $issueData->postedBy->user ),
+            $this->db->escapeWithTicks( $issueData->postedBy->avatarUrl ),
+            $this->db->escapeWithTicks( $issueData->postedBy->userUrl ),
+            $issueData->updatedAt
         );
 
         $this->db->query( $queryString );
@@ -119,6 +132,30 @@ class Server {
         }
 
         return $plugins;
+    }
+
+    public function getPluginReleases( $id ) {
+        $queryString = sprintf( "SELECT * FROM releases WHERE addon_id=%d ORDER BY release_date DESC", $id );
+        $result = $this->db->query( $queryString );
+
+        $releases = [];
+        while ( $row = $result->fetchArray( SQLITE3_ASSOC ) ) {
+            $releases[] = $row;
+        }
+
+        return $releases;
+    }
+
+    public function getPluginIssues( $id ) {
+        $queryString = sprintf( "SELECT * FROM issues WHERE addon_id=%d ORDER BY updated_at_date DESC", $id );
+        $result = $this->db->query( $queryString );
+
+        $issues = [];
+        while ( $row = $result->fetchArray( SQLITE3_ASSOC ) ) {
+            $issues[] = $row;
+        }
+
+        return $issues;
     }
 
     public function stopDb() {

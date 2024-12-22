@@ -20,11 +20,10 @@ CREATE TABLE "addons"
     "signing_authority" VARCHAR,
     "open_issues_count" INTEGER,
     "stars_count" INTEGER,
-    "watchers_count" INTEGER,
-    "subscribers_count" INTEGER,
     "updated_at" TIMESTAMP,
     "created_at" TIMESTAMP
 
 );
-CREATE INDEX created_at_index ON content( created_at );
-CREATE INDEX type_index ON content( type );
+CREATE INDEX created_at_index ON addons( created_at );
+CREATE INDEX type_index ON addons( type );
+CREATE INDEX id_index ON addons( id );

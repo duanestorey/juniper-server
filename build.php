@@ -2,6 +2,8 @@
 
 namespace Juniper\Server;
 
+ini_set('display_errors', 1); ini_set('display_startup_errors', 1); error_reporting(E_ALL);
+
 define( 'JUNIPER_SERVER_VER', '1.0.0' );
 define( 'JUNIPER_SERVER_DIR', dirname( __FILE__ ) );
 
@@ -38,14 +40,20 @@ class Build {
         file_put_contents( JUNIPER_SERVER_DIR . '/_public/plugins/index.html', $output );
     }
 
-    public function writeSinglePluginPage( $plugin ) {
-        $params = [ 'plugin' => $plugin ];
+    public function writeSinglePluginPage( $plugin, $releases, $issues ) {
+        $params = [ 'plugin' => $plugin, 'releases' => $releases, 'issues' => $issues ];
         $output = $this->latte->renderToString( JUNIPER_SERVER_DIR . '/theme/plugin-single.latte', $params );
 
         @mkdir( JUNIPER_SERVER_DIR . '/_public/plugins/' . $plugin['slug'], 0755, true );
         file_put_contents( JUNIPER_SERVER_DIR . '/_public/plugins/' . $plugin['slug'] . '/index.html', $output );
     }
 
+    public function writeHomePage() {
+        $params = [];
+        $output = $this->latte->renderToString( JUNIPER_SERVER_DIR . '/theme/home.latte', $params );
+
+        file_put_contents( JUNIPER_SERVER_DIR . '/_public/index.html', $output );   
+    }
 
     public function letsGo() {
         $this->branding();
@@ -70,8 +78,15 @@ class Build {
                         $addOnId = $this->server->addAddonToDb( $siteId, $addOn );
 
                         foreach( $addOn->releases as $num => $release ) {
-                            LOG( sprintf( "Adding release with TAG [%s]", $release->tagName ), 2 );
+                            LOG( sprintf( "Adding release with TAG [%s]", $release->tag ), 2 );
                             $this->server->addReleaseToDb( $addOnId, $release );
+                        }
+
+                        if ( $addOn->issues ) {
+                            foreach( $addOn->issues as $issue ) {
+                                LOG( sprintf( "Adding issues with NAME [%s]", $issue->title ), 2 );
+                                $this->server->addIssueToDb( $addOnId, $issue );
+                            } 
                         }
                     }
                 }
@@ -83,8 +98,12 @@ class Build {
         $this->writePluginPage( $plugins );
 
         foreach( $plugins as $plugin ) {
-            $this->writeSinglePluginPage( $plugin );
+            $releases = $this->server->getPluginReleases( $plugin['id']);
+            $issues = $this->server->getPluginIssues( $plugin['id'] );
+            $this->writeSinglePluginPage( $plugin, $releases, $issues );
         }
+
+        $this->writeHomePage();
 
         $this->server->stopDb();
 
