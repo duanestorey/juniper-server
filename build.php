@@ -61,7 +61,7 @@ class Build {
 
             LOG( sprintf( "Importing site [%s]", $site ), 1 );
 
-            $contents = file_get_contents( $site . '/wp-json/juniper/v1/releases/' );
+            $contents = $this->server->curlGet( $site . '/wp-json/juniper/v1/releases/' );
             if ( $contents ) {
                 $decodedContents = json_decode( $contents );        
                 if ( is_array( $decodedContents ) ) {

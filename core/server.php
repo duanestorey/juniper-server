@@ -19,6 +19,19 @@ class Server {
         $this->db = new DB();
     }
 
+    public function curlGet( $url ) {
+        $ch = curl_init();
+        curl_setopt( $ch, CURLOPT_URL, $url );
+        curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+        curl_setopt( $ch, CURLOPT_FOLLOWLOCATION, true );
+        curl_setopt( $ch, CURLOPT_TIMEOUT, 10000 );
+
+        curl_setopt( $ch, CURLOPT_USERAGENT, 'Juniper/Server' );
+        $response = curl_exec( $ch );
+    
+        return $response;
+    }
+
     public function loadConfig() {
         $this->config = Config::load( JUNIPER_SERVER_DIR . '/config/site.yaml' );
         $this->config = Config::flatten( $this->config );
