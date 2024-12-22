@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="{$site->lang}">
+    <head>
+        <link rel="stylesheet" href="{$page->assetUrl}/simple.css?v={$page->assetHash}">
+        <title>{$page->title}</title>
+        <link rel="icon" type="image/x-icon" href="/assets/favicon.ico?v={$page->assetHash}">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" media="print" onload="this.media='all'">
+
+        <meta charset="{$site->charset}">
+        <meta name="generator" content="Crossroads 1.0">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        {if $isSingle}
+        <link rel="canonical" href="{$content->url}">
+
+        <meta name="description" content="{$content->description}">
+        <meta name="og:description" content="{$content->description}">
+        <meta property="og:title" content="{$page->title}">
+        <meta property="og:url" content="{$content->url}">
+        <meta property="og:type" content="article">
+        {if $content->featuredImageData}
+        <meta property="og:image" content="{$content->featuredImageData->public_url}">
+        <meta property="og:image:width" content="{$content->featuredImageData->width}">
+        <meta property="og:image:height" content="{$content->featuredImageData->height}">
+        {/if}
+        <meta name="twitter:card" content="summary_large_image">   
+        <meta name="twitter:title" content="{$page->title}">
+        <meta name="twitter:description" content="{$content->description}">
+        <meta name="twitter:creator" content="@duanestorey">
+        {if $content->featuredImageData}
+        <meta name="twitter:image" content="{$content->featuredImageData->public_url}">
+        {/if}
+  
+
+        {else}
+        <meta name="description" content="{$page->description}">
+        <meta name="og:description" content="{$page->description}">
+        {/if}
+    </head>
+    <body class="{$page->bodyClasses}">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="/">{$site->title}</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                    <div class="navbar-nav">
+                        {foreach $menu[ 'main' ] as $menu_item}
+                        <a class="nav-item nav-link{if $menu_item->isActive} active{/if}" href="{$menu_item->url}">{$menu_item->name}</a>
+                        {/foreach}
+                    </div>
+                </div>
+            </div>
+        </nav>
+

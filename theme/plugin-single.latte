@@ -1,0 +1,45 @@
+{include 'header.latte'}
+
+    <div class="main container text-center">
+        {if $plugin['banner_image_url']}
+        <img class="banner" src="{$plugin['banner_image_url']}" />
+        {else}
+        <img class="banner" src="https://images.unsplash.com/photo-1515879218367-8466d910aaa4?q=80&w=2969&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="card-img-top" alt="...">
+        {/if}
+
+        <div class="info">
+            <div class="row">
+                <div class="col-8 text-left">
+                    <h2>{$plugin['name']}</h2>
+                </div>
+                <div class="col-4 text-right author">
+                    by <a href="{$plugin['author_url']}">{$plugin['author_name']}</a>
+                </div>
+            </div>
+        </div>
+        <div class="detailed">
+            <div class="row">
+                <div class="col-9 text-left desc-area">
+                    <div class="github">
+                    {$plugin['readme']|noescape}
+                    </div>
+                </div>
+                <div class="col-3 text-left issue-area">
+                    <img class="avatar" src="{$plugin['avatar_url']}" />
+                    <h4>Endorsements</h4>
+
+                    <div class="endorse">
+                        <span class="one"><i class="fa fa-star"> </i> - {$plugin['stars_count']}</span>
+                        <span class="one"><i class="fa fa-eye"> </i> - {$plugin['watchers_count']}</span>
+                    </div>
+                    <h4>Open Issues</h4>
+
+                    <div class="issues">
+                        <p>No issues currently</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{include 'footer.latte'}

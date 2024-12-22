@@ -1,0 +1,13 @@
+                {if $content->featuredImageData}
+                    <div class="featured mt-4 mb-4">
+                        <picture>
+                            {if $content->featuredImageData->hasResponsive}
+                                {foreach $content->featuredImageData->responsiveImages as $size => $image}
+                                <source media="(max-width: {$size}px)" srcset="{$image->url}">
+                                {/foreach}
+                                <source media="(min-width: {$content->featuredImageData->responsive_largest_size+1}px)" srcset="{$content->featuredImageData->url}">
+                            {/if}
+                            <img src="{$content->featuredImageData->url}" width="{$content->featuredImageData->width}" height="{$content->featuredImageData->height}" alt="Featured Image" class="img-fluid">
+                        </picture>
+                    </div>
+                {/if}

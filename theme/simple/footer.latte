@@ -1,0 +1,13 @@
+
+        <footer class="bg-primary pt-4 pb-4 mt-4 mb-4">
+            <div class="container text-center text-white">
+                All content copyright &copy; 2024<br>Generated using Crossroads SSG
+                {if $isHome}
+                <br>Last Updated {$renderTime|date:'F jS, Y - g:i:s'} UTC
+                {/if}
+            </div>
+
+            <script defer src="{$page->assetUrl}/simple.min.js?v={$page->assetHash}"></script>
+        </footer>   
+    </body>
+</html>

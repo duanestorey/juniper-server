@@ -10,9 +10,11 @@ class DB {
     }
 
     public function init() {
+        
         $this->addSchema( JUNIPER_SERVER_DIR . '/schema/sites.sql' );
         $this->addSchema( JUNIPER_SERVER_DIR . '/schema/addons.sql' );
         $this->addSchema( JUNIPER_SERVER_DIR . '/schema/releases.sql' );
+        
     }
 
     public function getLastInsertId() {
@@ -29,7 +31,7 @@ class DB {
     }
 
     public function escapeWithTicks( $str ) {
-        return "'" . $this->sql->escapeString( $str ) . "'";
+        return "'" . @$this->sql->escapeString( $str ) . "'";
     }
 
     public function prepare( $statement ) {

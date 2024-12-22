@@ -45,21 +45,30 @@ class Server {
     }
 
     public function addAddonToDb( $siteId, $addOnData ) {
-        LOG( sprintf( "Adding add-on to DB [%s]", $addOnData->slug ), 2 );
+        LOG( sprintf( "Adding add-on to DB [%s]", $addOnData->info->slug ), 2 );
 
         $queryString = sprintf( 
-            "INSERT INTO addons (site_id,type,name,slug,description,stable_version,banner_image_url,requires_php,requires_at_least,tested_up_to,updated_at,created_at) " . 
-            "VALUES (%u,%s,%s,%s,%s,%s,%s,%s,%s,%s,%u,%u)",
+            "INSERT INTO addons (site_id,type,name,slug,author_name,author_url,avatar_url,description,readme,stable_version,repo_version,banner_image_url,requires_php,requires_at_least,tested_up_to,open_issues_count,stars_count,watchers_count,subscribers_count,updated_at,created_at) " . 
+            "VALUES (%u,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%u,%u,%u,%u,%u,%u)",
             $siteId,
             $this->db->escapeWithTicks( 'plugin' ),
             $this->db->escapeWithTicks( $addOnData->info->pluginName ),
-            $this->db->escapeWithTicks( $addOnData->slug ),
+            $this->db->escapeWithTicks( $addOnData->info->slug ),
+            $this->db->escapeWithTicks( $addOnData->info->author ),
+            $this->db->escapeWithTicks( $addOnData->info->authorUrl ),
+            $this->db->escapeWithTicks( $addOnData->info->repoInfo->owner->avatar_url ),
             $this->db->escapeWithTicks( $addOnData->info->description ),
-            $this->db->escapeWithTicks( $addOnData->info->stable ),
-            '\'\'',
+            $this->db->escapeWithTicks( $addOnData->info->readmeHtml ),
+            $this->db->escapeWithTicks( $addOnData->info->stableVersion ),
+            $this->db->escapeWithTicks( $addOnData->info->version ),
+            $this->db->escapeWithTicks( $addOnData->info->bannerImage ),
             $this->db->escapeWithTicks( $addOnData->info->requiresPHP ),
             $this->db->escapeWithTicks( $addOnData->info->requiresAtLeast ),
             $this->db->escapeWithTicks( $addOnData->info->testedUpTo ),
+            $addOnData->info->repoInfo->open_issues_count, 
+            $addOnData->info->repoInfo->stargazers_count, 
+            $addOnData->info->repoInfo->watchers_count, 
+            $addOnData->info->repoInfo->subscribers_count, 
             time(),
             time()
         );
@@ -77,13 +86,25 @@ class Server {
             $addOnId,
             $this->db->escapeWithTicks( $releaseData->tagName ),
             $this->db->escapeWithTicks( $releaseData->name ),
-            $this->db->escapeWithTicks( $releaseData->name ),
+            $this->db->escapeWithTicks( $releaseData->description ),
             $this->db->escapeWithTicks( $releaseData->package_url ),
             $releaseData->signed ? 1 : 0,
             $releaseData->publishedDate
         );
 
         $this->db->query( $queryString );
+    }
+
+    public function getPluginList() {
+        $queryString = sprintf( "SELECT * FROM addons WHERE type=%s ORDER BY name", $this->db->escapeWithTicks( 'plugin' ) );
+        $result = $this->db->query( $queryString );
+
+        $plugins = [];
+        while ( $row = $result->fetchArray( SQLITE3_ASSOC ) ) {
+            $plugins[] = $row;
+        }
+
+        return $plugins;
     }
 
     public function stopDb() {

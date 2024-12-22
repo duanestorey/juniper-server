@@ -1,0 +1,32 @@
+{include 'header.latte'}
+
+    <div class="container mt-4">
+        <article>    
+            <h1 class="mt-4">{$content->title}</h1>
+            <div class="meta mb-2 text-primary fs-6 fw-light">
+                Published on <time>{$content->publishDate|date:'F jS, Y'}</time> &middot; <span>{$content->readingTime}</span>
+            </div>
+
+            <div class="content mt-3">
+                {include 'featured.latte'}
+                
+                {$content->html|noescape}
+
+                {if $content->taxonomy}
+                    <div class="tax">
+                    {foreach $content->taxonomy as $tax => $terms}
+                        {foreach $terms as $term}
+                        <a href="{$content->taxonomyLinks[ $tax ][ $term ]}" class="btn btn-secondary btn-sm">{$term|replace: ['-' => ' ']}</a>
+                        {/foreach}
+                    {/foreach}
+                    </div>
+                {/if}
+            </div>
+
+            <div class="comments mt-4 pt-4">
+                <div id="disqus_thread"></div>
+            </div>
+        </article>  
+    </div>
+
+{include 'footer.latte'}

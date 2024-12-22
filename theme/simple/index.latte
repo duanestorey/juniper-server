@@ -1,0 +1,44 @@
+{include 'header.latte'}
+        <div class="container mt-4">
+        {foreach $content as $item} 
+            <article class="mt-4 mb-4">    
+                <a href="{$item->relUrl}" class="link-dark"><h2 class="mt-4">{$item->title}</h2></a>
+                <div class="meta mb-2 text-primary fs-6 fw-light">Published on <time>{$item->publishDate|date:'F jS, Y'}</time></div>
+
+                <div class="content mt-3">
+                    {if $item->featuredImageData}
+                        <picture>
+                            {if $item->featuredImageData->hasResponsive}
+                                {foreach $item->featuredImageData->responsiveImages as $size => $image}
+                                <source media="(max-width: {$size}px)" srcset="{$image->url}">
+                                {/foreach}
+                                <source media="(min-width: {$item->featuredImageData->responsive_largest_size+1}px)" srcset="{$item->featuredImageData->url}">
+                            {/if}
+                            <img src="{$item->featuredImageData->url}" width="{$item->featuredImageData->width}" height="{$item->featuredImageData->height}" alt="Featured Image" class="img-thumbnail">
+                        </picture>
+                    {/if}
+                    {$item->excerpt()|noescape}
+                </div>
+
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <a href="{$item->relUrl}" class="btn btn-primary mt-4" title="{$item->title}" aria-label="Read More '{$item->title}'">Read More</a>
+                </div>
+
+                <div class="clearfix"></div>
+            </article>
+        {/foreach} 
+            <div class="mt-4 pt-4 pb-4 mb-4">
+                <nav aria-label="page navigation">
+                    <ul class="pagination justify-content-center ">
+                        {if $pagination->prevPageLink}
+                        <li class="page-item"><a class="page-link" href="{$pagination->prevPageLink}">Previous</a></li>
+                        {/if}
+
+                        {if $pagination->nextPageLink}
+                        <li class="page-item"><a class="page-link" href="{$pagination->nextPageLink}">Next</a></li>
+                        {/if}
+                    </ul>
+                </nav>
+            </div>
+        </div>
+{include 'footer.latte'}

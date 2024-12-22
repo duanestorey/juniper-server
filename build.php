@@ -9,10 +9,13 @@ require_once( JUNIPER_SERVER_DIR . '/vendor/autoload.php' );
 require_once( JUNIPER_SERVER_DIR . '/core/server.php' );
 
 class Build {
+    var $latte = null;
     var $server = null;
 
     public function __construct() {
         $this->server = new Server();
+        $this->latte = new \Latte\Engine;
+        $this->latte->setTempDirectory( sys_get_temp_dir() );
     }
 
     public function branding() {
@@ -27,12 +30,30 @@ class Build {
         LOG( $lineText );
     }
 
+    public function writePluginPage( $plugins ) {
+        $params = [ 'plugins' => $plugins ];
+        $output = $this->latte->renderToString( JUNIPER_SERVER_DIR . '/theme/plugins.latte', $params );
+
+        @mkdir( JUNIPER_SERVER_DIR . '/_public/plugins/', 0755, true );
+        file_put_contents( JUNIPER_SERVER_DIR . '/_public/plugins/index.html', $output );
+    }
+
+    public function writeSinglePluginPage( $plugin ) {
+        $params = [ 'plugin' => $plugin ];
+        $output = $this->latte->renderToString( JUNIPER_SERVER_DIR . '/theme/plugin-single.latte', $params );
+
+        @mkdir( JUNIPER_SERVER_DIR . '/_public/plugins/' . $plugin['slug'], 0755, true );
+        file_put_contents( JUNIPER_SERVER_DIR . '/_public/plugins/' . $plugin['slug'] . '/index.html', $output );
+    }
+
+
     public function letsGo() {
         $this->branding();
         LOG( "Build process starting for self-replicating repository", 0 );
 
         $this->server->startDb();
         $this->server->loadConfig();
+        
         $sites = $this->server->getSites();
 
         foreach( $sites as $site ) {     
@@ -56,7 +77,14 @@ class Build {
                 }
             }
         }
-     
+
+        // Build plugin pages
+        $plugins = $this->server->getPluginList();
+        $this->writePluginPage( $plugins );
+
+        foreach( $plugins as $plugin ) {
+            $this->writeSinglePluginPage( $plugin );
+        }
 
         $this->server->stopDb();
 

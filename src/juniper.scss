@@ -1,0 +1,112 @@
+.main {
+    margin-top: 50px;
+}
+
+img.banner {
+    height: 400px;
+    width: 100%;
+    object-fit: cover;
+}
+
+.main { 
+    .row {
+        width: 100%;
+        margin-left: 0px;
+    }
+
+    .info {
+        height: 60px;
+        background: #555;
+        padding: 10px 20px;
+
+        h2 {
+            line-height: 40px;
+            color: white;
+            font-size: 22pt;
+            font-weight: bold;
+        }
+
+        .author {
+            line-height: 40px;
+            color: #ccc;
+
+            a {
+                font-weight: bold;
+                color: white;
+            }
+        }
+    }
+
+    .detailed {
+        background: #eee;
+        padding: 10px 20px;
+
+        h4 {
+            margin-top: 20px;
+        }
+
+        .avatar {
+            margin-top: 20px;
+            width: 100%;
+            object-fit: cover;
+            border: 1px solid #aaa;
+        }
+    }
+
+    .github > h1 {
+        display: none;
+    }
+
+    .github {
+        padding-top: 20px;
+        h1 {
+            font-size: 20pt;
+        }
+
+        h2 {
+            font-size: 18pt;
+        }
+
+        h3 {
+            font-size: 16pt;
+        }
+
+        h4 {
+            font-size: 14pt;
+        }
+    }
+
+    .endorse .one {
+        width: 40%;
+        display: inline-block;
+    }
+}
+
+
+.card {
+    margin: 10px;
+    float: left;
+    width: 23%;
+
+    img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+    }
+
+    p.card-text {
+        height: 150px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
+
+    .card-title {
+        height: 70px;
+        display: block;
+        line-height: 1.1;
+    }
+}
+
+.clear {
+    clear: both;
+}

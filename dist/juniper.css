@@ -1,0 +1,96 @@
+.main {
+  margin-top: 50px;
+}
+
+img.banner {
+  height: 400px;
+  width: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+.main .row {
+  width: 100%;
+  margin-left: 0px;
+}
+.main .info {
+  height: 60px;
+  background: #555;
+  padding: 10px 20px;
+}
+.main .info h2 {
+  line-height: 40px;
+  color: white;
+  font-size: 22pt;
+  font-weight: bold;
+}
+.main .info .author {
+  line-height: 40px;
+  color: #ccc;
+}
+.main .info .author a {
+  font-weight: bold;
+  color: white;
+}
+.main .detailed {
+  background: #eee;
+  padding: 10px 20px;
+}
+.main .detailed h4 {
+  margin-top: 20px;
+}
+.main .detailed .avatar {
+  margin-top: 20px;
+  width: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  border: 1px solid #aaa;
+}
+.main .github > h1 {
+  display: none;
+}
+.main .github {
+  padding-top: 20px;
+}
+.main .github h1 {
+  font-size: 20pt;
+}
+.main .github h2 {
+  font-size: 18pt;
+}
+.main .github h3 {
+  font-size: 16pt;
+}
+.main .github h4 {
+  font-size: 14pt;
+}
+.main .endorse .one {
+  width: 40%;
+  display: inline-block;
+}
+
+.card {
+  margin: 10px;
+  float: left;
+  width: 23%;
+}
+.card img {
+  width: 100%;
+  height: 200px;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+.card p.card-text {
+  height: 150px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.card .card-title {
+  height: 70px;
+  display: block;
+  line-height: 1.1;
+}
+
+.clear {
+  clear: both;
+}

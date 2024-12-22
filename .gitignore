@@ -5,3 +5,5 @@ composer.lock
 node_modules
 repo.db
 *.db-journal
+_public
+

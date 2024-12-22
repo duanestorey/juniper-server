@@ -1,0 +1,51 @@
+.container {
+    .content {
+        img {
+            max-width: 100%;
+            border: 1px solid #ddd;
+        }
+
+        img.img-thumbnail {
+            max-width: 100%;
+            margin-right: 20px;
+            margin-bottom: 20px;
+        }
+
+        blockquote {
+            padding-left: 20px;
+            border-left: 2px solid;
+            color: #777;
+        }
+    }
+
+    code {
+        background: #eee;
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
+
+    .caption {
+        display: block;
+    }
+
+    .meta {
+        margin-top: -5px;
+        font-size: 0.8em;
+    }
+
+    article {
+        border-bottom: 1px solid #d8d8d8;
+        padding-bottom: 20px;
+        clear: both;
+    }
+}
+
+footer {
+    font-weight: 100;
+}
+
+@media (min-width: 1200px) {
+    .container {
+        max-width: 940px;
+    }
+}

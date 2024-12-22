@@ -1,0 +1,15 @@
+{include 'header.latte'}
+
+    <div class="container mt-4">
+        <article>    
+            <h1 class="mt-4">{$content->title}</h1>
+
+            <div class="content mt-3">
+                {include 'featured.latte'}
+                
+                {$content->html|noescape}
+            </div>
+        </article>
+    </div>
+
+{include 'footer.latte'}
