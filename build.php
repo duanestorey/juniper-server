@@ -42,8 +42,23 @@ class Build {
         file_put_contents( JUNIPER_SERVER_DIR . '/_public/plugins/index.html', $output );
     }
 
+    public function findReleaseWithTag( $releases, $tag ) {
+        $latestRelease = false;
+
+        foreach( $releases as $release ) {
+           if ( $release['release_tag'] == trim( $tag ) ) {
+                $latestRelease = $release;
+                break;
+            }
+        }
+
+        return $latestRelease;
+    }
+
     public function writeSinglePluginPage( $plugin, $releases, $issues ) {
-        $params = [ 'plugin' => $plugin, 'releases' => $releases, 'issues' => $issues ];
+        $latestRelease = $this->findReleaseWithTag( $releases, $plugin['stable_version'] );
+
+        $params = [ 'plugin' => $plugin, 'releases' => $releases, 'issues' => $issues, 'latestRelease' => $latestRelease ];
         $output = $this->latte->renderToString( JUNIPER_SERVER_DIR . '/theme/plugin-single.latte', $params );
 
         @mkdir( JUNIPER_SERVER_DIR . '/_public/plugins/' . $plugin['slug'], 0755, true );

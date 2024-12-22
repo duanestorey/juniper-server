@@ -87,11 +87,19 @@
                         <img class="avatar" src="{$plugin['avatar_url']}" />
                     </div>
 
-                    <h4>Open Issues</h4>
+                    {if $latestRelease}
+                    <div class="latest-release">
+                        <h4>Latest Release</h4>
 
-                    <div class="issues">
-                        <p>No issues currently</p>
+                        <div class="new">
+                            {if $latestRelease && $latestRelease['download_url']}
+                            <h4>{$latestRelease['name']}</h4>
+                            <div class="meta">{$latestRelease['release_date']|date: 'M jS, Y'}</div>
+                            <a href="{$latestRelease['download_url']}" class="btn btn-primary"><i class="fa-solid fa-download"> </i> Download {$latestRelease['release_tag']} </a>
+                            {/if}
+                        </div>
                     </div>
+                    {/if}
                 </div>
             </div>
         </div>

@@ -200,6 +200,18 @@ img.banner {
   border-bottom: 1px solid #ddd;
 }
 
+.latest-release .new h4 {
+  font-size: 12pt;
+  margin-bottom: 0px;
+}
+.latest-release .new .meta {
+  margin-bottom: 0px;
+  color: #777;
+  font-weight: normal;
+  font-size: 10pt;
+  margin-bottom: 10px;
+}
+
 .main-content h2 {
   font-size: 20pt;
 }
