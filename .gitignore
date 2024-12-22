@@ -3,3 +3,5 @@ vendor
 package-lock.json
 composer.lock
 node_modules
+repo.db
+*.db-journal
