@@ -61,7 +61,7 @@ class Build {
                 $newsItem = new \stdClass;
 
                 $newsItem->title = $item->title;
-                $newsItem->url = $item->url;
+                $newsItem->url = $item->link;
                 $newsItem->timestamp = $item->timestamp;
                 $newsItem->desc = $item->description;
                 $newsItem->content = $item->{'content:encoded'};
