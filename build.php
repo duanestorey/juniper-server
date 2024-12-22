@@ -33,8 +33,6 @@ class Build {
 
         $this->server->loadConfig();
 
-
-
         LOG( "Build process ending for self-replicating repository", 0 );
     }
 }
