@@ -17,7 +17,9 @@ class Build {
     public function __construct() {
         $this->server = new Server();
         $this->latte = new \Latte\Engine;
-        $this->latte->setTempDirectory( sys_get_temp_dir() );
+
+        $mkdir( JUNIPER_SERVER_DIR . '/cache', true, 0775 );
+        $this->latte->setTempDirectory( JUNIPER_SERVER_DIR . '/cache' );
     }
 
     public function branding() {
