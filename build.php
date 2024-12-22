@@ -49,7 +49,31 @@ class Build {
     }
 
     public function writeHomePage() {
-        $params = [];
+        $newsSites = $this->server->getConfigSetting( 'repo.news' );
+        $allNews = [];
+
+        foreach( $newsSites as $site ) {
+            $content = \Feed::loadRss( $site );
+
+            foreach ( $content->item as $item ) {
+                $newsItem = new \stdClass;
+
+                $newsItem->title = $item->title;
+                $newsItem->url = $item->url;
+                $newsItem->timestamp = $item->timestamp;
+                $newsItem->desc = $item->description;
+                $newsItem->content = $item->{'content:encoded'};
+
+                $allNews[ $newsItem->timestamp->__toString() ] = $newsItem;
+            }
+        }
+
+        krsort( $allNews );
+        $allNews = array_slice( $allNews, 0, 5 );
+
+        $newPlugins = $this->server->getNewestAddons();
+
+        $params = [ 'news' => $allNews, 'newPlugins' => $newPlugins ];
         $output = $this->latte->renderToString( JUNIPER_SERVER_DIR . '/theme/home.latte', $params );
 
         file_put_contents( JUNIPER_SERVER_DIR . '/_public/index.html', $output );   

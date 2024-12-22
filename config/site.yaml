@@ -2,3 +2,5 @@ repo:
   name: "NOTWPORG Repository"
   sites:
     - https://plugins.duanestorey.com/
+  news:
+    - https://www.thewpcommunitycollective.com/feed/

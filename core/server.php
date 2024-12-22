@@ -36,6 +36,14 @@ class Server {
         $this->config = Config::flatten( $this->config );
     }
 
+    public function getConfigSetting( $setting ) {
+        if ( !empty( $this->config[ $setting ] ) ) {
+            return $this->config[ $setting ];
+        } else {
+            return false;
+        }
+    }
+
     public function startDb() {
         LOG( "Opening Sqlite database", 1 );
 
@@ -144,6 +152,18 @@ class Server {
         }
 
         return $releases;
+    }
+       
+    public function getNewestAddons() {
+        $queryString = sprintf( "SELECT * FROM addons ORDER BY created_at DESC LIMIT 2" );
+        $result = $this->db->query( $queryString );
+
+        $addons = [];
+        while ( $row = $result->fetchArray( SQLITE3_ASSOC ) ) {
+            $addons[] = $row;
+        }
+
+        return $addons;
     }
 
     public function getPluginIssues( $id ) {
