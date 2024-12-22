@@ -1,5 +1,6 @@
 {
     "require": {
-        "latte/latte": "^3.0"
+        "latte/latte": "^3.0",
+        "symfony/yaml": "^7.2"
     }
 }
