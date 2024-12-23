@@ -5,6 +5,7 @@ node_modules
 repo.db
 *.db-journal
 cache
+_public/dist
 _public/plugins/*
 _public/plugins
 _public/themes/*
