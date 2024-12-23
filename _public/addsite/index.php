@@ -44,7 +44,6 @@ function handle_add_site() {
                     }
                 }
 
-
                 file_put_contents( $sitesYaml, Yaml::dump( $allSites ) );
 
                 $response->code = 200;
@@ -59,7 +58,6 @@ function handle_add_site() {
                     $allSites = [];
                 }
                 
-
                 $allSites = Yaml::parse( file_get_contents( $sitesYaml ) );
                 if ( !isset( $allSites[ 'sites' ] ) ) {
                     $allSites[ 'sites' ] = [];
@@ -78,6 +76,25 @@ function handle_add_site() {
                 header( 'HTTP/1.1 406 Not Acceptable' );
             }
         } else {
+            $sitesYaml = JUNIPER_SERVER_DIR . '/config/sites-invalid.yaml';
+            if ( file_exists( $sitesYaml ) ) {
+                $allSites = Yaml::parse( file_get_contents( $sitesYaml ) );
+            } else {
+                $allSites = [];
+            }
+            
+            $allSites = Yaml::parse( file_get_contents( $sitesYaml ) );
+            if ( !isset( $allSites[ 'sites' ] ) ) {
+                $allSites[ 'sites' ] = [];
+                $allSites[ 'sites' ][] = $cleanUrl;
+            } else {
+                if ( !in_array( $cleanUrl, $allSites[ 'sites' ] ) ) {
+                    $allSites[ 'sites' ][] = $cleanUrl;
+                }
+            }
+
+            file_put_contents( $sitesYaml, Yaml::dump( $allSites ) );
+
             $response->code = 404;
             $response->message = 'Site does not appear to be running Juniper/Author';
 
