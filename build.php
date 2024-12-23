@@ -153,5 +153,7 @@ class Build {
     }
 }
 
-$build = new Build;
-$build->letsGo();
+if (\PHP_SAPI === 'cli') {
+    $build = new Build;
+    $build->letsGo();
+}
