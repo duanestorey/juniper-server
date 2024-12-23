@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "42fc4b2d9db8451399be5303e84e97ad",
+    "content-hash": "18ae4a244526cfd5b3b5b3fe5f12daec",
     "packages": [
         {
             "name": "dg/rss-php",
@@ -355,6 +355,47 @@
                 }
             ],
             "time": "2024-10-23T06:56:12+00:00"
+        },
+        {
+            "name": "wongyip/html-beautify",
+            "version": "v1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/wongyip/html-beautify.git",
+                "reference": "90594b5109d4e2b112d70715761674a2e74eb733"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/wongyip/html-beautify/zipball/90594b5109d4e2b112d70715761674a2e74eb733",
+                "reference": "90594b5109d4e2b112d70715761674a2e74eb733",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Wongyip\\HTML\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Wongyip",
+                    "email": "wongyip@outlook.com",
+                    "homepage": "https://github.com/wongyip"
+                }
+            ],
+            "description": "Pretty Print HTML Tags",
+            "homepage": "https://github.com/wongyip/html-beautify",
+            "support": {
+                "source": "https://github.com/wongyip/html-beautify/tree/v1.1.0"
+            },
+            "time": "2024-04-22T06:21:20+00:00"
         }
     ],
     "packages-dev": [],

@@ -2,6 +2,8 @@
 
 namespace Juniper\Server;
 
+use \Wongyip\HTML\Beautify;
+
 ini_set('display_errors', 1); ini_set('display_startup_errors', 1); error_reporting(E_ALL);
 
 define( 'JUNIPER_SERVER_VER', '1.0.0' );
@@ -39,7 +41,7 @@ class Build {
         $output = $this->latte->renderToString( JUNIPER_SERVER_DIR . '/theme/plugins.latte', $params );
 
         @mkdir( JUNIPER_SERVER_DIR . '/_public/plugins/', 0755, true );
-        file_put_contents( JUNIPER_SERVER_DIR . '/_public/plugins/index.html', $output );
+        file_put_contents( JUNIPER_SERVER_DIR . '/_public/plugins/index.html', Beautify::html( $output ) );
     }
 
     public function findReleaseWithTag( $releases, $tag ) {
@@ -62,7 +64,7 @@ class Build {
         $output = $this->latte->renderToString( JUNIPER_SERVER_DIR . '/theme/plugin-single.latte', $params );
 
         @mkdir( JUNIPER_SERVER_DIR . '/_public/plugins/' . $plugin['slug'], 0755, true );
-        file_put_contents( JUNIPER_SERVER_DIR . '/_public/plugins/' . $plugin['slug'] . '/index.html', $output );
+        file_put_contents( JUNIPER_SERVER_DIR . '/_public/plugins/' . $plugin['slug'] . '/index.html', Beautify::html( $output ) );
     }
 
     public function writeHomePage() {
@@ -93,7 +95,7 @@ class Build {
         $params = [ 'news' => $allNews, 'newPlugins' => $newPlugins ];
         $output = $this->latte->renderToString( JUNIPER_SERVER_DIR . '/theme/home.latte', $params );
 
-        file_put_contents( JUNIPER_SERVER_DIR . '/_public/index.html', $output );   
+        file_put_contents( JUNIPER_SERVER_DIR . '/_public/index.html', Beautify::html( $output ) );   
     }
 
     public function letsGo() {
