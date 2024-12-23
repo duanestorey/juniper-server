@@ -27,6 +27,12 @@ class Build {
         $this->latte->setTempDirectory( JUNIPER_SERVER_DIR . '/cache' );
     }
 
+    public function getSiteData() {
+        $siteData = new \stdClass;
+        $siteData->bust = time();
+        return $siteData;
+    }
+
     public function compileAndCopyAssets() {
         $sassFile = JUNIPER_SERVER_DIR . '/src/juniper-server.scss';
 
@@ -53,7 +59,7 @@ class Build {
     }
 
     public function writePluginPage( $plugins ) {
-        $params = [ 'plugins' => $plugins ];
+        $params = [ 'plugins' => $plugins, 'site' => $this->getSiteData() ];
         $output = $this->latte->renderToString( JUNIPER_SERVER_DIR . '/theme/plugins.latte', $params );
 
         @mkdir( JUNIPER_SERVER_DIR . '/_public/plugins/', 0755, true );
@@ -76,7 +82,7 @@ class Build {
     public function writeSinglePluginPage( $plugin, $releases, $issues ) {
         $latestRelease = $this->findReleaseWithTag( $releases, $plugin['stable_version'] );
 
-        $params = [ 'plugin' => $plugin, 'releases' => $releases, 'issues' => $issues, 'latestRelease' => $latestRelease ];
+        $params = [ 'plugin' => $plugin, 'releases' => $releases, 'issues' => $issues, 'latestRelease' => $latestRelease, 'site' => $this->getSiteData() ];
         $output = $this->latte->renderToString( JUNIPER_SERVER_DIR . '/theme/plugin-single.latte', $params );
 
         @mkdir( JUNIPER_SERVER_DIR . '/_public/plugins/' . $plugin['slug'], 0755, true );
@@ -108,7 +114,7 @@ class Build {
 
         $newPlugins = $this->server->getNewestAddons();
 
-        $params = [ 'news' => $allNews, 'newPlugins' => $newPlugins ];
+        $params = [ 'news' => $allNews, 'newPlugins' => $newPlugins, 'site' => $this->getSiteData() ];
         $output = $this->latte->renderToString( JUNIPER_SERVER_DIR . '/theme/home.latte', $params );
 
         file_put_contents( JUNIPER_SERVER_DIR . '/_public/index.html', Beautify::html( $output ) );   
