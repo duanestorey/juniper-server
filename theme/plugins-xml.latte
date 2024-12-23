@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<addons>
+{foreach $addons as $addon}
+    <addon>
+        <name>{$addon['name']}</name>
+        <slug>{$addon['slug']}</slug>
+        <stars_count>{$addon['stars_count']}</stars_count>
+        <description>{$addon['description']}</description>
+        <author_name>{$addon['author_name']}</author_name>
+        <author_url>{$addon['author_url']}</author_url>
+        <avatar_url>{$addon['avatar_url']}</avatar_url>
+        <stable_version>{$addon['stable_version']}</stable_version>
+        <repo_version>{$addon['repo_version']}</repo_version>
+        <banner_image_url>{$addon['banner_image_url']}</banner_image_url>
+        <requires_php>{$addon['requires_php']}</requires_php>
+        <requires_at_least>{$addon['requires_at_least']}</requires_at_least>
+        <tested_up_to>{$addon['tested_up_to']}</tested_up_to>
+        <signing_authority>{$addon['signing_authority']}</signing_authority>
+        <open_issues_count>{$addon['open_issues_count']}</open_issues_count>
+        <total_downloads>{$addon['total_downloads']}</total_downloads>
+        <updated_at>{$addon['updated_at']}</updated_at>
+        <created_at>{$addon['created_at']}</created_at>
+        <releases_xml>/api/plugins/{$addon['slug']}/releases.xml</releases_xml>
+        <issues_xml>/api/plugins/{$addon['slug']}/issues.xml</issues_xml>
+        <readme_xml>/api/plugins/{$addon['slug']}/readme.xml</readme_xml>
+    </addon>
+{/foreach}
+</addons>

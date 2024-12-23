@@ -143,6 +143,18 @@ class Server {
         return $plugins;
     }
 
+    public function getRankedPluginList() {
+        $queryString = sprintf( "SELECT * FROM addons WHERE type=%s ORDER BY stars_count DESC", $this->db->escapeWithTicks( 'plugin' ) );
+        $result = $this->db->query( $queryString );
+
+        $plugins = [];
+        while ( $row = $result->fetchArray( SQLITE3_ASSOC ) ) {
+            $plugins[] = $row;
+        }
+
+        return $plugins;
+    }
+
     public function getPluginReleases( $id ) {
         $queryString = sprintf( "SELECT * FROM releases WHERE addon_id=%d ORDER BY release_date DESC", $id );
         $result = $this->db->query( $queryString );

@@ -100,6 +100,16 @@ class Build {
         file_put_contents( JUNIPER_SERVER_DIR . '/_public/plugins/' . $plugin['slug'] . '/index.html', $this->beautify( $output ) );
     }
 
+    public function writeRankedXmlPage() {
+        $addons = $this->server->getRankedPluginList();
+
+        $params = [ 'addons' => $addons, 'site' => $this->getSiteData() ];
+        $output = $this->latte->renderToString( JUNIPER_SERVER_DIR . '/theme/plugins-xml.latte', $params );
+
+        @mkdir( JUNIPER_SERVER_DIR . '/_public/api/ranked/', 0755, true );
+        file_put_contents( JUNIPER_SERVER_DIR . '/_public/api/ranked/index.xml', $output );
+    }
+
     public function writeHomeLikePage( $template = 'home.latte', $destFile = 'index.html' ) {
         $newsSites = $this->server->getConfigSetting( 'repo.news' );
         $allNews = [];
@@ -187,6 +197,8 @@ class Build {
 
         @mkdir( JUNIPER_SERVER_DIR . '/_public/submit', 0755, true );
         $this->writeHomeLikePage( 'submit.latte', 'submit/index.html' );
+
+        $this->writeRankedXmlPage();
 
         $this->server->stopDb();
 

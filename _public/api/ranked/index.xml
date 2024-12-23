@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<addons>
+    <addon>
+        <name>WP API Privacy</name>
+        <slug>wp-privacy/wp-api-privacy</slug>
+        <stars_count>154</stars_count>
+        <description>Strips potentially identifying information from outbound requests to the WordPress.org API</description>
+        <author_name>Duane Storey</author_name>
+        <author_url>https://github.com/wp-privacy</author_url>
+        <avatar_url>https://avatars.githubusercontent.com/u/187593277?v=4</avatar_url>
+        <stable_version>1.2.2</stable_version>
+        <repo_version>1.2.2</repo_version>
+        <banner_image_url>https://raw.githubusercontent.com/wp-privacy/wp-api-privacy/refs/heads/main/assets/banner-1544x500.jpg</banner_image_url>
+        <requires_php>6.0</requires_php>
+        <requires_at_least>6.0</requires_at_least>
+        <tested_up_to>6.7</tested_up_to>
+        <signing_authority>https://duanestorey.com</signing_authority>
+        <open_issues_count>0</open_issues_count>
+        <total_downloads>1422</total_downloads>
+        <updated_at>1734978439</updated_at>
+        <created_at>1734978439</created_at>
+        <releases_xml>/api/plugins/wp-privacy/wp-api-privacy/releases.xml</releases_xml>
+        <issues_xml>/api/plugins/wp-privacy/wp-api-privacy/issues.xml</issues_xml>
+        <readme_xml>/api/plugins/wp-privacy/wp-api-privacy/readme.xml</readme_xml>
+    </addon>
+    <addon>
+        <name>BenchPress</name>
+        <slug>robertdevore/benchpress</slug>
+        <stars_count>47</stars_count>
+        <description>A tool for benchmarking PHP code snippets and WordPress® queries to help developers optimize performance.</description>
+        <author_name>Robert DeVore</author_name>
+        <author_url>https://github.com/robertdevore</author_url>
+        <avatar_url>https://avatars.githubusercontent.com/u/9917957?v=4</avatar_url>
+        <stable_version>1.1.0</stable_version>
+        <repo_version>1.1.0</repo_version>
+        <banner_image_url></banner_image_url>
+        <requires_php></requires_php>
+        <requires_at_least></requires_at_least>
+        <tested_up_to></tested_up_to>
+        <signing_authority></signing_authority>
+        <open_issues_count>1</open_issues_count>
+        <total_downloads>0</total_downloads>
+        <updated_at>1734978440</updated_at>
+        <created_at>1734978440</created_at>
+        <releases_xml>/api/plugins/robertdevore/benchpress/releases.xml</releases_xml>
+        <issues_xml>/api/plugins/robertdevore/benchpress/issues.xml</issues_xml>
+        <readme_xml>/api/plugins/robertdevore/benchpress/readme.xml</readme_xml>
+    </addon>
+    <addon>
+        <name>Block Usage Tracker</name>
+        <slug>robertdevore/block-usage-tracker</slug>
+        <stars_count>22</stars_count>
+        <description>A plugin that lists active blocks on the site and counts their usage.</description>
+        <author_name>Robert DeVore</author_name>
+        <author_url>https://github.com/robertdevore</author_url>
+        <avatar_url>https://avatars.githubusercontent.com/u/9917957?v=4</avatar_url>
+        <stable_version>1.0.0</stable_version>
+        <repo_version>1.0.0</repo_version>
+        <banner_image_url></banner_image_url>
+        <requires_php></requires_php>
+        <requires_at_least></requires_at_least>
+        <tested_up_to></tested_up_to>
+        <signing_authority></signing_authority>
+        <open_issues_count>1</open_issues_count>
+        <total_downloads>0</total_downloads>
+        <updated_at>1734978440</updated_at>
+        <created_at>1734978440</created_at>
+        <releases_xml>/api/plugins/robertdevore/block-usage-tracker/releases.xml</releases_xml>
+        <issues_xml>/api/plugins/robertdevore/block-usage-tracker/issues.xml</issues_xml>
+        <readme_xml>/api/plugins/robertdevore/block-usage-tracker/readme.xml</readme_xml>
+    </addon>
+    <addon>
+        <name>Content Restriction for WordPress®</name>
+        <slug>robertdevore/content-restriction-for-wordpress</slug>
+        <stars_count>15</stars_count>
+        <description>Enables role-based content restriction by post type, taxonomy term, or individual post/page, redirecting unauthorized users to login when needed.</description>
+        <author_name>Robert DeVore</author_name>
+        <author_url>https://github.com/robertdevore</author_url>
+        <avatar_url>https://avatars.githubusercontent.com/u/9917957?v=4</avatar_url>
+        <stable_version>1.0.0</stable_version>
+        <repo_version>1.0.0</repo_version>
+        <banner_image_url></banner_image_url>
+        <requires_php></requires_php>
+        <requires_at_least></requires_at_least>
+        <tested_up_to></tested_up_to>
+        <signing_authority></signing_authority>
+        <open_issues_count>0</open_issues_count>
+        <total_downloads>0</total_downloads>
+        <updated_at>1734978440</updated_at>
+        <created_at>1734978440</created_at>
+        <releases_xml>/api/plugins/robertdevore/content-restriction-for-wordpress/releases.xml</releases_xml>
+        <issues_xml>/api/plugins/robertdevore/content-restriction-for-wordpress/issues.xml</issues_xml>
+        <readme_xml>/api/plugins/robertdevore/content-restriction-for-wordpress/readme.xml</readme_xml>
+    </addon>
+    <addon>
+        <name>Back In Stock Notifications for WooCommerce®</name>
+        <slug>robertdevore/back-in-stock-notifications</slug>
+        <stars_count>13</stars_count>
+        <description>Automatically notify customers when their favorite products are restocked, and track what products are most in demand.</description>
+        <author_name>Robert DeVore</author_name>
+        <author_url>https://github.com/robertdevore</author_url>
+        <avatar_url>https://avatars.githubusercontent.com/u/9917957?v=4</avatar_url>
+        <stable_version>1.0.1</stable_version>
+        <repo_version>1.0.1</repo_version>
+        <banner_image_url></banner_image_url>
+        <requires_php></requires_php>
+        <requires_at_least></requires_at_least>
+        <tested_up_to></tested_up_to>
+        <signing_authority></signing_authority>
+        <open_issues_count>0</open_issues_count>
+        <total_downloads>0</total_downloads>
+        <updated_at>1734978440</updated_at>
+        <created_at>1734978440</created_at>
+        <releases_xml>/api/plugins/robertdevore/back-in-stock-notifications/releases.xml</releases_xml>
+        <issues_xml>/api/plugins/robertdevore/back-in-stock-notifications/issues.xml</issues_xml>
+        <readme_xml>/api/plugins/robertdevore/back-in-stock-notifications/readme.xml</readme_xml>
+    </addon>
+    <addon>
+        <name>Autocrattic</name>
+        <slug>robertdevore/autocrattic</slug>
+        <stars_count>7</stars_count>
+        <description>A plugin that replaces specific hosting provider names with "WordPress®" in the post content.</description>
+        <author_name>Robert DeVore</author_name>
+        <author_url>https://github.com/robertdevore</author_url>
+        <avatar_url>https://avatars.githubusercontent.com/u/9917957?v=4</avatar_url>
+        <stable_version>1.0.0</stable_version>
+        <repo_version>1.0.0</repo_version>
+        <banner_image_url></banner_image_url>
+        <requires_php></requires_php>
+        <requires_at_least></requires_at_least>
+        <tested_up_to></tested_up_to>
+        <signing_authority></signing_authority>
+        <open_issues_count>0</open_issues_count>
+        <total_downloads>0</total_downloads>
+        <updated_at>1734978440</updated_at>
+        <created_at>1734978440</created_at>
+        <releases_xml>/api/plugins/robertdevore/autocrattic/releases.xml</releases_xml>
+        <issues_xml>/api/plugins/robertdevore/autocrattic/issues.xml</issues_xml>
+        <readme_xml>/api/plugins/robertdevore/autocrattic/readme.xml</readme_xml>
+    </addon>
+    <addon>
+        <name>Associated Taxonomies</name>
+        <slug>robertdevore/associated-taxonomies</slug>
+        <stars_count>2</stars_count>
+        <description>Adds a field to associate terms within the same taxonomy.</description>
+        <author_name>Robert DeVore</author_name>
+        <author_url>https://github.com/robertdevore</author_url>
+        <avatar_url>https://avatars.githubusercontent.com/u/9917957?v=4</avatar_url>
+        <stable_version>1.0.0</stable_version>
+        <repo_version>1.0.0</repo_version>
+        <banner_image_url></banner_image_url>
+        <requires_php></requires_php>
+        <requires_at_least></requires_at_least>
+        <tested_up_to></tested_up_to>
+        <signing_authority></signing_authority>
+        <open_issues_count>0</open_issues_count>
+        <total_downloads>0</total_downloads>
+        <updated_at>1734978440</updated_at>
+        <created_at>1734978440</created_at>
+        <releases_xml>/api/plugins/robertdevore/associated-taxonomies/releases.xml</releases_xml>
+        <issues_xml>/api/plugins/robertdevore/associated-taxonomies/issues.xml</issues_xml>
+        <readme_xml>/api/plugins/robertdevore/associated-taxonomies/readme.xml</readme_xml>
+    </addon>
+    <addon>
+        <name>Brands for WooCommerce®</name>
+        <slug>robertdevore/brands-for-woocommerce</slug>
+        <stars_count>2</stars_count>
+        <description>Allows you to create and manage brands in WooCommerce®, with options to display brands as lists, thumbnails, or sidebar widgets.</description>
+        <author_name>Robert DeVore</author_name>
+        <author_url>https://github.com/robertdevore</author_url>
+        <avatar_url>https://avatars.githubusercontent.com/u/9917957?v=4</avatar_url>
+        <stable_version>1.0.0</stable_version>
+        <repo_version>1.0.0</repo_version>
+        <banner_image_url></banner_image_url>
+        <requires_php></requires_php>
+        <requires_at_least></requires_at_least>
+        <tested_up_to></tested_up_to>
+        <signing_authority></signing_authority>
+        <open_issues_count>0</open_issues_count>
+        <total_downloads>0</total_downloads>
+        <updated_at>1734978440</updated_at>
+        <created_at>1734978440</created_at>
+        <releases_xml>/api/plugins/robertdevore/brands-for-woocommerce/releases.xml</releases_xml>
+        <issues_xml>/api/plugins/robertdevore/brands-for-woocommerce/issues.xml</issues_xml>
+        <readme_xml>/api/plugins/robertdevore/brands-for-woocommerce/readme.xml</readme_xml>
+    </addon>
+    <addon>
+        <name>Juniper/Author</name>
+        <slug>duanestorey/juniper-author</slug>
+        <stars_count>1</stars_count>
+        <description>Facilitates code signing and releases for WordPress add-ons using the Juniper release system for WordPress</description>
+        <author_name>Duane Storey</author_name>
+        <author_url>https://github.com/duanestorey</author_url>
+        <avatar_url>https://avatars.githubusercontent.com/u/366185?v=4</avatar_url>
+        <stable_version>1.0.5</stable_version>
+        <repo_version>1.0.5</repo_version>
+        <banner_image_url>https://raw.githubusercontent.com/duanestorey/juniper-author/refs/heads/main/assets/banner-1544x500.jpg</banner_image_url>
+        <requires_php>6.0</requires_php>
+        <requires_at_least>6.0</requires_at_least>
+        <tested_up_to>6.7</tested_up_to>
+        <signing_authority></signing_authority>
+        <open_issues_count>0</open_issues_count>
+        <total_downloads>11</total_downloads>
+        <updated_at>1734978439</updated_at>
+        <created_at>1734978439</created_at>
+        <releases_xml>/api/plugins/duanestorey/juniper-author/releases.xml</releases_xml>
+        <issues_xml>/api/plugins/duanestorey/juniper-author/issues.xml</issues_xml>
+        <readme_xml>/api/plugins/duanestorey/juniper-author/readme.xml</readme_xml>
+    </addon>
+    <addon>
+        <name>Barcodes for WooCommerce®</name>
+        <slug>robertdevore/barcodes-for-woocommerce</slug>
+        <stars_count>1</stars_count>
+        <description>Generate and manage barcodes/QR codes for WooCommerce orders and products.</description>
+        <author_name>Robert DeVore</author_name>
+        <author_url>https://github.com/robertdevore</author_url>
+        <avatar_url>https://avatars.githubusercontent.com/u/9917957?v=4</avatar_url>
+        <stable_version>0.0.1</stable_version>
+        <repo_version>0.0.1</repo_version>
+        <banner_image_url></banner_image_url>
+        <requires_php></requires_php>
+        <requires_at_least></requires_at_least>
+        <tested_up_to></tested_up_to>
+        <signing_authority></signing_authority>
+        <open_issues_count>0</open_issues_count>
+        <total_downloads>0</total_downloads>
+        <updated_at>1734978440</updated_at>
+        <created_at>1734978440</created_at>
+        <releases_xml>/api/plugins/robertdevore/barcodes-for-woocommerce/releases.xml</releases_xml>
+        <issues_xml>/api/plugins/robertdevore/barcodes-for-woocommerce/issues.xml</issues_xml>
+        <readme_xml>/api/plugins/robertdevore/barcodes-for-woocommerce/readme.xml</readme_xml>
+    </addon>
+    <addon>
+        <name>Bluesky Feed for WordPress®</name>
+        <slug>robertdevore/bluesky-feed-for-wordpress</slug>
+        <stars_count>0</stars_count>
+        <description>Showcase your latest Bluesky posts on your WordPress® site with customizable display options and seamless integration</description>
+        <author_name>Robert DeVore</author_name>
+        <author_url>https://github.com/robertdevore</author_url>
+        <avatar_url>https://avatars.githubusercontent.com/u/9917957?v=4</avatar_url>
+        <stable_version>1.0.0</stable_version>
+        <repo_version>1.0.0</repo_version>
+        <banner_image_url></banner_image_url>
+        <requires_php></requires_php>
+        <requires_at_least></requires_at_least>
+        <tested_up_to></tested_up_to>
+        <signing_authority></signing_authority>
+        <open_issues_count>1</open_issues_count>
+        <total_downloads>0</total_downloads>
+        <updated_at>1734978440</updated_at>
+        <created_at>1734978440</created_at>
+        <releases_xml>/api/plugins/robertdevore/bluesky-feed-for-wordpress/releases.xml</releases_xml>
+        <issues_xml>/api/plugins/robertdevore/bluesky-feed-for-wordpress/issues.xml</issues_xml>
+        <readme_xml>/api/plugins/robertdevore/bluesky-feed-for-wordpress/readme.xml</readme_xml>
+    </addon>
+</addons>
