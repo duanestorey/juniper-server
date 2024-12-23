@@ -103,11 +103,11 @@ class Build {
     public function writeRankedXmlPage() {
         $addons = $this->server->getRankedPluginList();
 
-        $params = [ 'addons' => $addons, 'site' => $this->getSiteData() ];
+        $params = [ 'json' => json_encode( $addons ), 'site' => $this->getSiteData() ];
         $output = $this->latte->renderToString( JUNIPER_SERVER_DIR . '/theme/plugins-xml.latte', $params );
 
         @mkdir( JUNIPER_SERVER_DIR . '/_public/api/ranked/', 0755, true );
-        file_put_contents( JUNIPER_SERVER_DIR . '/_public/api/ranked/index.xml', $output );
+        file_put_contents( JUNIPER_SERVER_DIR . '/_public/api/ranked/index.json', $output );
     }
 
     public function writeHomeLikePage( $template = 'home.latte', $destFile = 'index.html' ) {
