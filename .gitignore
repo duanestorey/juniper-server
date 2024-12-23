@@ -14,3 +14,4 @@ _public/plugins/*
 _public/plugins
 _public/themes/*
 _public/index.html
+config/sites-valid.yaml

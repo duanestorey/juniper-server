@@ -33,6 +33,17 @@ class Server {
 
     public function loadConfig() {
         $this->config = Config::load( JUNIPER_SERVER_DIR . '/config/site.yaml' );
+        if ( empty( $this->config[ 'repo' ][ 'sites' ] ) ) {
+            $this->config[ 'repo' ][ 'sites' ] = [];
+        }
+
+        $validSitesFile = JUNIPER_SERVER_DIR . '/config/sites-valid.yaml';
+        if ( file_exists( $validSitesFile ) ) {
+            $validSites = Config::load( $validSitesFile );
+
+            $this->config[ 'repo' ][ 'sites' ] = array_merge( $this->config[ 'repo' ][ 'sites' ], $validSites[ 'sites' ] );
+        }
+
         $this->config = Config::flatten( $this->config );
     }
 
@@ -66,6 +77,10 @@ class Server {
 
     public function addAddonToDb( $siteId, $addOnData ) {
         LOG( sprintf( "Adding add-on to DB [%s]", $addOnData->repository->fullName ), 2 );
+
+        if ( empty( $addOnData->totalReleaseDownloads ) ) {
+            $addOnData->totalReleaseDownloads = 0;
+        }
 
         $queryString = sprintf( 
             "INSERT INTO addons (site_id,type,name,slug,author_name,signing_authority,author_url,avatar_url,description,readme,stable_version,repo_version,banner_image_url,requires_php,requires_at_least,tested_up_to,open_issues_count,stars_count,total_downloads,updated_at,created_at) " . 
