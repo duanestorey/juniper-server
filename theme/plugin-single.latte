@@ -88,7 +88,7 @@
                         <img class="avatar" src="{$plugin['avatar_url']}" />
                     </div>
 
-                    {if $latestRelease['download_url']}
+                    {if $latestRelease && $latestRelease['download_url']}
                     <div class="latest-release">
                         <h4>Latest Release</h4>
 
