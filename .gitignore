@@ -5,3 +5,6 @@ node_modules
 repo.db
 *.db-journal
 cache
+dist/plugins
+dist/themes
+dist/index.html
