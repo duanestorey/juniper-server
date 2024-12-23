@@ -34,8 +34,9 @@ img.banner {
   height: 60px;
   padding: 10px 20px;
 }
-.main .info .star {
+.main .info .star, .main .info .download {
   font-size: 16pt;
+  padding: 0px 5px;
 }
 .main .info h2 {
   line-height: 40px;

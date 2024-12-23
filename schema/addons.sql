@@ -20,6 +20,7 @@ CREATE TABLE "addons"
     "signing_authority" VARCHAR,
     "open_issues_count" INTEGER,
     "stars_count" INTEGER,
+    "total_downloads" INTEGER,
     "updated_at" TIMESTAMP,
     "created_at" TIMESTAMP
 

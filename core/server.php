@@ -68,8 +68,8 @@ class Server {
         LOG( sprintf( "Adding add-on to DB [%s]", $addOnData->repository->fullName ), 2 );
 
         $queryString = sprintf( 
-            "INSERT INTO addons (site_id,type,name,slug,author_name,signing_authority,author_url,avatar_url,description,readme,stable_version,repo_version,banner_image_url,requires_php,requires_at_least,tested_up_to,open_issues_count,stars_count,updated_at,created_at) " . 
-            "VALUES (%u,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%u,%u,%u,%u)",
+            "INSERT INTO addons (site_id,type,name,slug,author_name,signing_authority,author_url,avatar_url,description,readme,stable_version,repo_version,banner_image_url,requires_php,requires_at_least,tested_up_to,open_issues_count,stars_count,total_downloads,updated_at,created_at) " . 
+            "VALUES (%u,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%u,%u,%u,%u,%u)",
             $siteId,
             $this->db->escapeWithTicks( 'plugin' ),
             $this->db->escapeWithTicks( $addOnData->info->pluginName ),
@@ -88,6 +88,7 @@ class Server {
             $this->db->escapeWithTicks( $addOnData->info->testedUpTo ),
             $addOnData->repository->openIssuesCount,  // open issues
             $addOnData->repository->starsCount, 
+            $addOnData->totalReleaseDownloads,
             time(),
             time()
         );

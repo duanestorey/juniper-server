@@ -38,9 +38,11 @@ img.banner {
         height: 60px;
         padding: 10px 20px;
 
-        .star {
+        .star, .download {
             font-size: 16pt;
+            padding: 0px 5px;
         }
+        
 
         h2 {
             line-height: 40px;
