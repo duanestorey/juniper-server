@@ -3,6 +3,7 @@
         "latte/latte": "^3.0",
         "symfony/yaml": "^7.2",
         "dg/rss-php": "^1.5",
-        "wongyip/html-beautify": "^1.1"
+        "wongyip/html-beautify": "^1.1",
+        "scssphp/scssphp": "^1.13"
     }
 }

@@ -3,6 +3,7 @@
 namespace Juniper\Server;
 
 use \Wongyip\HTML\Beautify;
+use ScssPhp\ScssPhp\Compiler;
 
 ini_set('display_errors', 1); ini_set('display_startup_errors', 1); error_reporting(E_ALL);
 
@@ -20,8 +21,23 @@ class Build {
         $this->server = new Server();
         $this->latte = new \Latte\Engine;
 
-        @mkdir( JUNIPER_SERVER_DIR . '/cache' );
+        @mkdir( JUNIPER_SERVER_DIR . '/cache', 0775 );
+        @mkdir( JUNIPER_SERVER_DIR . '/_public', 0775 );
+        @mkdir( JUNIPER_SERVER_DIR . '/_dist', 0775 );
         $this->latte->setTempDirectory( JUNIPER_SERVER_DIR . '/cache' );
+    }
+
+    public function compileAndCopyAssets() {
+        $sassFile = JUNIPER_SERVER_DIR . '/src/juniper-server.scss';
+
+         LOG( sprintf( "Compiling Sas file [%s]", $sassFile ), 0 );
+        $sassContents = file_get_contents( $sassFile );
+        if ( $sassContents ) {
+            $compiler = new Compiler();
+            $css = $compiler->compileString( $sassContents )->getCss();
+
+            file_put_contents( JUNIPER_SERVER_DIR . '/_public/dist/juniper-server.css', $css );
+        }
     }
 
     public function branding() {
@@ -104,15 +120,19 @@ class Build {
 
         $this->server->startDb();
         $this->server->loadConfig();
+        $this->compileAndCopyAssets();
         
         $sites = $this->server->getSites();
 
         foreach( $sites as $site ) {     
+            $site = rtrim( $site, '/' );
+            $site = rtrim( $site, '/' );
+
             $siteId = $this->server->addSiteToDb( $site );
 
             LOG( sprintf( "Importing site [%s]", $site ), 1 );
 
-            $contents = $this->server->curlGet( $site . '/wp-json/juniper/v1/releases/' );
+            $contents = $this->server->curlGet( $site . '/wp-json/juniper/v1/plugins/?v=' . time() );
             if ( $contents ) {
                 $decodedContents = json_decode( $contents );        
                 if ( is_array( $decodedContents ) ) {

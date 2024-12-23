@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="">
+
+<head>
+    <link rel="stylesheet" href="/dist/juniper-server.css">
+    <title>Juniper/Server Repository</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" media="all">
+    <meta charset="utf-8">
+    <meta name="generator" content="Juniper/Server">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="A self-hosted, self-mirroring plugin &amp; theme respository for WordPress">
+    <meta name="og:description" content="A self-hosted, self-mirroring plugin &amp; theme respository for WordPress">
+    <meta name="twitter:description" content="A self-hosted, self-mirroring plugin &amp; theme respository for WordPress">
+    <meta property="og:title" content="Juniper/Server Repository">
+    <meta name="twitter:title" content="Juniper/Server Repository">
+    <meta property="og:type" content="article">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?q=80&w=2952&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?q=80&w=2952&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
+</head>
+
+<body class="">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container"> <a class="navbar-brand" href="/">Alternate Repo</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav"> <a class="nav-item nav-link active" href="/">Home</a>
+                    <a class="nav-item nav-link active" href="/plugins">Plugins</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <div class="main container text-center">
+        <img class="banner" src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?q=80&w=3074&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="card-img-top" alt="...">
+        <div class="info bg-dark">
+            <div class="row">
+                <div class="col-8 text-left">
+                    <h2>Autocrattic</h2>
+                </div>
+                <div class="col-4 text-right author"> <span class="star"><i class="fa fa-star"> </i> 7</span>
+                    <span class="download"><i class="fa fa-download"> </i> 0</span>
+                </div>
+            </div>
+        </div>
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+                <button class="nav-link active" id="info-tab" data-bs-toggle="tab" data-bs-target="#info" type="button" role="tab" aria-controls="info" aria-selected="true">Information</button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link" id="releases-tab" data-bs-toggle="tab" data-bs-target="#releases" type="button" role="tab" aria-controls="releases" aria-selected="false">Releases</button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link" id="issues-tab" data-bs-toggle="tab" data-bs-target="#issues" type="button" role="tab" aria-controls="issues" aria-selected="false">Issues</button>
+            </li>
+        </ul>
+        <div class="detailed ">
+            <div class="row">
+                <div class="col-8 text-left desc-area tab-content">
+                    <div class="tab-pane fade show active" id="info" role="tabpanel" aria-labelledby="info-tab">
+                        <div class="github">
+                            <h1>Autocrattic plugin for WordPress</h1>
+                            <p>
+                                <img src="https://img.shields.io/badge/Version-1.3-green.svg" alt="Autocrattic Version" />
+                                <img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="MIT License" />
+                            </p>
+                            <p>Autocrattic is a WordPress plugin that automatically replaces specific hosting provider names with &quot;WordPress®&quot; across various areas of your site, including post content, titles, and widgets. It offers a settings page where you can easily manage the list of hostnames to replace.</p>
+                            <p><em>This plugin is in no way affiliated with Automattic, WordPress, the WordPress Fondation, Matt Mullenweg or WooCommerce, Inc.</em>
+                            </p>
+                            <h2>Features</h2>
+                            <ul>
+                                <li>Replaces custom hosting provider names with &quot;WordPress®&quot; in:
+                                    <ul>
+                                        <li>Post content (<code>the_content</code>)</li>
+                                        <li>Post titles (<code>the_title</code>)</li>
+                                        <li>Widget text content (<code>widget_text_content</code>)</li>
+                                    </ul>
+                                </li>
+                                <li>Comes with a settings page for easy configuration of hostnames to replace.</li>
+                                <li>Preloaded with the top 50 hosting provider names for immediate use.</li>
+                                <li>Secure, localized, and properly escaped for safety and flexibility.</li>
+                            </ul>
+                            <h2>Installation</h2>
+                            <ol>
+                                <li>Download the plugin from <a href="https://github.com/robertdevore/autocrattic">GitHub</a>.</li>
+                                <li>Unzip the plugin folder.</li>
+                                <li>Upload the unzipped folder to <code>/wp-content/plugins/</code> using an FTP client.</li>
+                                <li>Activate the plugin through the <strong>Plugins</strong> menu in WordPress.</li>
+                            </ol>
+                            <h2>Usage</h2>
+                            <ol>
+                                <li>Go to <strong>Settings</strong> -&gt; <strong>Autocrattic</strong> to customize the list of hosting providers you want to replace.</li>
+                                <li>By default, the plugin replaces popular hosting company names with &quot;WordPress®&quot; across post content, titles, and widget text.</li>
+                                <li>Modify the list of hostnames by adding or removing entries in the settings page (separate names by commas).</li>
+                            </ol>
+                            <h3>Example</h3>
+                            <p>If you add &quot;GoDaddy, Bluehost&quot; to the settings, the plugin will replace any occurrence of these names with &quot;WordPress®&quot; across your site's content.</p>
+                            <h2>Security</h2>
+                            <p>Autocrattic is built with security in mind:</p>
+                            <ul>
+                                <li><strong>Sanitization</strong>: All input is sanitized using <code>sanitize_textarea_field</code> before saving.</li>
+                                <li><strong>Escaping</strong>: Output is properly escaped using <code>esc_html()</code> and <code>esc_textarea()</code> to prevent XSS attacks.</li>
+                                <li><strong>Nonces</strong>: WordPress’s built-in nonces are used to secure form submissions.</li>
+                            </ul>
+                            <h2>Localization</h2>
+                            <p>Autocrattic is fully translation-ready and uses localization functions throughout. To contribute a translation, please follow the instructions in the <strong>Contributing</strong> section below.</p>
+                            <h2>Changelog</h2>
+                            <h3>v1.0</h3>
+                            <ul>
+                                <li>Initial release</li>
+                            </ul>
+                            <h2>Contributing</h2>
+                            <p>Contributions are welcome to improve the Autocrattic plugin! Here's how you can get involved:</p>
+                            <ol>
+                                <li>Fork this repository.</li>
+                                <li>Create a new branch: <code>git checkout -b feature/your-feature-name</code>.</li>
+                                <li>Make your changes and commit them: <code>git commit -m 'Add new feature'</code>.</li>
+                                <li>Push to the branch: <code>git push origin feature/your-feature-name</code>.</li>
+                                <li>Submit a pull request to the <code>main</code> branch.</li>
+                            </ol>
+                            <p>Please ensure your changes follow WordPress coding standards and that any public-facing text is localized using <code>__()</code> or <code>_e()</code>.</p>
+                            <h3>Reporting Issues</h3>
+                            <p>Found a bug? Have a feature request? Please <a href="https://github.com/robertdevore/autocrattic/issues">open an issue</a> on GitHub, and I'll look into it as soon as possible.</p>
+                            <h2>License</h2>
+                            <p>This project is licensed under the <strong>MIT License</strong> - see the <a href="LICENSE">LICENSE</a> file for more details.</p>
+                            <h2>Author</h2>
+                            <p>Created by <strong>Robert DeVore</strong>. If you have any questions, feel free to contact me through the <a href="https://github.com/your-repo/autocrattic/issues">GitHub Issues</a>.</p>
+                            <h2>Disclaimer</h2>
+                            <p>It's been stated above but should be said again so there is no confusion:</p>
+                            <p><strong>This plugin is in no way affiliated with Automattic, WordPress, the WordPress Fondation, Matt Mullenweg or WooCommerce, Inc.</strong>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="releases" role="tabpanel" aria-labelledby="releases-tab">
+                        <div class="release-inside">
+                            <p>No releases yet.</p>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="issues" role="tabpanel" aria-labelledby="issues-tab">
+                        <div class="issues-inside">
+                            <p>No issues yet.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-4 text-left issue-area">
+                    <div class="author">
+                        <h4>Author</h4>Crafted by <strong>Robert DeVore</strong>
+                        <img class="avatar" src="https://avatars.githubusercontent.com/u/9917957?v=4" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="bg-dark pt-4 pb-4 mt-4 mb-4">
+        <div class="container text-center text-white">All content copyright &copy; 2024-2025
+            <br>By A Community of WordPress Lovers
+            <br />Not affilitated in any way with WordPress.org, or Automattic Inc.</div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js" integrity="sha512-7Pi/otdlbbCR+LnW+F7PwFcSDJOuUJB3OxtEHbg4vSMvzvJjde4Po1v4BR9Gdc9aXNUNFVUY+SK51wWT8WF0Gg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script defer src="dist/juniper.js"></script>
+    </footer>
+</body>
+
+</html>
