@@ -33,6 +33,11 @@
             <li class="nav-item">
                 <button class="nav-link" id="issues-tab" data-bs-toggle="tab" data-bs-target="#issues" type="button" role="tab" aria-controls="issues" aria-selected="false">Issues</button>
             </li>
+            {if $plugin['signing_authority']}
+            <li class="nav-item">
+                <button class="nav-link" id="issues-sign" data-bs-toggle="tab" data-bs-target="#sign" type="button" role="tab" aria-controls="issues" aria-selected="false">Security</button>
+            </li>
+            {/if}
         </ul>
 
         <div class="detailed ">
@@ -80,6 +85,13 @@
                             {/if}
                         </div>
                     </div>
+                    {if $plugin['signing_authority']}
+                    <div class="tab-pane fade" id="sign" role="tabpanel" aria-labelledby="issues-sign">
+                        <p>This plugin has designated a signing authority for all future ZIP file releases.  That means in the near future, when you download a ZIP file, 
+                        it will be verified cryptographically using information provided by the designated website, <strong>{$plugin['signing_authority']}</strong>.
+                        <p>If you are a plugin or theme author, this information is provided in the main Plugin of Theme file, using the <strong>Authority:</strong> header.</p>
+                    </div>
+                    {/if}
                 </div>
                 <div class="d-none d-md-block col-md-4 text-left issue-area">
                     <div class="author">
