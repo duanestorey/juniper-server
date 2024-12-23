@@ -289,6 +289,18 @@ img.banner {
     clear: both;
 }
 
+@media only screen and (max-width: 576px) {
+    .main {
+        .card {
+            width: 100%;
+        }
+
+        .info h2 {
+            font-size: 18pt;
+        }
+    }
+}
+
 
 @media only screen and (min-width: 576px) {
     .main {
@@ -297,7 +309,7 @@ img.banner {
         }
 
         .info h2 {
-            font-size: 12pt;
+            font-size: 18pt;
         }
     }
 }
@@ -310,7 +322,7 @@ img.banner {
 
 
         .info h2 {
-            font-size: 14pt;
+            font-size: 20pt;
         }
     }
 }
@@ -323,7 +335,7 @@ img.banner {
         }
 
         .info h2 {
-            font-size: 16pt;
+            font-size: 20pt;
         }
     }
     
