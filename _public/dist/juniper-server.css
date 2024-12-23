@@ -28,6 +28,7 @@ img.banner {
 .main .info {
   height: 60px;
   padding: 10px 20px;
+  overflow: hidden;
 }
 .main .info .star, .main .info .download {
   font-size: 16pt;
@@ -38,6 +39,8 @@ img.banner {
   color: white;
   font-size: 22pt;
   font-weight: bold;
+  overflow: hidden;
+  width: 100%;
 }
 .main .info .author {
   line-height: 40px;
@@ -58,7 +61,7 @@ img.banner {
   margin-top: 20px;
   width: 100%;
   object-fit: cover;
-  border: 1px solid #aaa;
+  border: px solid #aaa;
 }
 .main .github > h1 {
   display: none;
@@ -91,7 +94,7 @@ img.banner {
 .card {
   border-radius: 0px !important;
   float: left;
-  width: 250px;
+  width: 23%;
   padding: 0px;
   background: #f8f8f8;
   position: relative;
@@ -223,4 +226,33 @@ img.banner {
 }
 .clear {
   clear: both;
+}
+@media only screen and (max-width: 576px) {
+  .main .card {
+    width: 100%;
+  }
+  .main .info h2 {
+    font-size: 12pt;
+  }
+}
+@media only screen and (max-width: 768px) {
+  .main .card {
+    width: 45%;
+  }
+  .main .info h2 {
+    font-size: 14pt;
+  }
+}
+@media only screen and (max-width: 992px) {
+  .main .card {
+    width: 31%;
+  }
+  .main .info h2 {
+    font-size: 16pt;
+  }
+}
+@media only screen and (max-width: 1200px) {
+  .main .card {
+    width: 23%;
+  }
 }

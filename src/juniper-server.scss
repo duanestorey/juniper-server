@@ -37,18 +37,20 @@ img.banner {
     .info {
         height: 60px;
         padding: 10px 20px;
+        overflow: hidden;
 
         .star, .download {
             font-size: 16pt;
             padding: 0px 5px;
         }
-        
 
         h2 {
             line-height: 40px;
             color: white;
             font-size: 22pt;
             font-weight: bold;
+            overflow: hidden;
+            width: 100%;
         }
 
         .author {
@@ -74,7 +76,7 @@ img.banner {
             margin-top: 20px;
             width: 100%;
             object-fit: cover;
-            border: 1px solid #aaa;
+            border: px solid #aaa;
         }
     }
 
@@ -118,7 +120,7 @@ img.banner {
 .card {
     border-radius: 0px!important;
     float: left;
-    width: 250px;
+    width: 23%;
     padding: 0px;
     background: #f8f8f8;
     position: relative;
@@ -283,4 +285,54 @@ img.banner {
 
 .clear {
     clear: both;
+}
+
+
+@media only screen and (max-width: 576px) {
+    .main {
+        .card {
+            width: 100%;
+        }
+
+        .info h2 {
+            font-size: 12pt;
+        }
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .main {
+        .card {
+            width: 45%;
+        }
+
+
+        .info h2 {
+            font-size: 14pt;
+        }
+    }
+}
+
+
+@media only screen and (max-width: 992px) {
+    .main {
+        .card {
+            width: 31%;
+        }
+
+        .info h2 {
+            font-size: 16pt;
+        }
+    }
+    
+}
+
+
+@media only screen and (max-width: 1200px) {
+    .main {
+        .card {
+            width: 23%;
+        }
+    }
+
 }

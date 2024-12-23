@@ -9,14 +9,14 @@
 
         <div class="info bg-dark">
             <div class="row">
-                <div class="col-8 text-left">
+                <div class="col-9 text-left">
                     <h2>
                      {if $plugin['signing_authority']}
                             <i class="fa fa-lock"> </i>
                         {/if} {$plugin['name']}
                     </h2>
                 </div>
-                <div class="col-4 text-right author">
+                <div class="d-none d-lg-block col-3 head-stars text-right author">
                     <span class="star"><i class="fa fa-star"> </i> {$plugin['stars_count']}</span>
                     <span class="download"><i class="fa fa-download"> </i> {$plugin['total_downloads']|number}</span>
                 </div>
@@ -37,7 +37,7 @@
 
         <div class="detailed ">
             <div class="row">
-                <div class="col-8 text-left desc-area tab-content">
+                <div class="col-md-8 text-left desc-area tab-content">
                     <div class="tab-pane fade show active" id="info" role="tabpanel" aria-labelledby="info-tab">
                         <div class="github">
                         {$plugin['readme']|noescape}
@@ -81,7 +81,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-4 text-left issue-area">
+                <div class="d-none d-md-block col-md-4 text-left issue-area">
                     <div class="author">
                         <h4>Author</h4>
                         Crafted by <strong>{$plugin['author_name']}</strong>
