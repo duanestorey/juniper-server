@@ -5,6 +5,8 @@ node_modules
 repo.db
 *.db-journal
 cache
+_public/api
+_public/api/*
 _public/dist
 _public/submit/*
 _public/submit
