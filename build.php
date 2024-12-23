@@ -87,6 +87,11 @@ class Build {
 
     public function writeSinglePluginPage( $plugin, $releases, $issues ) {
         $latestRelease = $this->findReleaseWithTag( $releases, $plugin['stable_version'] );
+        if ( !$latestRelease ) {
+            if ( count ( $releases ) ) {
+                $latestRelease = $releases[ 0 ];
+            }
+        }
 
         $params = [ 'plugin' => $plugin, 'releases' => $releases, 'issues' => $issues, 'latestRelease' => $latestRelease, 'site' => $this->getSiteData() ];
         $output = $this->latte->renderToString( JUNIPER_SERVER_DIR . '/theme/plugin-single.latte', $params );
