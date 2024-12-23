@@ -6,6 +6,8 @@ repo.db
 *.db-journal
 cache
 _public/dist
+_public/submit/*
+_public/submit
 _public/plugins/*
 _public/plugins
 _public/themes/*

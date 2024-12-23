@@ -27,6 +27,11 @@ class Build {
         $this->latte->setTempDirectory( JUNIPER_SERVER_DIR . '/cache' );
     }
 
+    public function beautify( $html ) {
+        // return Beautify::html( $html )
+        return $html;
+    }
+
     public function getSiteData() {
         $siteData = new \stdClass;
         $siteData->bust = time();
@@ -42,6 +47,7 @@ class Build {
             $compiler = new Compiler();
             $css = $compiler->compileString( $sassContents )->getCss();
 
+            @mkdir( JUNIPER_SERVER_DIR . '/_public/dist/', 0755, true );
             file_put_contents( JUNIPER_SERVER_DIR . '/_public/dist/juniper-server.css', $css );
         }
     }
@@ -63,7 +69,7 @@ class Build {
         $output = $this->latte->renderToString( JUNIPER_SERVER_DIR . '/theme/plugins.latte', $params );
 
         @mkdir( JUNIPER_SERVER_DIR . '/_public/plugins/', 0755, true );
-        file_put_contents( JUNIPER_SERVER_DIR . '/_public/plugins/index.html', Beautify::html( $output ) );
+        file_put_contents( JUNIPER_SERVER_DIR . '/_public/plugins/index.html', $this->beautify( $output ) );
     }
 
     public function findReleaseWithTag( $releases, $tag ) {
@@ -86,10 +92,10 @@ class Build {
         $output = $this->latte->renderToString( JUNIPER_SERVER_DIR . '/theme/plugin-single.latte', $params );
 
         @mkdir( JUNIPER_SERVER_DIR . '/_public/plugins/' . $plugin['slug'], 0755, true );
-        file_put_contents( JUNIPER_SERVER_DIR . '/_public/plugins/' . $plugin['slug'] . '/index.html', Beautify::html( $output ) );
+        file_put_contents( JUNIPER_SERVER_DIR . '/_public/plugins/' . $plugin['slug'] . '/index.html', $this->beautify( $output ) );
     }
 
-    public function writeHomePage() {
+    public function writeHomeLikePage( $template = 'home.latte', $destFile = 'index.html' ) {
         $newsSites = $this->server->getConfigSetting( 'repo.news' );
         $allNews = [];
 
@@ -115,9 +121,9 @@ class Build {
         $newPlugins = $this->server->getNewestAddons();
 
         $params = [ 'news' => $allNews, 'newPlugins' => $newPlugins, 'site' => $this->getSiteData() ];
-        $output = $this->latte->renderToString( JUNIPER_SERVER_DIR . '/theme/home.latte', $params );
+        $output = $this->latte->renderToString( JUNIPER_SERVER_DIR . '/theme/' . $template, $params );
 
-        file_put_contents( JUNIPER_SERVER_DIR . '/_public/index.html', Beautify::html( $output ) );   
+        file_put_contents( JUNIPER_SERVER_DIR . '/_public/' . $destFile, $this->beautify( $output ) );   
     }
 
     public function letsGo() {
@@ -172,7 +178,10 @@ class Build {
             $this->writeSinglePluginPage( $plugin, $releases, $issues );
         }
 
-        $this->writeHomePage();
+        $this->writeHomeLikePage();
+
+        @mkdir( JUNIPER_SERVER_DIR . '/_public/submit', 0755, true );
+        $this->writeHomeLikePage( 'submit.latte', 'submit/index.html' );
 
         $this->server->stopDb();
 
