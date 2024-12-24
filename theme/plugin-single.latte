@@ -2,7 +2,7 @@
 
     <div class="main container text-center">
         {if $plugin['banner_image_url']}
-        <img class="banner" src="{$plugin['banner_image_url']}" alt="Banner image for individual plugin" />
+        <img class="banner" src="{$plugin['banner_image_url']}" alt="Banner image for individual plugin">
         {else}
         <img class="banner" src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?q=80&w=3074&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="card-img-top" alt="...">
         {/if}
@@ -97,7 +97,7 @@
                     <div class="author">
                         <h4>Author</h4>
                         Crafted by <strong>{$plugin['author_name']}</strong>
-                        <img class="avatar" src="{$plugin['avatar_url']}" />
+                        <img class="avatar" src="{$plugin['avatar_url']}" alt="Author image for {$plugin['author_name']}">
                     </div>
 
                     {if $latestRelease && $latestRelease['download_url']}
