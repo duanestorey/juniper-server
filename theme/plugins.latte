@@ -1,7 +1,7 @@
 {include 'header.latte'}
 
     <div class="main container front text-center">
-        <img class="banner" src="{$image}" />
+        <img class="banner" src="{$image}" alt="Plugin banner image">
 
         <div class="info bg-dark">
             <div class="row">
@@ -20,7 +20,7 @@
                 
                 <a href="/plugins/{$plugin['slug']}">
                 {if strlen( trim( $plugin['banner_image_url']) )}
-                 <img src="{$plugin['banner_image_url']}" class="card-img-top">
+                 <img src="{$plugin['banner_image_url']}" class="card-img-top" alt="..">
                 {else}
                  <img src="{$addonImage}" class="card-img-top" alt="...">
                 {/if}
@@ -37,7 +37,7 @@
                     <div class="text-wrap">
                         <p class="card-text">{$plugin['description']}</p>
                     </div>
-                    <p>by <a href="{$plugin['author_url']}">{$plugin['author_name']}</a></strong></p>
+                    <p>by <a href="{$plugin['author_url']}">{$plugin['author_name']}</a></p>
                     <a href="/plugins/{$plugin['slug']}" class="btn btn-primary"><i class="fa-solid fa-eye"> </i> Read More</a>
                 </div>
             </div>
