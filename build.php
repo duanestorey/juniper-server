@@ -20,8 +20,7 @@ class Build {
 
     public function __construct() {
         $this->server = new Server();
-        
-
+    
         @mkdir( JUNIPER_SERVER_DIR . '/cache', 0775 );
         @mkdir( JUNIPER_SERVER_DIR . '/_public', 0775 );
         @mkdir( JUNIPER_SERVER_DIR . '/_dist', 0775 );
@@ -56,7 +55,11 @@ class Build {
     }
 
     public function getDefaultImage() {
-        return 'https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?q=80&w=2952&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
+        if ( !empty( $this->server->config[ 'repo.image' ] ) ) {
+            return $this->server->config[ 'repo.image' ];
+        } else {
+            return 'https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?q=80&w=2952&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
+        } 
     }
 
     public function branding() {
