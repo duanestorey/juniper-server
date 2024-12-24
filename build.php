@@ -82,7 +82,8 @@ class Build {
             'site' => $this->getSiteData(), 
             'title' => 'List of plugins for Wordpress - ' . $this->server->config[ 'repo.name' ],
             'desc' => 'The main plugin listings for self-hosted Github plugins for WordPress',
-            'image' => $this->getDefaultImage()
+            'image' => $this->getDefaultImage(),
+            'addonImage' => $this->server->config[ 'repo.addons.image' ]
         ];
 
         $output = $this->latte->renderToString( JUNIPER_SERVER_DIR . '/theme/plugins.latte', $params );
