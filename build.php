@@ -198,14 +198,14 @@ class Build {
     public function letsGo() {
         $this->branding();
 
-        if ( !file_exists( dirname( __FILE__ ) . '/site.yaml' ) ) {
-            LOG( "Missing site.yaml configuration file - copy the example from the config directory", 0, LOG::ERROR );
-            die;
-        }
-
         if ( !file_exists( 'vendor' ) ) {
             LOG( 'You need to run [composer install] before building', 1, LOG::ERROR );
             LOG( "Build process ended prematuredly for self-replicating repository", 0 );
+            die;
+        }
+
+        if ( !file_exists( dirname( __FILE__ ) . '/site.yaml' ) ) {
+            LOG( "Missing site.yaml configuration file - copy the example from the config directory", 0, LOG::ERROR );
             die;
         }
 
