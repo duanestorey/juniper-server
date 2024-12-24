@@ -6,7 +6,7 @@
         <div class="info bg-dark">
             <div class="row">
                 <div class="col-6 text-left">
-                    <h2>Plugins</h2>
+                    <h1>Plugins</h1>
                 </div>
                 <div class="col-6 text-right author">
                     <input id="search" type="text" placeholder="Search...">
@@ -20,9 +20,9 @@
                 
                 <a href="/plugins/{$plugin['slug']}">
                 {if strlen( trim( $plugin['banner_image_url']) )}
-                 <img src="{$plugin['banner_image_url']}" class="card-img-top" alt="..">
+                 <img src="{$plugin['banner_image_url']}" class="card-img-top" alt="Plugin Banner">
                 {else}
-                 <img src="{$addonImage}" class="card-img-top" alt="...">
+                 <img src="{$addonImage}" class="card-img-top" alt="Plugin Banner">
                 {/if}
                 </a>
                
