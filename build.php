@@ -32,7 +32,7 @@ class Build {
             $options = [
                 'indent_inner_html'     => true,
                 'indent_char'           => " ",
-                'indent_size'           => 2,
+                'indent_size'           => 4,
                 'wrap_line_length'      => 32768,
                 'unformatted'           => ['code', 'pre'],
                 'preserve_newlines'     => false,
