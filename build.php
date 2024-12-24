@@ -162,7 +162,7 @@ class Build {
     public function writeHomeLikePage( $template = 'home.latte', $destFile = 'index.html', $title = '', $desc = '' ) {
         LOG( sprintf( "Writing page [%s]", $destFile ), 1 );
     
-        $newsSites = $this->server->getConfigSetting( 'repo.news' );
+        $newsSites = $this->server->getConfigSetting( 'repo.news.sites' );
         $allNews = [];
 
         foreach( $newsSites as $site ) {
@@ -171,6 +171,7 @@ class Build {
             foreach ( $content->item as $item ) {
                 $newsItem = new \stdClass;
 
+                $newsItem->source = str_replace( array( 'www.', 'https://', 'http://', '/' ), array( '', '', '', '' ), $content->link );
                 $newsItem->title = $item->title;
                 $newsItem->url = $item->link;
                 $newsItem->timestamp = $item->timestamp;
@@ -182,7 +183,7 @@ class Build {
         }
 
         krsort( $allNews );
-        $allNews = array_slice( $allNews, 0, 5 );
+        $allNews = array_slice( $allNews, 0, $this->server->getConfigSetting( 'repo.news.num' ) );
 
         $newPlugins = $this->server->getNewestAddons();
 

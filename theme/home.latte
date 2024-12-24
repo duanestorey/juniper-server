@@ -24,7 +24,7 @@
                     {foreach $news as $newsItem}
                         <li>
                             <h4><a href="{$newsItem->url}">{$newsItem->title}</a></h4>
-                            <div class="meta">{$newsItem->timestamp|date:'F jS, Y'}</div>
+                            <div class="meta">{$newsItem->timestamp|date:'F jS, Y'} :: <strong>{$newsItem->source}</strong></div>
                         </li>
                     {/foreach}
                     </ul>
