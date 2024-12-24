@@ -1,9 +1,14 @@
 {
     "require": {
-        "latte/latte": "^3.0",
-        "symfony/yaml": "^7.2",
         "dg/rss-php": "^1.5",
-        "wongyip/html-beautify": "^1.1",
-        "scssphp/scssphp": "^1.13"
+        "latte/latte": "^3.0",
+        "scssphp/scssphp": "^1.13",
+        "symfony/yaml": "^5.4",
+        "wongyip/html-beautify": "^1.1"
+    },
+    "config": {
+        "platform": {
+            "php": "8.2"
+        }
     }
 }
