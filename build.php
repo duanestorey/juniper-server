@@ -205,7 +205,7 @@ class Build {
         }
 
         if ( !file_exists( dirname( __FILE__ ) . '/site.yaml' ) ) {
-            LOG( "Missing site.yaml configuration file - copy the example from the config directory", 0, LOG::ERROR );
+            LOG( "Missing site.yaml configuration file - copy the site.yaml from the config directory and modify it", 0, LOG::ERROR );
             die;
         }
 
