@@ -27,8 +27,8 @@ class Build {
     }
 
     public function beautify( $html ) {
-        // return Beautify::html( $html )
-        return $html;
+        return Beautify::html( $html );
+       // return $html;
     }
 
     public function getSiteData() {
