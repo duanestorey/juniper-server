@@ -229,6 +229,8 @@ class Build {
 
             if ( file_exists( '_public/repo.db' ) ) {
                  LOG( "File successfully downloaded", 1 );
+                 
+                $this->server->startDb();
             } else {
                  LOG( sprintf( "Error downloading database file from [%s]", $this->server->config[ 'repo.role.consumer_source' ] ), 1, LOG::ERROR );
                  LOG( "Build process ended prematuredly for self-replicating repository", 0 );
@@ -239,6 +241,7 @@ class Build {
             
                 LOG( "Build process starting for self-replicating repository", 0 );
 
+                $this->server->startDb();
                 $this->server->destroyAll();
 
                 $sites = $this->server->getSites();
@@ -284,7 +287,7 @@ class Build {
             }
         }
 
-        $this->server->startDb();
+      
         $this->compileAndCopyAssets();
 
         // Build plugin pages
