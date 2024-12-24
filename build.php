@@ -17,6 +17,7 @@ require_once( JUNIPER_SERVER_DIR . '/core/server.php' );
 class Build {
     var $latte = null;
     var $server = null;
+    var $beauty = null;
 
     public function __construct() {
         $this->server = new Server();
@@ -27,7 +28,21 @@ class Build {
     }
 
     public function beautify( $html ) {
-        return Beautify::html( $html );
+        if ( !$this->beautify ) {
+            $options = [
+                'indent_inner_html'     => true,
+                'indent_char'           => " ",
+                'indent_size'           => 2,
+                'wrap_line_length'      => 32768,
+                'unformatted'           => ['code', 'pre'],
+                'preserve_newlines'     => false,
+                'preserve_newlines_max' => 32768,
+                'indent_scripts'        => 'normal',
+            ];
+
+            $this->beautify = new Beautify( $optoins );
+        }
+        return $this->beautify->beautify( $html );
        // return $html;
     }
 
