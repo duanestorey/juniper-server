@@ -47,6 +47,10 @@ class Server {
         $this->config = Config::flatten( $this->config );
     }
 
+    public function destroyAll() {
+        $this->db->destroyAll();
+    }
+
     public function getConfigSetting( $setting ) {
         if ( !empty( $this->config[ $setting ] ) ) {
             return $this->config[ $setting ];
@@ -75,6 +79,30 @@ class Server {
         return $this->db->getLastInsertId();
     }
 
+    public function getTotalDownloads() {
+        $total = 0;
+
+        $queryString = "SELECT SUM(total_downloads) as total FROM addons";
+        $result = $this->db->query( $queryString );
+        if ( $row = $result->fetchArray( SQLITE3_ASSOC ) ) {
+            $total = $row[ 'total' ];
+        }
+
+        return $total;
+    }
+
+    public function getTotalPlugins() {
+        $total = 0;
+
+        $queryString = "SELECT count(0) as total FROM addons";
+        $result = $this->db->query( $queryString );
+        if ( $row = $result->fetchArray( SQLITE3_ASSOC ) ) {
+            $total = $row[ 'total' ];
+        }
+
+        return $total;
+    }
+
     public function addAddonToDb( $siteId, $addOnData ) {
         LOG( sprintf( "Adding add-on to DB [%s]", $addOnData->repository->fullName ), 2 );
 
@@ -83,12 +111,14 @@ class Server {
         }
 
         $queryString = sprintf( 
-            "INSERT INTO addons (site_id,type,name,slug,author_name,signing_authority,author_url,avatar_url,description,readme,stable_version,repo_version,banner_image_url,requires_php,requires_at_least,tested_up_to,open_issues_count,stars_count,total_downloads,updated_at,created_at) " . 
-            "VALUES (%u,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%u,%u,%u,%u,%u)",
+            "INSERT INTO addons (site_id,type,name,slug,branch,src,author_name,signing_authority,author_url,avatar_url,description,readme,stable_version,repo_version,banner_image_url,requires_php,requires_at_least,tested_up_to,open_issues_count,stars_count,total_downloads,updated_at,created_at) " . 
+            "VALUES (%u,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%u,%u,%u,%u,%u)",
             $siteId,
             $this->db->escapeWithTicks( 'plugin' ),
             $this->db->escapeWithTicks( $addOnData->info->pluginName ),
             $this->db->escapeWithTicks( $addOnData->repository->fullName ),
+            !empty( $addOnData->repository->primaryBranch ) ? $this->db->escapeWithTicks( $addOnData->repository->primaryBranch )  : $this->db->escapeWithTicks( '' ),
+            $this->db->escapeWithTicks( 'github' ),
             $this->db->escapeWithTicks( $addOnData->info->author ),
             $this->db->escapeWithTicks( $addOnData->info->signingAuthority ),
             $this->db->escapeWithTicks( $addOnData->repository->owner->ownerUrl ),

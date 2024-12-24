@@ -45,6 +45,11 @@ img.banner {
 }
 
 .main { 
+
+    .front-meta {
+        color: white;
+    }
+
     .row {
         width: 100%;
         margin-left: 0px;
@@ -161,11 +166,17 @@ img.banner {
         background: #f8f8f8;
     }
 
-    p.card-text {
-        height: 130px;
-        text-overflow: ellipsis;
-        overflow: hidden;
-        padding: 5px;
+    .text-wrap {
+        overflow: scroll;
+
+        p.card-text {
+            height: 90px;
+            text-overflow: ellipsis;
+            line-height: 1.2;
+            padding: 10px;
+        }  
+
+        margin-bottom: 10px
     }
 
     .card-title {
@@ -313,6 +324,10 @@ img.banner {
     .main {
         .card {
             width: 100%;
+            
+            img {
+                height: 250px;
+            }
         }
 
         .info h2 {
@@ -326,6 +341,10 @@ img.banner {
     .main {
         .card {
             width: 100%;
+
+            img {
+                height: 200px;
+            }
         }
 
         .info h2 {
@@ -338,6 +357,10 @@ img.banner {
     .main {
         .card {
             width: 45%;
+
+            img {
+                height: 180px;
+            }
         }
 
 
@@ -346,7 +369,6 @@ img.banner {
         }
     }
 }
-
 
 @media only screen and (min-width: 992px) {
     .main {
@@ -358,9 +380,7 @@ img.banner {
             font-size: 20pt;
         }
     }
-    
 }
-
 
 @media only screen and (min-width: 1200px) {
     .main {

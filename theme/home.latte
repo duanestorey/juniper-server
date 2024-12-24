@@ -5,8 +5,12 @@
 
     <div class="info bg-dark">
         <div class="row">
-            <div class="col text-left">
+            <div class="col-md-9 text-left">
                 <h2>Community Home</h2>
+            </div>
+            <div class="d-none d-lg-block col-md-3 head-stars text-right author">
+                <span class="download"><i class="fa-solid fa-wrench"> </i> {$site->totalPlugins|number}</span>
+                <span class="download"><i class="fa-solid fa-download"> </i> {$site->totalDownloads|number}</span>
             </div>
         </div>
     </div>
@@ -28,7 +32,7 @@
 
                 {/if}
             </div>
-            <div class="col-md-4  latest">
+            <div class="col-md-4 latest">
                  {if $newPlugins}
                     <h2>Latest Additions</h2>
                     <ul>

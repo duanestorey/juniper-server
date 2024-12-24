@@ -5,6 +5,8 @@ namespace Juniper\Server;
 use \Wongyip\HTML\Beautify;
 use ScssPhp\ScssPhp\Compiler;
 
+define( 'SKIP_BUILD', 0 );
+
 ini_set('display_errors', 1); ini_set('display_startup_errors', 1); error_reporting(E_ALL);
 
 define( 'JUNIPER_SERVER_VER', '1.0.0' );
@@ -35,13 +37,16 @@ class Build {
     public function getSiteData() {
         $siteData = new \stdClass;
         $siteData->bust = time();
+        $siteData->totalDownloads = $this->server->getTotalDownloads();
+        $siteData->totalPlugins = $this->server->getTotalPlugins();
+
         return $siteData;
     }
 
     public function compileAndCopyAssets() {
         $sassFile = JUNIPER_SERVER_DIR . '/src/juniper-server.scss';
 
-         LOG( sprintf( "Compiling Sas file [%s]", $sassFile ), 0 );
+        LOG( sprintf( "Compiling Sas file [%s]", $sassFile ), 1 );
         $sassContents = file_get_contents( $sassFile );
         if ( $sassContents ) {
             $compiler = new Compiler();
@@ -65,6 +70,8 @@ class Build {
     }
 
     public function writePluginPage( $plugins ) {
+        LOG( "Writing plugin index file", 1 );
+
         $params = [ 'plugins' => $plugins, 'site' => $this->getSiteData() ];
         $output = $this->latte->renderToString( JUNIPER_SERVER_DIR . '/theme/plugins.latte', $params );
 
@@ -85,7 +92,35 @@ class Build {
         return $latestRelease;
     }
 
+    public function cleanupReadme( $plugin ) {
+        $result = preg_match_all( '!<a\s+(?:[^>]*?\s+)?href=(["\'])(.*?)\1!', $plugin[ 'readme' ], $matches );
+        if ( $result ) {
+            $changed = false;
+            $newReadme = $plugin[ 'readme' ];
+            foreach( $matches[2] as $num => $link ) {
+                $originalLink = $link;
+
+                if ( strpos( $originalLink, 'http://' ) === false && strpos( $originalLink, 'https://' ) === false ) {
+                    // this is not an external link
+                    $newLink = 'https://github.com/' . $plugin[ 'slug' ] . '/' . $originalLink;
+                    $newReadme = str_replace( $originalLink, $newLink, $newReadme );
+
+                    $changed = true;
+                }
+            }
+
+            if ( $changed ) {
+                $plugin[ 'readme' ] = $newReadme;
+            }
+        }
+
+        return $plugin;
+
+    }
+
     public function writeSinglePluginPage( $plugin, $releases, $issues ) {
+        LOG( sprintf( "Writing individual plugin [%s]", $plugin[ 'slug' ] ), 1 );
+
         $latestRelease = $this->findReleaseWithTag( $releases, $plugin['stable_version'] );
         if ( !$latestRelease ) {
             if ( count ( $releases ) ) {
@@ -93,7 +128,9 @@ class Build {
             }
         }
 
-        $params = [ 'plugin' => $plugin, 'releases' => $releases, 'issues' => $issues, 'latestRelease' => $latestRelease, 'site' => $this->getSiteData() ];
+        $newPlugin = $this->cleanUpReadme( $plugin );
+
+        $params = [ 'plugin' => $newPlugin, 'releases' => $releases, 'issues' => $issues, 'latestRelease' => $latestRelease, 'site' => $this->getSiteData() ];
         $output = $this->latte->renderToString( JUNIPER_SERVER_DIR . '/theme/plugin-single.latte', $params );
 
         @mkdir( JUNIPER_SERVER_DIR . '/_public/plugins/' . $plugin['slug'], 0755, true );
@@ -111,6 +148,8 @@ class Build {
     }
 
     public function writeHomeLikePage( $template = 'home.latte', $destFile = 'index.html' ) {
+        LOG( sprintf( "Writing page [%s]", $destFile ), 1 );
+    
         $newsSites = $this->server->getConfigSetting( 'repo.news' );
         $allNews = [];
 
@@ -148,39 +187,50 @@ class Build {
         $this->server->startDb();
         $this->server->loadConfig();
         $this->compileAndCopyAssets();
-        
-        $sites = $this->server->getSites();
 
-        foreach( $sites as $site ) {     
-            $site = rtrim( $site, '/' );
-            $site = rtrim( $site, '/' );
+        if ( !SKIP_BUILD ) {    
+            $this->server->destroyAll();
 
-            $siteId = $this->server->addSiteToDb( $site );
+            $sites = $this->server->getSites();
 
-            LOG( sprintf( "Importing site [%s]", $site ), 1 );
+            foreach( $sites as $site ) {     
+                $site = rtrim( $site, '/' );
+                $site = rtrim( $site, '/' );
 
-            $contents = $this->server->curlGet( $site . '/wp-json/juniper/v1/plugins/?v=' . time() );
-            if ( $contents ) {
-                $decodedContents = json_decode( $contents );        
-                if ( is_array( $decodedContents ) ) {
-                    foreach( $decodedContents as $num => $addOn ) {
-                        LOG( sprintf( "Adding new ADDON [%s] of TYPE [%s]", $addOn->info->pluginName, $addOn->info->type ), 1 );
-                        $addOnId = $this->server->addAddonToDb( $siteId, $addOn );
+                $siteId = $this->server->addSiteToDb( $site );
 
-                        foreach( $addOn->releases as $num => $release ) {
-                            LOG( sprintf( "Adding release with TAG [%s]", $release->tag ), 2 );
-                            $this->server->addReleaseToDb( $addOnId, $release );
-                        }
+                LOG( sprintf( "Importing site [%s]", $site ), 1 );
 
-                        if ( $addOn->issues ) {
-                            foreach( $addOn->issues as $issue ) {
-                                LOG( sprintf( "Adding issues with NAME [%s]", $issue->title ), 2 );
-                                $this->server->addIssueToDb( $addOnId, $issue );
-                            } 
+                $contents = $this->server->curlGet( $site . '/wp-json/juniper/v1/releases/?v=' . time() );
+                if ( $contents ) {
+                    $decodedContents = json_decode( $contents );   
+
+                    // to handle our new versioning
+                    if ( isset( $decodedContents->client_version ) ) {
+                    
+                        $decodedContents = $decodedContents->releases;
+                    }
+
+                    if ( is_array( $decodedContents ) ) {
+                        foreach( $decodedContents as $num => $addOn ) {
+                            LOG( sprintf( "Adding new ADDON [%s] of TYPE [%s]", $addOn->info->pluginName, $addOn->info->type ), 1 );
+                            $addOnId = $this->server->addAddonToDb( $siteId, $addOn );
+
+                            foreach( $addOn->releases as $num => $release ) {
+                                LOG( sprintf( "Adding release with TAG [%s]", $release->tag ), 2 );
+                                $this->server->addReleaseToDb( $addOnId, $release );
+                            }
+
+                            if ( $addOn->issues ) {
+                                foreach( $addOn->issues as $issue ) {
+                                    LOG( sprintf( "Adding issues with NAME [%s]", $issue->title ), 2 );
+                                    $this->server->addIssueToDb( $addOnId, $issue );
+                                } 
+                            }
                         }
                     }
                 }
-            }
+            }       
         }
 
         // Build plugin pages
@@ -197,8 +247,6 @@ class Build {
 
         @mkdir( JUNIPER_SERVER_DIR . '/_public/submit', 0755, true );
         $this->writeHomeLikePage( 'submit.latte', 'submit/index.html' );
-
-        $this->writeRankedXmlPage();
 
         $this->server->stopDb();
 
