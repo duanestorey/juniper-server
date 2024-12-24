@@ -1,6 +1,10 @@
 repo:
   name: "The Not WP Repository"
-  sites:
+  desc: "A collection of themes and plugins for WordPress, hosted by the community"
+  role: 
+    producer: 1
+# change producer to 0 to product a mirror of the 'consumer_source' target
+    consumer_source: https://notwp.org
   news:
     - https://www.thewpcommunitycollective.com/feed/
 

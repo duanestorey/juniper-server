@@ -32,7 +32,7 @@ class Server {
     }
 
     public function loadConfig() {
-        $this->config = Config::load( JUNIPER_SERVER_DIR . '/config/site.yaml' );
+        $this->config = Config::load( JUNIPER_SERVER_DIR . '/site.yaml' );
         if ( empty( $this->config[ 'repo' ][ 'sites' ] ) ) {
             $this->config[ 'repo' ][ 'sites' ] = [];
         }

@@ -6,7 +6,7 @@ class DB {
     var $sql = null;
 
     public function __construct() {
-        $this->sql = new \SQLite3( JUNIPER_SERVER_DIR . '/repo.db', SQLITE3_OPEN_READWRITE | SQLITE3_OPEN_CREATE );
+        $this->sql = new \SQLite3( JUNIPER_SERVER_DIR . '/_public/repo.db', SQLITE3_OPEN_READWRITE | SQLITE3_OPEN_CREATE );
     }
 
     public function init() {

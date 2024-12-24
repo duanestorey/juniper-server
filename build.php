@@ -199,56 +199,79 @@ class Build {
 
     public function letsGo() {
         $this->branding();
-        LOG( "Build process starting for self-replicating repository", 0 );
 
-        $this->server->startDb();
+        if ( !file_exists( dirname( __FILE__ ) . '/site.yaml' ) ) {
+            LOG( "Missing site.yaml configuration file - copy the example from the config directory", 0, LOG::ERROR );
+            die;
+        }
+        
         $this->server->loadConfig();
-        $this->compileAndCopyAssets();
+        if ( $this->server->config[ 'repo.role.producer' ] == 0 ) {
+            // we are a consumer
+            LOG( "Consumer mode - grabbing Sqlite database from producter", 0 );
+            $dbLocation = $this->server->config[ 'repo.role.consumer_source' ] . '/repo.db';
 
-        if ( !SKIP_BUILD ) {    
-            $this->server->destroyAll();
+            @unlink( '_public/repo.db' );
+            @copy( $dbLocation, '_public/repo.db' );
 
-            $sites = $this->server->getSites();
+            if ( file_exists( '_public/repo.db' ) ) {
+                 LOG( "File successfully downloaded", 1 );
+            } else {
+                 LOG( sprintf( "Error downloading database file from [%s]", $this->server->config[ 'repo.role.consumer_source' ] ), 1, LOG::ERROR );
+                 LOG( "Build process ended prematuredly for self-replicating repository", 0 );
+                 die;
+            }
+        } else {
+            if ( !SKIP_BUILD ) {    
+                LOG( "Build process starting for self-replicating repository", 0 );
 
-            foreach( $sites as $site ) {     
-                $site = rtrim( $site, '/' );
-                $site = rtrim( $site, '/' );
+                $this->server->destroyAll();
 
-                $siteId = $this->server->addSiteToDb( $site );
+                $sites = $this->server->getSites();
 
-                LOG( sprintf( "Importing site [%s]", $site ), 1 );
+                foreach( $sites as $site ) {     
+                    $site = rtrim( $site, '/' );
+                    $site = rtrim( $site, '/' );
 
-                $contents = $this->server->curlGet( $site . '/wp-json/juniper/v1/releases/?v=' . time() );
-                if ( $contents ) {
-                    $decodedContents = json_decode( $contents );   
+                    $siteId = $this->server->addSiteToDb( $site );
 
-                    // to handle our new versioning
-                    if ( isset( $decodedContents->client_version ) ) {
-                    
-                        $decodedContents = $decodedContents->releases;
-                    }
+                    LOG( sprintf( "Importing site [%s]", $site ), 1 );
 
-                    if ( is_array( $decodedContents ) ) {
-                        foreach( $decodedContents as $num => $addOn ) {
-                            LOG( sprintf( "Adding new ADDON [%s] of TYPE [%s]", $addOn->info->pluginName, $addOn->info->type ), 1 );
-                            $addOnId = $this->server->addAddonToDb( $siteId, $addOn );
+                    $contents = $this->server->curlGet( $site . '/wp-json/juniper/v1/releases/?v=' . time() );
+                    if ( $contents ) {
+                        $decodedContents = json_decode( $contents );   
 
-                            foreach( $addOn->releases as $num => $release ) {
-                                LOG( sprintf( "Adding release with TAG [%s]", $release->tag ), 2 );
-                                $this->server->addReleaseToDb( $addOnId, $release );
-                            }
+                        // to handle our new versioning
+                        if ( isset( $decodedContents->client_version ) ) {
+                        
+                            $decodedContents = $decodedContents->releases;
+                        }
 
-                            if ( $addOn->issues ) {
-                                foreach( $addOn->issues as $issue ) {
-                                    LOG( sprintf( "Adding issues with NAME [%s]", $issue->title ), 2 );
-                                    $this->server->addIssueToDb( $addOnId, $issue );
-                                } 
+                        if ( is_array( $decodedContents ) ) {
+                            foreach( $decodedContents as $num => $addOn ) {
+                                LOG( sprintf( "Adding new ADDON [%s] of TYPE [%s]", $addOn->info->pluginName, $addOn->info->type ), 1 );
+                                $addOnId = $this->server->addAddonToDb( $siteId, $addOn );
+
+                                foreach( $addOn->releases as $num => $release ) {
+                                    LOG( sprintf( "Adding release with TAG [%s]", $release->tag ), 2 );
+                                    $this->server->addReleaseToDb( $addOnId, $release );
+                                }
+
+                                if ( $addOn->issues ) {
+                                    foreach( $addOn->issues as $issue ) {
+                                        LOG( sprintf( "Adding issues with NAME [%s]", $issue->title ), 2 );
+                                        $this->server->addIssueToDb( $addOnId, $issue );
+                                    } 
+                                }
                             }
                         }
                     }
-                }
-            }       
+                }       
+            }
         }
+
+        $this->server->startDb();
+        $this->compileAndCopyAssets();
 
         // Build plugin pages
         $plugins = $this->server->getPluginList();
