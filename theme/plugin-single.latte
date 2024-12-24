@@ -2,7 +2,7 @@
 
     <div class="main container text-center">
         {if $plugin['banner_image_url']}
-        <img class="banner" src="{$plugin['banner_image_url']}" />
+        <img class="banner" src="{$plugin['banner_image_url']}" alt="Banner image for individual plugin" />
         {else}
         <img class="banner" src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?q=80&w=3074&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="card-img-top" alt="...">
         {/if}
@@ -72,7 +72,7 @@
                                 <ul>
                                 {foreach $issues as $issue} 
                                     <li>
-                                        <img class="issue-avatar" src="{$issue['user_avatar_url']}" />
+                                        <img class="issue-avatar" src="{$issue['user_avatar_url']}" alt="User avatar">
                                         <h5><a href="{$issue['url']}">{$issue['title']}</a></h5>
                                         <div class="meta">{$issue['updated_at_date']|date: 'M jS, Y'}</div>
                                         <p class="body">{$issue['body']}</p>
