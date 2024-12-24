@@ -57,6 +57,10 @@ class Build {
         }
     }
 
+    public function getDefaultImage() {
+        return 'https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?q=80&w=2952&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
+    }
+
     public function branding() {
         $brandText = sprintf( "| Juniper/Server version %s |", JUNIPER_SERVER_VER );
         $lineText = '';
@@ -72,7 +76,14 @@ class Build {
     public function writePluginPage( $plugins ) {
         LOG( "Writing plugin index file", 1 );
 
-        $params = [ 'plugins' => $plugins, 'site' => $this->getSiteData(), 'title' => 'List of plugins for Wordpress - ' . $this->server->config[ 'repo.name' ] ];
+        $params = [ 
+            'plugins' => $plugins, 
+            'site' => $this->getSiteData(), 
+            'title' => 'List of plugins for Wordpress - ' . $this->server->config[ 'repo.name' ],
+            'desc' => 'The main plugin listings for self-hosted Github plugins for WordPress',
+            'image' => $this->getDefaultImage()
+        ];
+
         $output = $this->latte->renderToString( JUNIPER_SERVER_DIR . '/theme/plugins.latte', $params );
 
         @mkdir( JUNIPER_SERVER_DIR . '/_public/plugins/', 0755, true );
@@ -136,7 +147,9 @@ class Build {
             'issues' => $issues, 
             'latestRelease' => $latestRelease, 
             'site' => $this->getSiteData(),
-            'title' => $plugin['name' ] . ' - ' . $this->server->config[ 'repo.name' ]
+            'title' => $plugin['name' ] . ' by ' . $plugin['author_name'] . ' - ' . $this->server->config[ 'repo.name' ],
+            'desc' => $plugin['description'],
+            'image' => ( $plugin['banner_image_url'] ? $plugin['banner_image_url'] : $this->getDefaultImage() )
         ];
         $output = $this->latte->renderToString( JUNIPER_SERVER_DIR . '/theme/plugin-single.latte', $params );
 
@@ -144,7 +157,7 @@ class Build {
         file_put_contents( JUNIPER_SERVER_DIR . '/_public/plugins/' . $plugin['slug'] . '/index.html', $this->beautify( $output ) );
     }
 
-    public function writeHomeLikePage( $template = 'home.latte', $destFile = 'index.html', $title ) {
+    public function writeHomeLikePage( $template = 'home.latte', $destFile = 'index.html', $title = '', $desc = '' ) {
         LOG( sprintf( "Writing page [%s]", $destFile ), 1 );
     
         $newsSites = $this->server->getConfigSetting( 'repo.news' );
@@ -171,7 +184,14 @@ class Build {
 
         $newPlugins = $this->server->getNewestAddons();
 
-        $params = [ 'news' => $allNews, 'newPlugins' => $newPlugins, 'site' => $this->getSiteData(), 'title' => $title ];
+        $params = [ 
+            'news' => $allNews, 
+            'newPlugins' => $newPlugins, 
+            'site' => $this->getSiteData(), 
+            'title' => $title,
+            'desc' => $desc,
+            'image' => $this->getDefaultImage()
+        ];
         $output = $this->latte->renderToString( JUNIPER_SERVER_DIR . '/theme/' . $template, $params );
 
         file_put_contents( JUNIPER_SERVER_DIR . '/_public/' . $destFile, $this->beautify( $output ) );   
@@ -240,10 +260,10 @@ class Build {
             $this->writeSinglePluginPage( $plugin, $releases, $issues );
         }
 
-        $this->writeHomeLikePage( 'home.latte', 'index.html', $this->server->config[ 'repo.name' ]  );
+        $this->writeHomeLikePage( 'home.latte', 'index.html', $this->server->config[ 'repo.name' ], 'The NotWP Repositority of self-hosted Github plugins and themes for WordPress'  );
 
         @mkdir( JUNIPER_SERVER_DIR . '/_public/submit', 0755, true );
-        $this->writeHomeLikePage( 'submit.latte', 'submit/index.html', 'Submit new plugin or theme - ' . $this->server->config[ 'repo.name' ] );
+        $this->writeHomeLikePage( 'submit.latte', 'submit/index.html', 'Submit new plugin or theme - ' . $this->server->config[ 'repo.name' ], "Submit a new plugin to the Not WP Repository for WordPress" );
 
         $this->server->stopDb();
 
