@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+{foreach $plugins as $plugin}
+    <url>
+        <loc>{$home}/plugins/{$plugin[slug]}/</loc>
+        <changefreq>weekly</changefreq>
+    </url>
+{/foreach}
+    <url>
+        <loc>{$home}/</loc>
+        <changefreq>daily</changefreq>
+    </url>
+    <url>
+        <loc>{$home}/plugins/</loc>
+        <changefreq>daily</changefreq>
+    </url>
+    <url>
+        <loc>{$home}/submit/</loc>
+        <changefreq>daily</changefreq>
+    </url>
+</urlset>

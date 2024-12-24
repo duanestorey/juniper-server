@@ -1,5 +1,6 @@
 repo:
   name: "The Not WP Repository"
+  home: https://notwp.org
   desc: "A collection of themes and plugins for WordPress, hosted by the community"
   role: 
     producer: 1

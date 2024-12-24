@@ -75,7 +75,7 @@ class Build {
     }
 
     public function writePluginPage( $plugins ) {
-        LOG( "Writing plugin index file", 1 );
+        LOG( "Writing plugin index file [plugins/index.html]", 1 );
 
         $params = [ 
             'plugins' => $plugins, 
@@ -91,6 +91,19 @@ class Build {
         @mkdir( JUNIPER_SERVER_DIR . '/_public/plugins/', 0755, true );
         file_put_contents( JUNIPER_SERVER_DIR . '/_public/plugins/index.html', $this->beautify( $output ) );
     }
+
+     public function writeSitemapPage( $plugins ) {
+        LOG( "Writing sitemap file [index.xml]", 1 );
+
+        $params = [ 
+            'plugins' => $plugins,
+            'home' => $this->server->config[ 'repo.home' ]
+        ];
+
+        $output = $this->latte->renderToString( JUNIPER_SERVER_DIR . '/theme/sitemap.latte', $params );
+
+        file_put_contents( JUNIPER_SERVER_DIR . '/_public/sitemap.xml', $output );
+    }   
 
     public function findReleaseWithTag( $releases, $tag ) {
         $latestRelease = false;
@@ -288,7 +301,6 @@ class Build {
             }
         }
 
-      
         $this->compileAndCopyAssets();
 
         // Build plugin pages
@@ -305,6 +317,8 @@ class Build {
 
         @mkdir( JUNIPER_SERVER_DIR . '/_public/submit', 0755, true );
         $this->writeHomeLikePage( 'submit.latte', 'submit/index.html', 'Submit new plugin or theme - ' . $this->server->config[ 'repo.name' ], "Submit a new plugin to the Not WP Repository for WordPress" );
+
+        $this->writeSitemapPage( $plugins );
 
         $this->server->stopDb();
 
