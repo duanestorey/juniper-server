@@ -42,8 +42,8 @@ class Build {
 
             $this->beautify = new Beautify( $options );
         }
-        return $this->beautify->beautify( $html );
-       // return $html;
+        //return $this->beautify->beautify( $html );
+        return $html;
     }
 
     public function getSiteData() {
