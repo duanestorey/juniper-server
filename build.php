@@ -17,7 +17,7 @@ require_once( JUNIPER_SERVER_DIR . '/core/server.php' );
 class Build {
     var $latte = null;
     var $server = null;
-    var $beauty = null;
+    var $beautify = null;
 
     public function __construct() {
         $this->server = new Server();
