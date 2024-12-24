@@ -40,7 +40,7 @@ class Build {
                 'indent_scripts'        => 'normal',
             ];
 
-            $this->beautify = new Beautify( $optoins );
+            $this->beautify = new Beautify( $options );
         }
         return $this->beautify->beautify( $html );
        // return $html;
