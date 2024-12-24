@@ -9,7 +9,7 @@ require_once( JUNIPER_SERVER_DIR . '/core/log-listener-shell.php' );
 require_once( JUNIPER_SERVER_DIR . '/core/log.php' );
 
 class Server {
-    var $config = null;
+    public $config = null;
     var $db = null;
 
     public function __construct() {

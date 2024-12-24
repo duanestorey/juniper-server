@@ -72,7 +72,7 @@ class Build {
     public function writePluginPage( $plugins ) {
         LOG( "Writing plugin index file", 1 );
 
-        $params = [ 'plugins' => $plugins, 'site' => $this->getSiteData() ];
+        $params = [ 'plugins' => $plugins, 'site' => $this->getSiteData(), 'title' => 'List of plugins for Wordpress - ' . $this->server->config[ 'repo.name' ] ];
         $output = $this->latte->renderToString( JUNIPER_SERVER_DIR . '/theme/plugins.latte', $params );
 
         @mkdir( JUNIPER_SERVER_DIR . '/_public/plugins/', 0755, true );
@@ -130,24 +130,21 @@ class Build {
 
         $newPlugin = $this->cleanUpReadme( $plugin );
 
-        $params = [ 'plugin' => $newPlugin, 'releases' => $releases, 'issues' => $issues, 'latestRelease' => $latestRelease, 'site' => $this->getSiteData() ];
+        $params = [ 
+            'plugin' => $newPlugin, 
+            'releases' => $releases, 
+            'issues' => $issues, 
+            'latestRelease' => $latestRelease, 
+            'site' => $this->getSiteData(),
+            'title' => $plugin['name' ] . ' - ' . $this->server->config[ 'repo.name' ]
+        ];
         $output = $this->latte->renderToString( JUNIPER_SERVER_DIR . '/theme/plugin-single.latte', $params );
 
         @mkdir( JUNIPER_SERVER_DIR . '/_public/plugins/' . $plugin['slug'], 0755, true );
         file_put_contents( JUNIPER_SERVER_DIR . '/_public/plugins/' . $plugin['slug'] . '/index.html', $this->beautify( $output ) );
     }
 
-    public function writeRankedXmlPage() {
-        $addons = $this->server->getRankedPluginList();
-
-        $params = [ 'json' => json_encode( $addons ), 'site' => $this->getSiteData() ];
-        $output = $this->latte->renderToString( JUNIPER_SERVER_DIR . '/theme/plugins-xml.latte', $params );
-
-        @mkdir( JUNIPER_SERVER_DIR . '/_public/api/ranked/', 0755, true );
-        file_put_contents( JUNIPER_SERVER_DIR . '/_public/api/ranked/index.json', $output );
-    }
-
-    public function writeHomeLikePage( $template = 'home.latte', $destFile = 'index.html' ) {
+    public function writeHomeLikePage( $template = 'home.latte', $destFile = 'index.html', $title ) {
         LOG( sprintf( "Writing page [%s]", $destFile ), 1 );
     
         $newsSites = $this->server->getConfigSetting( 'repo.news' );
@@ -174,7 +171,7 @@ class Build {
 
         $newPlugins = $this->server->getNewestAddons();
 
-        $params = [ 'news' => $allNews, 'newPlugins' => $newPlugins, 'site' => $this->getSiteData() ];
+        $params = [ 'news' => $allNews, 'newPlugins' => $newPlugins, 'site' => $this->getSiteData(), 'title' => $title ];
         $output = $this->latte->renderToString( JUNIPER_SERVER_DIR . '/theme/' . $template, $params );
 
         file_put_contents( JUNIPER_SERVER_DIR . '/_public/' . $destFile, $this->beautify( $output ) );   
@@ -243,10 +240,10 @@ class Build {
             $this->writeSinglePluginPage( $plugin, $releases, $issues );
         }
 
-        $this->writeHomeLikePage();
+        $this->writeHomeLikePage( 'home.latte', 'index.html', $this->server->config[ 'repo.name' ]  );
 
         @mkdir( JUNIPER_SERVER_DIR . '/_public/submit', 0755, true );
-        $this->writeHomeLikePage( 'submit.latte', 'submit/index.html' );
+        $this->writeHomeLikePage( 'submit.latte', 'submit/index.html', 'Submit new plugin or theme - ' . $this->server->config[ 'repo.name' ] );
 
         $this->server->stopDb();
 
