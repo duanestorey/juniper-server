@@ -9,7 +9,7 @@ define( 'SKIP_BUILD', 0 );
 
 ini_set('display_errors', 1); ini_set('display_startup_errors', 1); error_reporting(E_ALL);
 
-define( 'JUNIPER_SERVER_VER', '1.0.0' );
+define( 'JUNIPER_SERVER_VER', '1.1.0' );
 define( 'JUNIPER_SERVER_DIR', dirname( __FILE__ ) );
 
 require_once( JUNIPER_SERVER_DIR . '/core/server.php' );
@@ -217,7 +217,7 @@ class Build {
         $this->server->loadConfig();
         if ( $this->server->config[ 'repo.role.producer' ] == 0 ) {
             // we are a consumer
-            LOG( "Consumer mode - grabbing Sqlite database from producter", 0 );
+            LOG( "Consumer mode - grabbing Sqlite database from producer", 0 );
             $dbLocation = $this->server->config[ 'repo.role.consumer_source' ] . '/repo.db';
 
             @unlink( '_public/repo.db' );
