@@ -14,8 +14,6 @@ class Server {
 
     public function __construct() {
         Log::instance()->installListener( new LogListenerShell() );
-
-        $this->db = new DB();
     }
 
     public function curlGet( $url ) {
@@ -60,6 +58,8 @@ class Server {
     }
 
     public function startDb() {
+        $this->db = new DB();
+        
         LOG( "Opening Sqlite database", 1 );
 
         $this->db->init();

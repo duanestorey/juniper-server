@@ -12,7 +12,6 @@ ini_set('display_errors', 1); ini_set('display_startup_errors', 1); error_report
 define( 'JUNIPER_SERVER_VER', '1.0.0' );
 define( 'JUNIPER_SERVER_DIR', dirname( __FILE__ ) );
 
-require_once( JUNIPER_SERVER_DIR . '/vendor/autoload.php' );
 require_once( JUNIPER_SERVER_DIR . '/core/server.php' );
 
 class Build {
@@ -21,12 +20,11 @@ class Build {
 
     public function __construct() {
         $this->server = new Server();
-        $this->latte = new \Latte\Engine;
+        
 
         @mkdir( JUNIPER_SERVER_DIR . '/cache', 0775 );
         @mkdir( JUNIPER_SERVER_DIR . '/_public', 0775 );
         @mkdir( JUNIPER_SERVER_DIR . '/_dist', 0775 );
-        $this->latte->setTempDirectory( JUNIPER_SERVER_DIR . '/cache' );
     }
 
     public function beautify( $html ) {
@@ -204,6 +202,17 @@ class Build {
             LOG( "Missing site.yaml configuration file - copy the example from the config directory", 0, LOG::ERROR );
             die;
         }
+
+        if ( !file_exists( 'vendor' ) ) {
+            LOG( 'You need to run [composer install] before building', 1, LOG::ERROR );
+            LOG( "Build process ended prematuredly for self-replicating repository", 0 );
+            die;
+        }
+
+        require_once( 'vendor/autoload.php' );
+
+        $this->latte = new \Latte\Engine;
+        $this->latte->setTempDirectory( JUNIPER_SERVER_DIR . '/cache' );
         
         $this->server->loadConfig();
         if ( $this->server->config[ 'repo.role.producer' ] == 0 ) {
@@ -223,6 +232,7 @@ class Build {
             }
         } else {
             if ( !SKIP_BUILD ) {    
+            
                 LOG( "Build process starting for self-replicating repository", 0 );
 
                 $this->server->destroyAll();
