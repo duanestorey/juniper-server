@@ -147,7 +147,7 @@ class Build {
             'issues' => $issues, 
             'latestRelease' => $latestRelease, 
             'site' => $this->getSiteData(),
-            'title' => $plugin['name' ] . ' by ' . $plugin['author_name'] . ' - ' . $this->server->config[ 'repo.name' ],
+            'title' => $plugin['name' ] . ' by ' . $plugin['author_name'],
             'desc' => $plugin['description'],
             'image' => ( $plugin['banner_image_url'] ? $plugin['banner_image_url'] : $this->getDefaultImage() )
         ];
