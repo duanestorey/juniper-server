@@ -9,6 +9,10 @@ CREATE TABLE "releases"
     "description" VARCHAR,
     "download_url" VARCHAR(256),
     "signed" INT(1),
+    "hash_algo" VARCHAR(8),
+    "hash" VARCHAR,
+    "file_updated_date" TIMESTAMP,
+    "local_file_name" VARCHAR,
     "release_date" TIMESTAMP
 
 );

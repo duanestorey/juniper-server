@@ -57,6 +57,9 @@
                                     <li>
                                         <h5><strong>{$release['release_tag']}</strong> - <a href="{$release['url']}">{$release['name']}</a><span class="meta"> / {$release['release_date']|date: 'M jS, Y'}</span></h5>
                                         <p>{$release['description']}</p>
+                                        {if !empty( $release['file_hash'] )}
+                                            <div class="release-hash">SHA256 hash: <pre>{$release['file_hash']}</pre></div>
+                                        {/if}          
                                     </li>
                                 {/foreach}
                                 </ul>
@@ -110,11 +113,17 @@
                             <a href="https://github.com/{$plugin['slug']}/archive/refs/tags/{$latestRelease['release_tag']}.zip" class="btn btn-primary"><i class="fa-solid fa-download"> </i> Download {$latestRelease['release_tag']} </a>
                             {/if}
                         </div>
+
+                        {if !empty( $latestRelease['file_hash'] )}
+                            <div class="hash">SHA-256 hash:<br>
+                            <pre data-toggle="tooltip" data-placement="top" title="The hash can be used to verify the ZIP file is legitimate">{$latestRelease['file_hash']}</pre>
+                            </div>
+                        {/if}
                     </div>
                     {else}
                     <div class="latest-release">
                         <h4>Download</h4>
-                        <p>The latest development archive is available below.</p>
+                        The latest development archive is available below:
                         <a href="https://github.com/{$plugin['slug']}/archive/HEAD.zip" class="btn btn-primary"><i class="fa-solid fa-download"> </i> Download Latest</a>
                     </div>                   
                     {/if}
@@ -126,7 +135,7 @@
                         <!-- Place this tag where you want the button to render. -->
                         <!-- Place this tag where you want the button to render. -->
                         <a class="github-button" href="https://github.com/{$plugin['slug']}" data-color-scheme="no-preference: light; light: light; dark: dark;" data-size="large" data-show-count="true" aria-label="Star {$plugin['slug']} on GitHub">Star</a>
-                        <a class="github-button" href="https://github.com/sponsors/{$plugin['repo_owner']}" data-color-scheme="no-preference: light; light: light; dark: dark;" data-size="large" aria-label="Sponsor @{$plugin['author_name']} on GitHub">Support Author</a>
+                        <a class="github-button" href="https://github.com/sponsors/{$plugin['repo_owner']}" data-color-scheme="no-preference: light; light: light; dark: dark;" data-size="large" aria-label="Sponsor @{$plugin['author_name']} on GitHub">Support Project</a>
                     </div>
 
                     <div class="author">

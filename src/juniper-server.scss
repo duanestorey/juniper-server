@@ -286,7 +286,7 @@ div.crafted {
 .latest-release {
     .new {
         h4 {
-            font-size: 12pt;
+            font-size: 13pt;
             margin-bottom: 0px;
         }
 
@@ -297,6 +297,10 @@ div.crafted {
             font-size: 10pt;
             margin-bottom: 10px;
         }
+    }
+
+    .hash {
+        margin-top: 10px;
     }
 }
 

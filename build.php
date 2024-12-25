@@ -57,6 +57,9 @@ class Build {
 
     public function compileAndCopyAssets() {
         $sassFile = JUNIPER_SERVER_DIR . '/src/juniper-server.scss';
+        $jsFile = JUNIPER_SERVER_DIR . '/src/juniper-server.js';
+
+        @mkdir( JUNIPER_SERVER_DIR . '/_public/dist/', 0755, true );
 
         LOG( sprintf( "Compiling Sas file [%s]", $sassFile ), 1 );
         $sassContents = file_get_contents( $sassFile );
@@ -64,9 +67,11 @@ class Build {
             $compiler = new Compiler();
             $css = $compiler->compileString( $sassContents )->getCss();
 
-            @mkdir( JUNIPER_SERVER_DIR . '/_public/dist/', 0755, true );
+
             file_put_contents( JUNIPER_SERVER_DIR . '/_public/dist/juniper-server.css', $css );
         }
+
+        copy( $jsFile, JUNIPER_SERVER_DIR . '/_public/dist/juniper-server.js' );
     }
 
     public function getDefaultImage() {
@@ -120,7 +125,7 @@ class Build {
         file_put_contents( JUNIPER_SERVER_DIR . '/_public/sitemap.xml', $output );
     }   
 
-    public function findReleaseWithTag( $releases, $tag ) {
+    public function findReleaseWithTag( $addon, $releases, $tag ) {
         $latestRelease = false;
 
         foreach( $releases as $release ) {
@@ -131,6 +136,47 @@ class Build {
         }
 
         return $latestRelease;
+    }
+
+    public function processRelease( $addon, $release ) {
+
+        if ( $release == false ) {
+            return $release;
+        }
+
+        LOG( sprintf( "Processing release [%s] and creating HASH", $addon[ 'slug' ] . '/' . $release['release_tag'] ), 1 );
+
+        $release[ 'file_hash' ] = false;
+        
+        $releaseDir = JUNIPER_SERVER_DIR . '/_public/releases';
+        @mkdir( $releaseDir );
+
+        $newReleaseDir = $releaseDir . '/' . $addon[ 'slug' ] . '/' . $release[ 'release_tag' ];
+        @mkdir( $newReleaseDir, 0775, true );
+        
+
+        // download file
+        if ( !empty( $release[ 'download_url' ] ) ) {
+            $filename = $release['download_url'];
+          
+        } else {
+            $filename = "https://github.com/{$addon['slug']}/archive/refs/tags/{$release['release_tag']}.zip";
+        }
+
+        $localFile = $newReleaseDir  . '/' . basename( $filename );
+        if ( !file_exists( $localFile ) ) {
+            LOG( sprintf( "Copying [%s] to [%s]", $addon[ 'slug' ] . '/' . $release[ 'release_tag' ] . '/' . basename( $filename ) ,  $addon[ 'slug' ] . '/'. basename( $localFile ) ), 2 );
+            copy( $filename, $localFile );      
+        }
+
+        if ( file_exists( $localFile ) ) {
+            $hash = hash_file( 'sha256', $localFile );
+            $release[ 'file_hash' ] = $hash;
+
+            LOG( sprintf( "File hash is [%s]", $hash ), 2 );
+        }
+
+        return $release;
     }
 
     public function cleanupReadme( $plugin ) {
@@ -162,12 +208,14 @@ class Build {
     public function writeSinglePluginPage( $plugin, $releases, $issues ) {
         LOG( sprintf( "Writing individual plugin [%s]", $plugin[ 'slug' ] ), 1 );
 
-        $latestRelease = $this->findReleaseWithTag( $releases, $plugin['stable_version'] );
+        $latestRelease = $this->findReleaseWithTag( $plugin, $releases, $plugin['stable_version'] );
         if ( !$latestRelease ) {
             if ( count ( $releases ) ) {
                 $latestRelease = $releases[ 0 ];
             }
         }
+
+        $latestRelease = $this->processRelease( $plugin, $latestRelease );
 
         $newPlugin = $this->cleanUpReadme( $plugin );
 
@@ -377,12 +425,25 @@ class Build {
 
         $this->compileAndCopyAssets();
 
-        // Build plugin pages
+        // Process releases
         $plugins = $this->server->getPluginList();
+        foreach( $plugins as $plugin ) {
+            $releases = $this->server->getPluginReleases( $plugin['id'] );
+            foreach( $releases as &$release ) {
+                //$release = $this->processRelease( $plugin, $release );
+            }
+        }
+        // Build plugin pages
+        
         $this->writePluginPage( $plugins );
 
         foreach( $plugins as $plugin ) {
             $releases = $this->server->getPluginReleases( $plugin['id'] );
+
+            foreach( $releases as &$release ) {
+                $release = $this->processRelease( $plugin, $release );
+            }
+
             $issues = $this->server->getPluginIssues( $plugin['id'] );
             $this->writeSinglePluginPage( $plugin, $releases, $issues );
         }

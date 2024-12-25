@@ -17,3 +17,4 @@ _public/themes/*
 _public/index.html
 config/sites-valid.yaml
 /_public/learn
+/_public/releases
