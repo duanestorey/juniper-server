@@ -5,6 +5,7 @@ namespace Juniper\Server;
 use Symfony\Component\Yaml\Yaml;
 
 require_once( '../../build.php' );
+require_once( '../../vendor/autoload.php' );
 
 function handle_add_site() {
     $response = new \stdClass;
@@ -20,7 +21,7 @@ function handle_add_site() {
         $ch = curl_init();
         curl_setopt( $ch, CURLOPT_URL, $url );
         curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-        curl_setopt( $ch, CURLOPT_CAINFO, JUNIPER_SERVER_DIR . '/certs/curl-ca-bundle.pem' );
+       // curl_setopt( $ch, CURLOPT_CAINFO, JUNIPER_SERVER_DIR . '/certs/curl-ca-bundle.pem' );
         curl_setopt( $ch, CURLOPT_SSL_VERIFYPEER, 0 );
 
         $curlResponse = \curl_exec( $ch );

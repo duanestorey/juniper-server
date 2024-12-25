@@ -187,10 +187,10 @@ class Build {
         file_put_contents( JUNIPER_SERVER_DIR . '/_public/plugins/' . $plugin['slug'] . '/index.html', $this->beautify( $output ) );
     }
 
-    public function writeHomeLikePage( $template = 'home.latte', $destFile = 'index.html', $title = '', $desc = '' ) {
+    public function writeHomeLikePage( $template = 'home.latte', $destFile = 'index.html', $title = '', $desc = '', $data = '' ) {
         LOG( sprintf( "Writing page [%s]", $destFile ), 1 );
     
-        $newsSites = $this->server->getConfigSetting( 'repo.news.sites' );
+        $newsSites = $this->server->getConfigSetting( 'repo.news.home.sites' );
         $allNews = [];
 
         foreach( $newsSites as $site ) {
@@ -211,7 +211,7 @@ class Build {
         }
 
         krsort( $allNews );
-        $allNews = array_slice( $allNews, 0, $this->server->getConfigSetting( 'repo.news.num' ) );
+        $allNews = array_slice( $allNews, 0, $this->server->getConfigSetting( 'repo.news.home.num' ) );
 
         $newPlugins = $this->server->getNewestAddons();
 
@@ -221,11 +221,70 @@ class Build {
             'site' => $this->getSiteData(), 
             'title' => $title,
             'desc' => $desc,
-            'image' => $this->getDefaultImage()
+            'image' => $this->getDefaultImage(),
+            'data' => $data
         ];
         $output = $this->latte->renderToString( JUNIPER_SERVER_DIR . '/theme/' . $template, $params );
 
         file_put_contents( JUNIPER_SERVER_DIR . '/_public/' . $destFile, $this->beautify( $output ) );   
+    }
+
+    public function loadRssFeed( $site, $maxItems = 5 ) {
+        $content = \Feed::loadRss( $site );
+        $allNews = [];
+
+        foreach ( $content->item as $item ) {
+            $newsItem = new \stdClass;
+
+            $newsItem->source = str_replace( array( 'www.', 'https://', 'http://', '/' ), array( '', '', '', '' ), $content->link );
+            $newsItem->title = $item->title->__toString();
+            $newsItem->url = $item->link->__toString();
+            $newsItem->timestamp = $item->timestamp->__toString();
+            $newsItem->desc = $item->description->__toString();
+
+            $allNews[ $newsItem->timestamp ] = $newsItem;
+        }    
+
+        krsort( $allNews );
+
+        return array_slice( $allNews, 0, $maxItems );
+    }
+
+    public function buildNewsFeeds() {
+        $news = [];
+
+        $sections = $this->server->config[ 'repo.news.sections' ];
+        $count = 0;
+        foreach( $sections as $section => $data ) {
+            $newsSection = new \stdClass;
+
+            $newsSection->name = $this->server->config[ 'repo.news.sections.' . $section . '.name' ];
+            $newsSection->sites = $this->server->config[ 'repo.news.sections.' . $section . '.sites' ];
+            $newsSection->slug = $section;
+            $newsSection->count = $count;
+            $newsSection->feeds = [];
+
+            foreach( $newsSection->sites as $oneSite ) {
+                $feedItem = new \stdClass;
+                $feedItem->feed = $this->loadRssFeed( $oneSite );
+                $feedItem->source = $feedItem->feed[array_key_first($feedItem->feed)]->source;
+                $newsSection->feeds[] = $feedItem;
+            }
+
+            if ( $newsSection->count == 0 ) {
+                $newsSection->selected = 'true';
+                $newsSection->active = ' active';
+                $newsSection->show = ' show';
+            } else {
+                $newsSection->selected = 'false';
+                $newsSection->active = '';
+                $newsSection->show = '';
+            }
+            $news[] = $newsSection;
+            $count++;
+        }
+
+        return $news;
     }
 
     public function letsGo() {
@@ -332,6 +391,15 @@ class Build {
 
         @mkdir( JUNIPER_SERVER_DIR . '/_public/submit', 0755, true );
         $this->writeHomeLikePage( 'submit.latte', 'submit/index.html', 'Submit new plugin or theme - ' . $this->server->config[ 'repo.name' ], "Submit a new plugin to the Not WP Repository for WordPress" );
+
+        @mkdir( JUNIPER_SERVER_DIR . '/_public/learn', 0755, true );
+        $this->writeHomeLikePage( 
+            'learn.latte', 
+            'learn/index.html', 
+            'Learn more about extending and creating on WordPress - ' . $this->server->config[ 'repo.name' ], 
+            "A currated list of resources from aroudn the web regarding WordPress",
+            $this->buildNewsFeeds()
+        );
 
         $this->writeSitemapPage( $plugins );
 

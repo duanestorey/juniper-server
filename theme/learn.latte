@@ -1,0 +1,48 @@
+{include 'header.latte'}
+
+<div class="main container learn text-center">
+    <img class="banner" src="{$image}" alt="Main banner Image">
+
+    <div class="info bg-dark">
+        <div class="row">
+            <div class="col text-left">
+                <h1>Learn</h1>
+            </div>
+        </div>
+    </div>
+
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+        {foreach $data as $oneSection}
+        <li class="nav-item">
+            <button class="nav-link{$oneSection->active}" id="{$oneSection->slug}-tab" data-bs-toggle="tab" data-bs-target="#{$oneSection->slug}" type="button" role="tab" aria-controls="{$oneSection->slug}" aria-selected="{$oneSection->selected}">{$oneSection->name}</button>
+        </li>
+        {/foreach}
+    </ul>
+
+    <div id="content" class="main-content text-left tab-content">
+        {foreach $data as $oneSection}
+        <div class="tab-pane fade{$oneSection->show}{$oneSection->active}" id="{$oneSection->slug}" role="tabpanel" aria-labelledby="{$oneSection->slug}-tab">
+            <h2>{$oneSection->name}</h2>
+      
+            <div class="row news">
+                {foreach $oneSection->feeds as $oneFeed}
+                <div class="col">   
+                    <h3>{$oneFeed->source}</h3>
+                    <ul>
+                        {foreach $oneFeed->feed as $feedData}
+                        <li>
+                            <h3><a href="{$feedData->url}">{$feedData->title}</a></h3>
+                            <div class="meta">{$feedData->timestamp|date:'F jS, Y'} :: <strong>{$feedData->source}</strong></div>
+                        </li>
+                        {/foreach}
+                    </ul>
+                </div>
+                {/foreach}
+            </div>
+    
+        </div>
+        {/foreach}
+    </div>
+</div>
+
+{include 'footer.latte'}
