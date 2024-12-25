@@ -94,33 +94,46 @@
                     {/if}
                 </div>
                 <div class="d-none d-md-block col-md-4 text-left issue-area">
-                    <div class="author">
-                        <h4>Author</h4>
-                        Crafted by <strong><a href="{$plugin['author_url']}">{$plugin['author_name']}</a></strong>
-                        <img class="avatar" src="{$plugin['avatar_url']}" alt="Author image for {$plugin['author_name']}">
-
-                        
-                    </div>
-
-                    {if $latestRelease && $latestRelease['download_url']}
+                    {if $latestRelease}
                     <div class="latest-release">
                         <h4>Latest Release</h4>
 
+                        <p>The latest official release is below.</p>
+
                         <div class="new">
-                            {if $latestRelease && $latestRelease['download_url']}
                             <h4>{$latestRelease['name']}</h4>
+
                             <div class="meta">{$latestRelease['release_date']|date: 'M jS, Y'}</div>
+                            {if  $latestRelease['download_url']}
                             <a href="{$latestRelease['download_url']}" class="btn btn-primary"><i class="fa-solid fa-download"> </i> Download {$latestRelease['release_tag']} </a>
+                            {else}
+                            <a href="https://github.com/{$plugin['slug']}/archive/refs/tags/{$latestRelease['release_tag']}.zip" class="btn btn-primary"><i class="fa-solid fa-download"> </i> Download {$latestRelease['release_tag']} </a>
                             {/if}
                         </div>
                     </div>
+                    {else}
+                    <div class="latest-release">
+                        <h4>Download</h4>
+                        <p>The latest development archive is available below.</p>
+                        <a href="https://github.com/{$plugin['slug']}/archive/HEAD.zip" class="btn btn-primary"><i class="fa-solid fa-download"> </i> Download Latest</a>
+                    </div>                   
                     {/if}
 
 
                     <div class="on-github">
                         <h4>Github Repository</h4>
                         <p>This project is located on Github in the repository <strong>{$plugin['slug']}</strong>.</p>
-                        <a href="https://github.com/{$plugin['slug']}" class="btn btn-primary"><i class="fa-brands fa-github"></i> Visit Github</a>
+                        <!-- Place this tag where you want the button to render. -->
+                        <!-- Place this tag where you want the button to render. -->
+                        <a class="github-button" href="https://github.com/{$plugin['slug']}" data-color-scheme="no-preference: light; light: light; dark: dark;" data-size="large" data-show-count="true" aria-label="Star {$plugin['slug']} on GitHub">Star</a>
+                        <a class="github-button" href="https://github.com/sponsors/{$plugin['repo_owner']}" data-color-scheme="no-preference: light; light: light; dark: dark;" data-size="large" aria-label="Sponsor @{$plugin['author_name']} on GitHub">Support Author</a>
+                    </div>
+
+                    <div class="author">
+                        <h4>Author</h4>
+                        <div class="crafted">Crafted by <strong><a href="{$plugin['author_url']}">{$plugin['author_name']}</a></strong></div>
+                        <a class="github-button owner" href="https://github.com/{$plugin['repo_owner']}" data-color-scheme="no-preference: light; light: light; dark: dark;" data-size="large" data-show-count="true" aria-label="Follow @{$plugin['repo_owner']} on GitHub">Follow @{$plugin['repo_owner']}</a>
+                        <img class="avatar" src="{$plugin['avatar_url']}" alt="Author image for {$plugin['author_name']}">
                     </div>
                 </div>
             </div>

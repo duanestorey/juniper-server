@@ -98,7 +98,7 @@ img.banner {
         }
 
         .avatar {
-            margin-top: 20px;
+            margin-top: 10px;
             width: 100%;
             object-fit: cover;
             border: px solid #aaa;
@@ -110,6 +110,10 @@ img.banner {
     }
 
     .github {
+
+        ul {
+            margin-bottom: 20px;
+        }
         
         h1 {
             font-size: 20pt;
@@ -139,6 +143,12 @@ img.banner {
         display: inline-block;
     }
 }
+
+
+div.crafted {
+    margin-bottom: 10px;
+}
+
 
 .card-area {
     text-align: left;

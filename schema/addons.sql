@@ -9,6 +9,7 @@ CREATE TABLE "addons"
     "slug" VARCHAR,
     "branch" VARCHAR,
     "author_name" VARCHAR,
+    "repo_owner" VARCHAR,
     "author_url" VARCHAR,
     "avatar_url" VARCHAR(255),
     "description" VARCHAR,

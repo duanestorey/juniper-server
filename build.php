@@ -382,7 +382,7 @@ class Build {
         $this->writePluginPage( $plugins );
 
         foreach( $plugins as $plugin ) {
-            $releases = $this->server->getPluginReleases( $plugin['id']);
+            $releases = $this->server->getPluginReleases( $plugin['id'] );
             $issues = $this->server->getPluginIssues( $plugin['id'] );
             $this->writeSinglePluginPage( $plugin, $releases, $issues );
         }
