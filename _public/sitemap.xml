@@ -57,6 +57,10 @@
         <changefreq>weekly</changefreq>
     </url>
     <url>
+        <loc>https://notwp.org/plugins/qasedak/simple-language-switcher/</loc>
+        <changefreq>weekly</changefreq>
+    </url>
+    <url>
         <loc>https://notwp.org/plugins/wp-privacy/wp-api-privacy/</loc>
         <changefreq>weekly</changefreq>
     </url>

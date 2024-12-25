@@ -96,8 +96,10 @@
                 <div class="d-none d-md-block col-md-4 text-left issue-area">
                     <div class="author">
                         <h4>Author</h4>
-                        Crafted by <strong>{$plugin['author_name']}</strong>
+                        Crafted by <strong><a href="{$plugin['author_url']}">{$plugin['author_name']}</a></strong>
                         <img class="avatar" src="{$plugin['avatar_url']}" alt="Author image for {$plugin['author_name']}">
+
+                        
                     </div>
 
                     {if $latestRelease && $latestRelease['download_url']}
@@ -113,6 +115,13 @@
                         </div>
                     </div>
                     {/if}
+
+
+                    <div class="on-github">
+                        <h4>Github Repository</h4>
+                        <p>This project is located on Github in the repository <strong>{$plugin['slug']}</strong>.</p>
+                        <a href="https://github.com/{$plugin['slug']}" class="btn btn-primary"><i class="fa-brands fa-github"></i> Visit Github</a>
+                    </div>
                 </div>
             </div>
         </div>
