@@ -16,12 +16,26 @@ class Server {
         Log::instance()->installListener( new LogListenerShell() );
     }
 
-    public function curlGet( $url ) {
+    public function curlGetJson( $url ) {
+        $headers = [
+            'Accept: application/json'
+        ];
+
+        return $this->curlGet( $url, $headers );
+    }
+
+    public function curlGet( $url, $headers = false ) {
         $ch = curl_init();
+
         curl_setopt( $ch, CURLOPT_URL, $url );
         curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
         curl_setopt( $ch, CURLOPT_FOLLOWLOCATION, true );
         curl_setopt( $ch, CURLOPT_TIMEOUT, 10000 );
+
+     
+        if ( $headers ) {
+            curl_setopt( $ch, CURLOPT_HTTPHEADER, $headers );
+        }
 
         curl_setopt( $ch, CURLOPT_USERAGENT, 'Juniper/Server' );
         $response = curl_exec( $ch );

@@ -390,7 +390,7 @@ class Build {
 
                     LOG( sprintf( "Importing site [%s]", $site ), 1 );
 
-                    $contents = $this->server->curlGet( $site . '/wp-json/juniper/v1/releases/?v=' . time() );
+                    $contents = $this->server->curlGetJson( $site . '/wp-json/juniper/v1/releases/?v=' . time() );
                     if ( $contents ) {
                         $decodedContents = json_decode( $contents );   
 
