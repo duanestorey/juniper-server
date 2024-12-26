@@ -94,6 +94,9 @@
                         it will be verified cryptographically using information provided by the designated website, <strong>{$plugin['signing_authority']}</strong>.
                         <p>If you are a plugin or theme author, this information is provided in the main Plugin of Theme file, using the <strong>Authority:</strong> header.</p>
                         {/if}
+
+                        <h2>Hash Verification</h2>
+                        <p>ZIP files downloaded via this site have an associated SHA256 hash.</p>
                     </div>
                  
                 </div>
@@ -124,8 +127,8 @@
                     {else}
                     <div class="latest-release">
                         <h4>Download</h4>
-                        The latest development archive is available below:
-                        <a href="https://github.com/{$plugin['slug']}/archive/HEAD.zip" class="btn btn-primary"><i class="fa-solid fa-download"> </i> Download Latest</a>
+                        The latest development archive is available below.<br><br>
+                        <p><a href="https://github.com/{$plugin['slug']}/archive/HEAD.zip" class="btn btn-primary"><i class="fa-solid fa-download"> </i> Download Latest</a></p>
                     </div>                   
                     {/if}
 
