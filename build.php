@@ -9,7 +9,7 @@ define( 'SKIP_BUILD', 0 );
 
 ini_set('display_errors', 1); ini_set('display_startup_errors', 1); error_reporting(E_ALL);
 
-define( 'JUNIPER_SERVER_VER', '1.1.1' );
+define( 'JUNIPER_SERVER_VER', '1.1.2' );
 define( 'JUNIPER_SERVER_DIR', dirname( __FILE__ ) );
 
 require_once( JUNIPER_SERVER_DIR . '/core/server.php' );
