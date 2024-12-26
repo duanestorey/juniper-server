@@ -370,6 +370,10 @@ div.crafted {
             font-size: 18pt;
         }
     }
+
+    img.banner {
+        height: 250px;
+    }
 }
 
 
@@ -387,6 +391,10 @@ div.crafted {
         .info h1 {
             font-size: 18pt;
         }
+    }
+
+    img.banner {
+        height: 250px;
     }
 }
 
@@ -406,6 +414,10 @@ div.crafted {
             font-size: 20pt;
         }
     }
+
+    img.banner {
+        height: 300px;
+    }
 }
 
 @media only screen and (min-width: 992px) {
@@ -419,6 +431,10 @@ div.crafted {
             font-size: 20pt;
         }
     }
+
+    img.banner {
+        height: 350px;
+    }
 }
 
 @media only screen and (min-width: 1200px) {
@@ -428,4 +444,7 @@ div.crafted {
         }
     }
 
+    img.banner {
+        height: 400px;
+    }
 }
