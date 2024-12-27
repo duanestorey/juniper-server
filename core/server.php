@@ -128,7 +128,7 @@ class Server {
             "INSERT INTO addons (site_id,type,name,slug,branch,src,author_name,signing_authority,repo_owner,author_url,avatar_url,description,readme,stable_version,repo_version,banner_image_url,requires_php,requires_at_least,tested_up_to,open_issues_count,stars_count,total_downloads,updated_at,created_at) " . 
             "VALUES (%u,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%u,%u,%u,%u,%u)",
             $siteId,
-            $this->db->escapeWithTicks( 'plugin' ),
+            $this->db->escapeWithTicks( $addOnData->info->type ),
             $this->db->escapeWithTicks( $addOnData->info->pluginName ),
             $this->db->escapeWithTicks( $addOnData->repository->fullName ),
             !empty( $addOnData->repository->primaryBranch ) ? $this->db->escapeWithTicks( $addOnData->repository->primaryBranch )  : $this->db->escapeWithTicks( '' ),
