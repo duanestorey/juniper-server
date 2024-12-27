@@ -16,13 +16,15 @@
             <div class="col-md-8">   
                 <h2>How To Submit</h2> 
 
-                <p>This mirror works in tandem with the <a href="/plugins/duanestorey/juniper-author/">Juniper/Author</a> plugin. The first step is to install that plugin, and use your Github token to import your repositories.  From the administration panel in Juniper/Author, you'll be able to submit your plugins and themes to this mirror. After brief period of time (roughly 15 minutes), they should automatically show up here.</p>   
+                <p>This mirror is a mostly-statically generated site based on <a href="https://github.com/duanestorey/juniper-server">Juniper/Server</a>, which is a distributed repository system for WordPress licensed under the GPL. It works in tandem with the <a href="/plugins/duanestorey/juniper-author/">Juniper/Author</a> plugin, which is meant to be utilized by plugin and theme authors who wish to self-host and distribute their plugins or themes. </p>
+                
+                <p>The first step is to install that plugin, and the use a private Github token to import your repositories.  From the administration panel in Juniper/Author, you'll be able to submit your plugins and themes to this mirror (or any other of your choosing). After a brief period of time (roughly 15 minutes), they should automatically show up here.</p>   
            
                 <h3>Thumbnail Images</h3>
 
                 <p>The thumbnail images for each plugin or theme are pulled directly from each Github repository in the main <strong>/assets</strong> folder. You can see an example <a href="https://github.com/wp-privacy/wp-api-privacy/tree/main/assets">in this repository</a>.</p>
                 
-                <p>Two sizes are currently supported, 1544x500 and 772x250. Simply add both of these image variants, Refresh your data in Juniper/Author, and the next time the mirror repository updates, the images will be updated as well</p>
+                <p>Three sizes are currently supported, 1200x800, 1544x500 and 772x250 - we strongly recommend people use the 1200x800 size as it's the most flexible in terms of aspect ratio. Simply add these images variants, refresh your data in Juniper/Author, and the next time the mirror repository updates, the images will be updated as well</p>
 
                 <h3>Support</h3> 
 
