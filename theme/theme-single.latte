@@ -1,0 +1,169 @@
+{include 'header.latte'}
+
+    <div class="main container text-center">
+        {if $theme['banner_image_url']}
+        <img class="banner" src="{$theme['banner_image_url']}" alt="Banner image for individual theme">
+        {else}
+        <img class="banner" src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?q=80&w=3074&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="card-img-top" alt="...">
+        {/if}
+
+        <div class="info bg-dark">
+            <div class="row">
+                <div class="col-9 text-left">
+                    <h1>
+                     {if $theme['signing_authority']}
+                            <i class="fa fa-lock"> </i>
+                        {/if} {$theme['name']}
+                    </h1>
+                </div>
+                <div class="d-none d-lg-block col-3 head-stars text-right author">
+                    <span class="star"><i class="fa fa-star"> </i> {$theme['stars_count']}</span>
+                    <span class="download"><i class="fa fa-download"> </i> {$theme['total_downloads']|number}</span>
+                </div>
+            </div>
+        </div>
+
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+                <button class="nav-link active" id="info-tab" data-bs-toggle="tab" data-bs-target="#info" type="button" role="tab" aria-controls="info" aria-selected="true">Information</button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link" id="releases-tab" data-bs-toggle="tab" data-bs-target="#releases" type="button" role="tab" aria-controls="releases" aria-selected="false">Releases</button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link" id="issues-tab" data-bs-toggle="tab" data-bs-target="#issues" type="button" role="tab" aria-controls="issues" aria-selected="false">Issues</button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link" id="issues-sign" data-bs-toggle="tab" data-bs-target="#sign" type="button" role="tab" aria-controls="sign" aria-selected="false">Security</button>
+            </li>
+        </ul>
+
+        <div class="detailed ">
+            <div class="row">
+                <div class="col-md-8 text-left desc-area tab-content">
+                    <div class="tab-pane fade show active" id="info" role="tabpanel" aria-labelledby="info-tab">
+                        <div class="github">
+                        {$theme['readme']|noescape}
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="releases" role="tabpanel" aria-labelledby="releases-tab">   
+                        <div class="release-inside">
+                            {if $releases} 
+                                <p>The following is a list of the most recent releases for this theme.</p>
+                                <ul>
+                                {foreach $releases as $release} 
+                                    <li>
+                                        <h5><strong>{$release['release_tag']}</strong> - <a href="{$release['url']}">{$release['name']}</a><span class="meta"> / {$release['release_date']|date: 'M jS, Y'}</span></h5>
+                                        <p>{$release['description']}</p>
+                                        {if !empty( $release['file_hash'] )}
+                                            <div class="release-hash">SHA256 hash: <pre>{$release['file_hash']}</pre></div>
+                                        {/if}          
+                                    </li>
+                                {/foreach}
+                                </ul>
+                            {else}
+                            <p>No releases yet.</p>
+                            {/if}
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="issues" role="tabpanel" aria-labelledby="issues-tab">
+                        <div class="issues-inside">
+                            {if $issues} 
+                                <p>The following is a list of the most recent issues for this theme.</p>
+                                <ul>
+                                {foreach $issues as $issue} 
+                                    <li>
+                                        <img class="issue-avatar" src="{$issue['user_avatar_url']}" alt="User avatar">
+                                        <h5><a href="{$issue['url']}">{$issue['title']}</a></h5>
+                                        <div class="meta">{$issue['updated_at_date']|date: 'M jS, Y'}</div>
+                                        <p class="body">{$issue['body']}</p>
+                                        <div class="clear"></div>
+                                    </li>
+                                {/foreach}
+                                </ul>
+                            {else}
+                                <p>No issues yet.</p>
+                            {/if}
+                        </div>
+                    </div>
+                  
+                    <div class="tab-pane fade" id="sign" role="tabpanel" aria-labelledby="issues-sign">
+                        <div class="github">
+                        {if $theme['signing_authority']}
+                        <h2>Signing Authority</h2>
+                        <p>This theme has designated a signing authority for all future ZIP file releases.  That means in the near future, when you download a ZIP file, 
+                        it will be verified cryptographically using information provided by the designated website, <strong>{$theme['signing_authority']}</strong>.
+                        <p>If you are a plugin or theme author, this information is provided in the main Plugin of Theme file, using the <strong>Authority:</strong> header.</p>
+                        {/if}
+
+                        <h2>Hash Verification</h2>
+                        <p>ZIP files downloaded via this site have an associated SHA256 hash.</p>
+                        <h4>Mac</h4>
+
+                        <p>On Mac, you can use the sha256 command to calculate the hash of a downloaded ZIP file. Open terminal and execute:</p>
+                        <pre>sha256 [filename]</pre>
+                        <p>Where [filename] is the name of the ZIP file. If the hash matches the one on the website, the ZIP file is genuine.</p>
+
+                        <h4>Linux</h4>
+
+                        <p>On Linux, you can use the sha256sum command to calculate the hash of a downloaded ZIP file. From a shell, execute:</p>
+                        <pre>sha256sum [filename]</pre>
+                        <p>Where [filename] is the name of the ZIP file. If the hash matches the one on the website, the ZIP file is genuine.</p>
+                        </div>
+                    </div>
+                 
+                </div>
+                <div class="d-none d-md-block col-md-4 text-left issue-area">
+                    {if $latestRelease}
+                    <div class="latest-release">
+                        <h4>Latest Release</h4>
+
+                        <p>The latest official release is below.</p>
+
+                        <div class="new">
+                            <h4>{$latestRelease['name']}</h4>
+
+                            <div class="meta">{$latestRelease['release_date']|date: 'M jS, Y'}</div>
+                            {if  $latestRelease['download_url']}
+                            <a href="{$latestRelease['download_url']}" class="btn btn-primary"><i class="fa-solid fa-download"> </i> Download {$latestRelease['release_tag']} </a>
+                            {else}
+                            <a href="https://github.com/{$theme['slug']}/archive/refs/tags/{$latestRelease['release_tag']}.zip" class="btn btn-primary"><i class="fa-solid fa-download"> </i> Download {$latestRelease['release_tag']} </a>
+                            {/if}
+                        </div>
+
+                        {if !empty( $latestRelease['file_hash'] )}
+                            <div class="hash">SHA-256 hash:<br>
+                            <pre data-toggle="tooltip" data-placement="top" title="The hash can be used to verify the ZIP file is legitimate">{$latestRelease['file_hash']}</pre>
+                            </div>
+                        {/if}
+                    </div>
+                    {else}
+                    <div class="latest-release">
+                        <h4>Download</h4>
+                        The latest development archive is available below.<br><br>
+                        <p><a href="https://github.com/{$theme['slug']}/archive/HEAD.zip" class="btn btn-primary"><i class="fa-solid fa-download"> </i> Download Latest</a></p>
+                    </div>                   
+                    {/if}
+
+
+                    <div class="on-github">
+                        <h4>Github Repository</h4>
+                        <p>This project is located on Github in the repository <strong><a href="https://github.com/{$theme['slug']}">{$theme['slug']}</a></strong>.</p>
+                        <!-- Place this tag where you want the button to render. -->
+                        <!-- Place this tag where you want the button to render. -->
+                        <a class="github-button" href="https://github.com/{$theme['slug']}" data-color-scheme="no-preference: light; light: light; dark: dark;" data-size="large" data-show-count="true" aria-label="Star {$theme['slug']} on GitHub">Star</a>
+                        <a class="github-button" href="https://github.com/sponsors/{$theme['repo_owner']}" data-color-scheme="no-preference: light; light: light; dark: dark;" data-size="large" aria-label="Sponsor @{$theme['author_name']} on GitHub">Support Project</a>
+                    </div>
+
+                    <div class="author">
+                        <h4>Author</h4>
+                        <div class="crafted">Crafted by <strong><a href="{$theme['author_url']}">{$theme['author_name']}</a></strong></div>
+                        <a class="github-button owner" href="https://github.com/{$theme['repo_owner']}" data-color-scheme="no-preference: light; light: light; dark: dark;" data-size="large" data-show-count="true" aria-label="Follow @{$theme['repo_owner']} on GitHub">Follow @{$theme['repo_owner']}</a>
+                        <img class="avatar" src="{$theme['avatar_url']}" alt="Author image for {$theme['author_name']}">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{include 'footer.latte'}

@@ -108,7 +108,19 @@ class Server {
     public function getTotalPlugins() {
         $total = 0;
 
-        $queryString = "SELECT count(0) as total FROM addons";
+        $queryString = "SELECT count(0) as total FROM addons WHERE type='plugin'";
+        $result = $this->db->query( $queryString );
+        if ( $row = $result->fetchArray( SQLITE3_ASSOC ) ) {
+            $total = $row[ 'total' ];
+        }
+
+        return $total;
+    }
+
+    public function getTotalThemes() {
+        $total = 0;
+
+        $queryString = "SELECT count(0) as total FROM addons WHERE type='theme'";
         $result = $this->db->query( $queryString );
         if ( $row = $result->fetchArray( SQLITE3_ASSOC ) ) {
             $total = $row[ 'total' ];
@@ -129,7 +141,7 @@ class Server {
             "VALUES (%u,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%u,%u,%u,%u,%u)",
             $siteId,
             $this->db->escapeWithTicks( $addOnData->info->type ),
-            $this->db->escapeWithTicks( $addOnData->info->pluginName ),
+            $this->db->escapeWithTicks( ( $addOnData->info->type == 'plugin' ) ? $addOnData->info->pluginName : $addOnData->info->themeName ),
             $this->db->escapeWithTicks( $addOnData->repository->fullName ),
             !empty( $addOnData->repository->primaryBranch ) ? $this->db->escapeWithTicks( $addOnData->repository->primaryBranch )  : $this->db->escapeWithTicks( '' ),
             $this->db->escapeWithTicks( 'github' ),
@@ -191,8 +203,8 @@ class Server {
         $this->db->query( $queryString );
     }
 
-    public function getPluginList() {
-        $queryString = sprintf( "SELECT * FROM addons WHERE type=%s ORDER BY name", $this->db->escapeWithTicks( 'plugin' ) );
+    public function getPluginOrThemeList( $type ) {
+        $queryString = sprintf( "SELECT * FROM addons WHERE type=%s ORDER BY name", $this->db->escapeWithTicks( $type) );
         $result = $this->db->query( $queryString );
 
         $plugins = [];

@@ -1,0 +1,50 @@
+{include 'header.latte'}
+
+    <div class="main container front text-center">
+        <img class="banner" src="{$image}" alt="Plugin banner image">
+
+        <div class="info bg-dark">
+            <div class="row">
+                <div class="col-6 text-left">
+                    <h1>Themes</h1>
+                </div>
+                <div class="col-6 text-right author">
+                    <input id="search" type="text" placeholder="Search...">
+                </div>
+            </div>
+        </div>
+
+        <div class="card-area text-center">
+        {foreach $themes as $theme}
+            <div class="card">
+                
+                <a href="/themes/{$theme['slug']}">
+                {if strlen( trim( $theme['banner_image_url']) )}
+                 <img src="{$theme['banner_image_url']}" class="card-img-top" alt="Theme Banner">
+                {else}
+                 <img src="{$addonImage}" class="card-img-top" alt="Theme Banner">
+                {/if}
+                </a>
+               
+                <div class="card-body">
+                    <div class="card-title align-middle bg-dark">
+                        <a href="/themes/{$theme['slug']}/"> 
+                        {if $theme['signing_authority']}
+                            <i class="fa fa-lock"> </i>
+                        {/if}
+                        {$theme['name']}</a>
+                    </div>
+                    <div class="text-wrap">
+                        <p class="card-text">{$theme['description']}</p>
+                    </div>
+                    <p>by <a href="{$theme['author_url']}">{$theme['author_name']}</a></p>
+                    <a href="/themes/{$theme['slug']}" class="btn btn-primary"><i class="fa-solid fa-eye"> </i> Read More</a>
+                </div>
+            </div>
+        {/foreach}
+        </div>
+
+        <div class="clear"></div>
+    </div>
+
+{include 'footer.latte'}

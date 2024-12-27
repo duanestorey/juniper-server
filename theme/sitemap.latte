@@ -6,12 +6,22 @@
         <changefreq>weekly</changefreq>
     </url>
 {/foreach}
+{foreach $themes as $theme}
+    <url>
+        <loc>{$home}/themes/{$theme[slug]}/</loc>
+        <changefreq>weekly</changefreq>
+    </url>
+{/foreach}
     <url>
         <loc>{$home}/</loc>
         <changefreq>daily</changefreq>
     </url>
     <url>
         <loc>{$home}/plugins/</loc>
+        <changefreq>daily</changefreq>
+    </url>
+    <url>
+        <loc>{$home}/themes/</loc>
         <changefreq>daily</changefreq>
     </url>
     <url>

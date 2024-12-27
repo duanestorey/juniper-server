@@ -51,6 +51,7 @@ class Build {
         $siteData->bust = time();
         $siteData->totalDownloads = $this->server->getTotalDownloads();
         $siteData->totalPlugins = $this->server->getTotalPlugins();
+        $siteData->totalThemes = $this->server->getTotalThemes();
 
         return $siteData;
     }
@@ -112,11 +113,31 @@ class Build {
         file_put_contents( JUNIPER_SERVER_DIR . '/_public/plugins/index.html', $this->beautify( $output ) );
     }
 
-     public function writeSitemapPage( $plugins ) {
+
+    public function writeThemePage( $themes ) {
+        LOG( "Writing theme index file [themes/index.html]", 1 );
+
+        $params = [ 
+            'themes' => $themes, 
+            'site' => $this->getSiteData(), 
+            'title' => 'List of themes for Wordpress - ' . $this->server->config[ 'repo.name' ],
+            'desc' => 'The main themes listings for self-hosted Github plugins for WordPress',
+            'image' => $this->getDefaultImage(),
+            'addonImage' => $this->server->config[ 'repo.addons.image' ]
+        ];
+
+        $output = $this->latte->renderToString( JUNIPER_SERVER_DIR . '/theme/themes.latte', $params );
+
+        @mkdir( JUNIPER_SERVER_DIR . '/_public/themes/', 0755, true );
+        file_put_contents( JUNIPER_SERVER_DIR . '/_public/themes/index.html', $this->beautify( $output ) );
+    }
+
+     public function writeSitemapPage( $plugins, $themes ) {
         LOG( "Writing sitemap file [index.xml]", 1 );
 
         $params = [ 
             'plugins' => $plugins,
+            'themes' => $themes,
             'home' => $this->server->config[ 'repo.home' ]
         ];
 
@@ -233,6 +254,36 @@ class Build {
 
         @mkdir( JUNIPER_SERVER_DIR . '/_public/plugins/' . $plugin['slug'], 0755, true );
         file_put_contents( JUNIPER_SERVER_DIR . '/_public/plugins/' . $plugin['slug'] . '/index.html', $this->beautify( $output ) );
+    }
+
+    public function writeSingleThemePage( $theme, $releases, $issues ) {
+        LOG( sprintf( "Writing individual theme [%s]", $theme[ 'slug' ] ), 1 );
+
+        $latestRelease = $this->findReleaseWithTag( $theme, $releases, $theme['stable_version'] );
+        if ( !$latestRelease ) {
+            if ( count ( $releases ) ) {
+                $latestRelease = $releases[ 0 ];
+            }
+        }
+
+        $latestRelease = $this->processRelease( $theme, $latestRelease );
+
+        $newTheme = $this->cleanUpReadme( $theme );
+
+        $params = [ 
+            'theme' => $newTheme, 
+            'releases' => $releases, 
+            'issues' => $issues, 
+            'latestRelease' => $latestRelease, 
+            'site' => $this->getSiteData(),
+            'title' => $theme['name' ] . ' by ' . $theme['author_name'],
+            'desc' => $theme['description'],
+            'image' => ( $theme['banner_image_url'] ? $theme['banner_image_url'] : $this->getDefaultImage() )
+        ];
+        $output = $this->latte->renderToString( JUNIPER_SERVER_DIR . '/theme/theme-single.latte', $params );
+
+        @mkdir( JUNIPER_SERVER_DIR . '/_public/themes/' . $theme['slug'], 0755, true );
+        file_put_contents( JUNIPER_SERVER_DIR . '/_public/themes/' . $theme['slug'] . '/index.html', $this->beautify( $output ) );
     }
 
     public function writeHomeLikePage( $template = 'home.latte', $destFile = 'index.html', $title = '', $desc = '', $data = '' ) {
@@ -426,16 +477,11 @@ class Build {
         $this->compileAndCopyAssets();
 
         // Process releases
-        $plugins = $this->server->getPluginList();
-        foreach( $plugins as $plugin ) {
-            $releases = $this->server->getPluginReleases( $plugin['id'] );
-            foreach( $releases as &$release ) {
-                //$release = $this->processRelease( $plugin, $release );
-            }
-        }
-        // Build plugin pages
+        $plugins = $this->server->getPluginOrThemeList( 'plugin' );
+        $themes = $this->server->getPluginOrThemeList( 'theme' );
         
         $this->writePluginPage( $plugins );
+        $this->writeThemePage( $themes );
 
         foreach( $plugins as $plugin ) {
             $releases = $this->server->getPluginReleases( $plugin['id'] );
@@ -447,6 +493,19 @@ class Build {
             $issues = $this->server->getPluginIssues( $plugin['id'] );
             $this->writeSinglePluginPage( $plugin, $releases, $issues );
         }
+
+
+        foreach( $themes as $theme ) {
+            $releases = $this->server->getPluginReleases( $plugin['id'] );
+
+            foreach( $releases as &$release ) {
+                $release = $this->processRelease( $theme, $release );
+            }
+
+            $issues = $this->server->getPluginIssues( $plugin['id'] );
+            $this->writeSingleThemePage( $theme, $releases, $issues );
+        }
+
 
         $this->writeHomeLikePage( 'home.latte', 'index.html', $this->server->config[ 'repo.name' ], 'The NotWP Repositority of self-hosted Github plugins and themes for WordPress'  );
 
@@ -462,7 +521,7 @@ class Build {
             $this->buildNewsFeeds()
         );
 
-        $this->writeSitemapPage( $plugins );
+        $this->writeSitemapPage( $plugins, $themes );
 
         $this->server->stopDb();
 
