@@ -40,11 +40,11 @@
                     {foreach $newPlugins as $addOn}
                         <li>
                             {if strlen( trim( $addOn['banner_image_url']) )}
-                            <a href="/plugins/{$addOn['slug']}"><img src="{$addOn['banner_image_url']}" class="card-img-top" alt="Plugin image"></a>
+                            <a href="/{$addOn['type']}s/{$addOn['slug']}"><img src="{$addOn['banner_image_url']}" class="card-img-top" alt="Add-on image"></a>
                             {else}
-                            <a href="/plugins/{$addOn['slug']}"><img alt="Plugin image" src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?q=80&w=3074&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="card-img-top" ></a>
+                            <a href="/{$addOn['type']}s/{$addOn['slug']}"><img alt="Add-on image" src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?q=80&w=3074&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="card-img-top" ></a>
                             {/if}
-                            <h3><a href="/plugins/{$addOn['slug']}">{$addOn['name']}</a></h3>
+                            <h3><a href="/{$addOn['type']}s/{$addOn['slug']}">{$addOn['name']}</a></h3>
                             <div class="meta">A {$addOn['type']} by <a href="{$addOn['author_url']}">{$addOn['author_name']}</a></div>
                         </li>
                     {/foreach}
