@@ -111,6 +111,18 @@ class Server {
         return $this->db->getLastInsertId();
     }
 
+    public function getCountBySiteId( $siteId, $type ) {
+        $total = 0;
+
+        $queryString = sprintf( "SELECT COUNT(id) as total FROM addons WHERE site_id=%d AND type=%s", (int)$siteId, $this->db->escapeWithTicks( $type ) );
+        $result = $this->db->query( $queryString );
+        if ( $row = $result->fetchArray( SQLITE3_ASSOC ) ) {
+            $total = $row[ 'total' ];
+        }
+
+        return $total;
+    }
+
     public function getTotalDownloads() {
         $total = 0;
 

@@ -9,12 +9,12 @@
                     <h1>Authors</h1>
                 </div>
                 <div class="col-6 text-right author">
-                    
+                  
                 </div>
             </div>
         </div>
 
-        <div class="card-area text-center">
+        <div class="card-area author text-center">
         {foreach $authors as $author}
             {if $author['name']}
             <div class="card">     
@@ -24,8 +24,11 @@
                
                 <div class="card-body">
                     <div class="card-title align-middle bg-dark">
-                        <a href="/authors/"> 
-                        {$author['name']}</a>
+                        <div><a href="/authors/">{$author['name']}</a></div><br>
+                        <div>
+                            <span class="download" role="heading"><i class="fa-solid fa-palette" role="presentation"> </i> {$author['total_themes']|number}</span>
+                            <span class="download" role="heading"><i class="fa-solid fa-wrench" role="presentation"> </i> {$author['total_plugins']|number}</span>
+                        </div>
                     </div>
                     <div class="text-wrap">
                         <p class="card-text">{$author['bio']}</p>

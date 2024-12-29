@@ -98,6 +98,11 @@ class Build {
     public function writeAuthorPage( $sites ) {
         LOG( "Writing plugin index file [plugins/index.html]", 1 );
 
+        foreach ( $sites as &$site ) {
+            $site['total_plugins'] = $this->server->getCountBySiteId( $site['id'], 'plugin' );
+            $site['total_themes'] = $this->server->getCountBySiteId( $site['id'], 'theme' );
+        }
+
         $params = [ 
             'authors' => $sites, 
             'site' => $this->getSiteData(), 

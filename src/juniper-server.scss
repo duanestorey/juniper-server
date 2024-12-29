@@ -204,7 +204,7 @@ div.crafted {
         font-size: 14pt;
         display: block;
         padding: 10px;
-        display: flex;
+        
         justify-content: center; /* Horizontally center */
         align-items: center; /* Vertically center */
 
@@ -212,6 +212,10 @@ div.crafted {
             vertical-align: middle;
             color: white;
         }
+    }
+
+    .author .card-title {
+        display: block;
     }
 }
 
