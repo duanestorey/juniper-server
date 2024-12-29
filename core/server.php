@@ -79,11 +79,29 @@ class Server {
         $this->db->init();
     }
 
-    public function addSiteToDb( $siteUrl ) {
+    public function addSiteToDb( $siteUrl, $user, $version ) {
         LOG( sprintf( "Adding site to DB [%s]", $siteUrl ), 2 );
+
+        $avatar = !empty( $user->avatarUrl ) ? $user->avatarUrl : '';
+        $name = !empty( $user->name ) ? $user->name : '';
+        $bio = !empty( $user->bio ) ? $user->bio : '';
+        $company = !empty( $user->company ) ? $user->company : '';
+        $githubUrl = !empty( $user->url ) ? $user->url : '';
+        $twitter = !empty( $user->twitter_name ) ? $user->twitter_name : '';
+        $blogUrl = !empty( $user->blog_url ) ? $user->blog_url : '';
+
         $queryString = sprintf( 
-            "INSERT INTO sites (url,num_failures,updated_at,first_added) VALUES (%s,0,%u,%u)",
+            "INSERT INTO sites (url,num_failures,api_version,name,slug,bio,company,avatar_url,github_url,twitter,blog_url,updated_at,first_added) VALUES (%s,0,%s,%s,%s,%s,%s,%s,%s,%s,%s,%u,%u)",
             $this->db->escapeWithTicks( $siteUrl ),
+            $this->db->escapeWithTicks( $version ),
+            $this->db->escapeWithTicks( $name ),
+            $this->db->escapeWithTicks( str_replace( ' ', '-', strtolower( $name ) ) ),
+            $this->db->escapeWithTicks( $bio ),
+            $this->db->escapeWithTicks( $company ),
+            $this->db->escapeWithTicks( $avatar ),
+            $this->db->escapeWithTicks( $githubUrl ),
+            $this->db->escapeWithTicks( $twitter ),
+            $this->db->escapeWithTicks( $blogUrl ),
             time(),
             time()
         );
@@ -226,6 +244,20 @@ class Server {
 
         return $plugins;
     }
+
+
+    public function getAllSites() {
+        $queryString = "SELECT * FROM sites ORDER BY name ASC";
+        $result = $this->db->query( $queryString );
+
+        $sites = [];
+        while ( $row = $result->fetchArray( SQLITE3_ASSOC ) ) {
+            $sites[] = $row;
+        }
+
+        return $sites;
+    }
+       
 
     public function getPluginReleases( $id ) {
         $queryString = sprintf( "SELECT * FROM releases WHERE addon_id=%d ORDER BY release_date DESC", $id );

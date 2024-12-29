@@ -1,0 +1,44 @@
+{include 'header.latte'}
+
+    <div class="main container front text-center">
+        <img class="banner" src="{$image}" alt="Author banner image">
+
+        <div class="info bg-dark">
+            <div class="row">
+                <div class="col-6 text-left">
+                    <h1>Plugin &amp; Theme Authors</h1>
+                </div>
+                <div class="col-6 text-right author">
+                    
+                </div>
+            </div>
+        </div>
+
+        <div class="card-area text-center">
+        {foreach $authors as $author}
+            {if $author['name']}
+            <div class="card">     
+                <a href="/authors/">
+                <img src="{$author['avatar_url']}" class="card-img-top" alt="Author image">
+                </a>
+               
+                <div class="card-body">
+                    <div class="card-title align-middle bg-dark">
+                        <a href="/authors/"> 
+                        {$author['name']}</a>
+                    </div>
+                    <div class="text-wrap">
+                        <p class="card-text">{$author['bio']}</p>
+                    </div>
+                    <p><a href="{$author['name']}">{$author['name']}</a></p>
+                    <a href="/authors/" class="btn btn-primary"><i class="fa-solid fa-eye"> </i> Read More</a>
+                </div>
+            </div>
+            {/if}
+        {/foreach}
+        </div>
+
+        <div class="clear"></div>
+    </div>
+
+{include 'footer.latte'}

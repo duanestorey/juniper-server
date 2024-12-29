@@ -95,13 +95,30 @@ class Build {
         LOG( $lineText );
     }
 
+    public function writeAuthorPage( $sites ) {
+        LOG( "Writing plugin index file [plugins/index.html]", 1 );
+
+        $params = [ 
+            'authors' => $sites, 
+            'site' => $this->getSiteData(), 
+            'title' => 'List of Plugin and Theme Authors for WordPress  - ' . $this->server->config[ 'repo.name' ],
+            'desc' => 'A list of all the awesome contributors of plugins and themes',
+            'image' => $this->getDefaultImage()
+        ];
+
+        $output = $this->latte->renderToString( JUNIPER_SERVER_DIR . '/theme/authors.latte', $params );
+
+        @mkdir( JUNIPER_SERVER_DIR . '/_public/authors/', 0755, true );
+        file_put_contents( JUNIPER_SERVER_DIR . '/_public/authors/index.html', $this->beautify( $output ) );  
+    }
+
     public function writePluginPage( $plugins ) {
         LOG( "Writing plugin index file [plugins/index.html]", 1 );
 
         $params = [ 
             'plugins' => $plugins, 
             'site' => $this->getSiteData(), 
-            'title' => 'List of plugins for Wordpress - ' . $this->server->config[ 'repo.name' ],
+            'title' => 'List of plugins for WordPress - ' . $this->server->config[ 'repo.name' ],
             'desc' => 'The main plugin listings for self-hosted Github plugins for WordPress',
             'image' => $this->getDefaultImage(),
             'addonImage' => $this->server->config[ 'repo.addons.image' ]
@@ -437,19 +454,23 @@ class Build {
                     $site = rtrim( $site, '/' );
                     $site = rtrim( $site, '/' );
 
-                    $siteId = $this->server->addSiteToDb( $site );
-
-                    LOG( sprintf( "Importing site [%s]", $site ), 1 );
 
                     $contents = $this->server->curlGetJson( $site . '/wp-json/juniper/v1/releases/?v=' . time() );
                     if ( $contents ) {
                         $decodedContents = json_decode( $contents );   
 
                         // to handle our new versioning
-                        if ( isset( $decodedContents->client_version ) ) {
                         
+                        $user = false;
+                        $version = false;
+                        if ( isset( $decodedContents->client_version ) ) {
+                            $version = $decodedContents->client_version;
+                            $user = !empty( $decodedContents->user ) ? $decodedContents->user : false; 
                             $decodedContents = $decodedContents->releases;
-                        }
+                        }      
+
+                        $siteId = $this->server->addSiteToDb( $site, $user, $version );
+                        LOG( sprintf( "Importing site [%s]", $site ), 1 );
 
                         if ( is_array( $decodedContents ) ) {
                             foreach( $decodedContents as $num => $addOn ) {
@@ -506,6 +527,8 @@ class Build {
             $this->writeSingleThemePage( $theme, $releases, $issues );
         }
 
+        $sites = $this->server->getAllSites();
+        $this->writeAuthorPage( $sites );
 
         $this->writeHomeLikePage( 'home.latte', 'index.html', $this->server->config[ 'repo.name' ], 'The NotWP Repositority of self-hosted Github plugins and themes for WordPress'  );
 

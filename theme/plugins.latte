@@ -17,7 +17,6 @@
         <div class="card-area text-center">
         {foreach $plugins as $plugin}
             <div class="card">
-                
                 <a href="/plugins/{$plugin['slug']}">
                 {if strlen( trim( $plugin['banner_image_url']) )}
                  <img src="{$plugin['banner_image_url']}" class="card-img-top" alt="Plugin Banner">
