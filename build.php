@@ -522,13 +522,13 @@ class Build {
 
 
         foreach( $themes as $theme ) {
-            $releases = $this->server->getPluginReleases( $plugin['id'] );
+            $releases = $this->server->getPluginReleases( $theme['id'] );
 
             foreach( $releases as &$release ) {
                 $release = $this->processRelease( $theme, $release );
             }
 
-            $issues = $this->server->getPluginIssues( $plugin['id'] );
+            $issues = $this->server->getPluginIssues( $theme['id'] );
             $this->writeSingleThemePage( $theme, $releases, $issues );
         }
 
