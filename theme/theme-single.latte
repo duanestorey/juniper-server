@@ -47,14 +47,14 @@
                         </div>
                     </div>
                     <div class="tab-pane fade" id="releases" role="tabpanel" aria-labelledby="releases-tab">   
-                        <div class="release-inside">
+                        <div class="release-inside github">
                             {if $releases} 
                                 <p>The following is a list of the most recent releases for this theme.</p>
                                 <ul>
                                 {foreach $releases as $release} 
                                     <li>
-                                        <h5><strong>{$release['release_tag']}</strong> - <a href="{$release['url']}">{$release['name']}</a><span class="meta"> / {$release['release_date']|date: 'M jS, Y'}</span></h5>
-                                        <p>{$release['description']}</p>
+                                        <h3><strong>{$release['release_tag']}</strong> - <a href="{$release['url']}">{$release['name']}</a><span class="meta"> / {$release['release_date']|date: 'M jS, Y'}</span></h3>
+                                     <!--   <p>{$release['description']|noescape}</p> -->
                                         {if !empty( $release['file_hash'] )}
                                             <div class="release-hash">SHA256 hash: <pre>{$release['file_hash']}</pre></div>
                                         {/if}          
@@ -76,7 +76,7 @@
                                         <img class="issue-avatar" src="{$issue['user_avatar_url']}" alt="User avatar">
                                         <h5><a href="{$issue['url']}">{$issue['title']}</a></h5>
                                         <div class="meta">{$issue['updated_at_date']|date: 'M jS, Y'}</div>
-                                        <p class="body">{$issue['body']}</p>
+                                      <!--  <p class="body">{$issue['body']|noescape}</p> -->
                                         <div class="clear"></div>
                                     </li>
                                 {/foreach}

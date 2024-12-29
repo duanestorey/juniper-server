@@ -4,7 +4,8 @@
         "latte/latte": "^3.0",
         "scssphp/scssphp": "^1.13",
         "symfony/yaml": "^5.4",
-        "wongyip/html-beautify": "^1.1"
+        "wongyip/html-beautify": "^1.1",
+        "erusev/parsedown": "^1.7"
     },
     "config": {
         "platform": {

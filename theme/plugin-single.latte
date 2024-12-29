@@ -54,7 +54,7 @@
                                 {foreach $releases as $release} 
                                     <li>
                                         <h5><strong>{$release['release_tag']}</strong> - <a href="{$release['url']}">{$release['name']}</a><span class="meta"> / {$release['release_date']|date: 'M jS, Y'}</span></h5>
-                                        <p>{$release['description']}</p>
+                                   <!--     <p>{$release['description']}</p> -->
                                         {if !empty( $release['file_hash'] )}
                                             <div class="release-hash">SHA256 hash: <pre>{$release['file_hash']}</pre></div>
                                         {/if}          
@@ -76,7 +76,7 @@
                                         <img class="issue-avatar" src="{$issue['user_avatar_url']}" alt="User avatar">
                                         <h5><a href="{$issue['url']}">{$issue['title']}</a></h5>
                                         <div class="meta">{$issue['updated_at_date']|date: 'M jS, Y'}</div>
-                                        <p class="body">{$issue['body']}</p>
+                                       <!-- <p class="body">{$issue['body']}</p> -->
                                         <div class="clear"></div>
                                     </li>
                                 {/foreach}

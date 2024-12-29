@@ -182,7 +182,6 @@ class Build {
     }
 
     public function processRelease( $addon, $release ) {
-
         if ( $release == false ) {
             return $release;
         }
@@ -196,7 +195,6 @@ class Build {
 
         $newReleaseDir = $releaseDir . '/' . $addon[ 'slug' ] . '/' . $release[ 'release_tag' ];
         @mkdir( $newReleaseDir, 0775, true );
-        
 
         // download file
         if ( !empty( $release[ 'download_url' ] ) ) {
@@ -477,6 +475,9 @@ class Build {
                         $siteId = $this->server->addSiteToDb( $site, $user, $version );
                         LOG( sprintf( "Importing site [%s]", $site ), 1 );
 
+                        $Parsedown = new \Parsedown();
+                        $Parsedown->setSafeMode( true );
+
                         if ( is_array( $decodedContents ) ) {
                             foreach( $decodedContents as $num => $addOn ) {
                                 LOG( sprintf( "Adding new ADDON [%s] of TYPE [%s]", ( isset( $addOn->info->pluginName ) ? $addOn->info->pluginName : $addOn->info->themeName ), $addOn->info->type, 1 ) );
@@ -484,12 +485,19 @@ class Build {
 
                                 foreach( $addOn->releases as $num => $release ) {
                                     LOG( sprintf( "Adding release with TAG [%s]", $release->tag ), 2 );
+
+                                    $release->body = $Parsedown->text( $release->body );
                                     $this->server->addReleaseToDb( $addOnId, $release );
                                 }
 
                                 if ( $addOn->issues ) {
                                     foreach( $addOn->issues as $issue ) {
                                         LOG( sprintf( "Adding issues with NAME [%s]", $issue->title ), 2 );
+
+                                        if ( $issue->body ) {
+                                            $issue->body = $Parsedown->text( $issue->body );
+                                        }
+                                        
                                         $this->server->addIssueToDb( $addOnId, $issue );
                                     } 
                                 }
