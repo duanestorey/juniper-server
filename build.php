@@ -474,7 +474,7 @@ class Build {
 
                         if ( is_array( $decodedContents ) ) {
                             foreach( $decodedContents as $num => $addOn ) {
-                                LOG( sprintf( "Adding new ADDON [%s] of TYPE [%s]", $addOn->info->pluginName, $addOn->info->type ), 1 );
+                                LOG( sprintf( "Adding new ADDON [%s] of TYPE [%s]", ( isset( $addOn->info->pluginName ) ? $addOn->info->pluginName : $addOn->info->themeName ), $addOn->info->type, 1 ) );
                                 $addOnId = $this->server->addAddonToDb( $siteId, $addOn );
 
                                 foreach( $addOn->releases as $num => $release ) {
